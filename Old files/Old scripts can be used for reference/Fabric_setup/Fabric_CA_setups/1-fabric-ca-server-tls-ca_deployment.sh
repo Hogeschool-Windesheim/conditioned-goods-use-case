@@ -23,13 +23,13 @@ cd
 mkdir fabric-ca-client
 cp Downloads/bin/fabric-ca-client fabric-ca-client/
 cd fabric-ca-client
-mkdir tls-ca org1-ca vebabox-ca int-ca tls-root-cert
+mkdir tls-ca org1-ca int-ca tls-root-cert
 
 
 
 # Setting PATH variables in ~/.profile
-echo 'export FABRIC_CA_CLIENT_HOME=/home/robin/fabric-ca-client' >> ~/.profile
-echo 'export FABRIC_CA_CLIENT_TLS_CERTFILES=/home/robin/fabric-ca-client/tls-root-cert' >> ~/.profile
+echo 'export FABRIC_CA_CLIENT_HOME=~/fabric-ca-client' >> ~/.profile
+echo 'export FABRIC_CA_CLIENT_TLS_CERTFILES=~/fabric-ca-client/tls-root-cert' >> ~/.profile
 source ~/.profile
 
 
@@ -45,7 +45,7 @@ cd fabric-ca-server-tls
 
 # Setting the config values for ~/fabric-ca-server-tls/fabric-ca-server-config.yaml
 # Reading the input from user, leaving blank will insert default value.
-read -p "Enter the port [Default: 7754]: " portid
+read -p "Enter the port [Default: 7054]: " portid
 read -p "Enter the CA name [Default: Spark!LivingLab-TLS-CA]: " canameid
 read -p "Enter the listenAddress [Default: 127.0.0.1:9444]: " listenaddressid
 

@@ -12,7 +12,7 @@
 
 ####################################################################################################################################################################
 
-# Copying the TLS CA root certificate to the fabric-ca-client/tls-root-cert directory.
+# Copying the TLS CA public key to the fabric-ca-client/tls-root-cert directory.
 cd
 cp fabric-ca-server-tls/ca-cert.pem fabric-ca-client/tls-root-cert/tls-ca-cert.pem
 

@@ -574,7 +574,7 @@ cd
 sudo cp ~/Downloads/bin/genesis_block.pb ~/container-volumes/peer0-spark/production
 docker exec -it peer0-spark peer channel join -b /var/hyperledger/production/genesis_block.pb -o VebaBox-Node:9440 --clientauth --cafile /etc/hyperledger/fabric/msp/tls/tls-ca-cert.pem --certfile /etc/hyperledger/fabric/msp/user/peer-admin/tls/cert.pem --keyfile /etc/hyperledger/fabric/msp/user/peer-admin/tls/key.pem
 
-#export CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/user/peer-admin/msp
+#docker exec -it peer0-spark export CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/user/peer-admin/msp
 
 #./osnadmin channel join --channel-id spark-vebabox-channel  --config-block ~/Downloads/bin/genesis_block.pb -o localhost:9440 --ca-file ~/organizations/peerOrganizations/spark/peers/orderer0-spark/tls/tls-ca-cert.pem --client-cert ~/admin-client/admin-client-tls-cert.pem --client-key ~/admin-client/admin-client-tls-key.pem
 #docker exec -it peer0-spark peer channel join -b ~/Downloads/bin/genesis_block.pb -o VebaBox-Node:9440 --clientauth --cafile ~/organizations/peerOrganizations/spark/peers/orderer0-spark/tls/tls-ca-cert.pem --client-cert ~/admin-client/admin-client-tls-cert.pem --client-key ~/admin-client/admin-client-tls-key.pem
