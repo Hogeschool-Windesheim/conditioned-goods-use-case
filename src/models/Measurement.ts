@@ -1,36 +1,14 @@
 
+import {Object, Property} from 'fabric-contract-api';
+
 /** 
  * Measurement
  */
+@Object()
 export default class Measurement {
+    @Property()
+    public name: string; 
 
-    /** 
-     * Constructor
-     */
-    constructor(name: string, value: number, owner: string) {
-        this.name = name;
-        this.value = value;
-        this.owner = owner;
-    }
-
-    /** 
-     * Get owner
-     */
-    getOwner() {
-        return this,owner;
-    }
-
-    /** 
-     * Get name
-     */
-    getName() {
-        return this.name;
-    }
-
-    /** 
-     * Get value
-     */
-    getValue() {
-        return this.value;
-    }
+    @Property()
+    public value: string;
 }
