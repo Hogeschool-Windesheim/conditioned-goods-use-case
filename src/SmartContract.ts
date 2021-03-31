@@ -2,6 +2,7 @@ import {Context, Contract, Info, Transaction} from 'fabric-contract-api';
 import Measurement from './models/Measurement';
 import {toBytes} from './helpers';
 
+
 /** 
  * SmartContract
  */
@@ -27,13 +28,13 @@ export default class SmartContract extends Contract {
      * Add data to ledger
      */
     @Transaction()
-    public async addData(ctx: Context) {
+    public async addData(ctx: Context, id: number, name: string, value: number) {
         // let mspid = ctx.clientIdentity.getMSPID();
 
         let measurement: Measurement = {
-            name: 'test',
-            value: '1', 
+            name,
+            value   
         }
-        await ctx.stub.putState("test", toBytes(measurement));
+        await ctx.stub.putState(id, toBytes(measurement));
     }
 }

@@ -10,5 +10,5 @@ export default class Measurement {
     public name: string; 
 
     @Property()
-    public value: string;
+    public value: string | number;
 }
