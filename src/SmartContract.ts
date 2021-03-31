@@ -28,7 +28,7 @@ export default class SmartContract extends Contract {
      * Add data to ledger
      */
     @Transaction()
-    public async addData(ctx: Context, id: number, name: string, value: number) {
+    public async addData(ctx: Context, id: string, name: string, value: number) {
         // let mspid = ctx.clientIdentity.getMSPID();
 
         let measurement: Measurement = {
@@ -42,7 +42,7 @@ export default class SmartContract extends Contract {
      * Retrieve data from the ledger
      */
     @Transaction(false)
-    public async ReadData(ctx: Context, id: number) {
+    public async ReadData(ctx: Context, id: string) {
         const measurement = await ctx.stub.getState(id); 
         if (!measurement || measurement.length === 0) {
             throw new Error(`The asset ${id} does not exist`);
