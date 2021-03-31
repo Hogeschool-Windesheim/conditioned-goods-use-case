@@ -37,4 +37,16 @@ export default class SmartContract extends Contract {
         }
         await ctx.stub.putState(id, toBytes(measurement));
     }
+
+    /**
+     * Retrieve data from the ledger
+     */
+    @Transaction(false)
+    public async ReadData(ctx: Context, id: number) {
+        const measurement = await ctx.stub.getState(id); 
+        if (!measurement || measurement.length === 0) {
+            throw new Error(`The asset ${id} does not exist`);
+        }
+        return measurement.toString();
+    }
 }
