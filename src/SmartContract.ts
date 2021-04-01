@@ -7,15 +7,7 @@ import {toBytes} from './helpers';
  * SmartContract
  */
  @Info({title: "Measurements", description: "measurements smart contract"})
-export default class SmartContract extends Contract {
-
-    /** 
-     * Contructor
-     */
-    constructor() {
-        super('org.condgood.smartcontract');
-    }
-
+export class SmartContract extends Contract {
     /** 
      * Setup of the ledger
      */
