@@ -6,7 +6,7 @@ import {toBytes} from './helpers';
 /** 
  * SmartContract
  */
- @Info({title: "Measurements", description: "measurements smart contract"})
+@Info({title: "Measurements", description: "measurements smart contract"})
 export class SmartContract extends Contract {
     /** 
      * Setup of the ledger
