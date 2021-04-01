@@ -20,7 +20,7 @@ export default class SmartContract extends Contract {
      * Setup of the ledger
      */
     @Transaction()
-    public async instantiate() {
+    public async InitLedger() {
         // nothing yet
     }
 
@@ -28,7 +28,7 @@ export default class SmartContract extends Contract {
      * Add data to ledger
      */
     @Transaction()
-    public async addData(ctx: Context, id: string, name: string, value: number) {
+    public async AddData(ctx: Context, id: string, name: string, value: number) {
         // let mspid = ctx.clientIdentity.getMSPID();
 
         let measurement: Measurement = {
