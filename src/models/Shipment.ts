@@ -6,5 +6,6 @@ import Measurement from './Measurement';
  */
 export default class Shipment {
     public id: string; 
-    public temperature: Measurement;
+    public temperature?: Measurement;
+    public sensors?: Array<string>;
 }

@@ -1,5 +1,5 @@
 import {Context, Contract} from 'fabric-contract-api';
-import Measurement, {MeasurementType} from '../models/Measurement';
+import Measurement from '../models/Measurement';
 import {toBytes, toObject, toArrayOfObjects} from '../helpers';
 
 // TODO: SLA Json file with requirements? Measurement Enum?
@@ -29,7 +29,7 @@ export class SmartContract extends Contract {
         }
 
         let measurement: Measurement = {
-            type: MeasurementType.TEMP,
+            sensorID: "1",
             value
         }
 

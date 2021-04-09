@@ -1,5 +1,5 @@
 import {Context, Contract} from 'fabric-contract-api';
-import Measurement, {MeasurementType} from '../models/Measurement';
+import Measurement from '../models/Measurement';
 import Shipment from '../models/Shipment';
 import {ShipmentContract} from './ShipmentContract';
 import {toBytes, toObject, toArrayOfObjects} from '../helpers';
@@ -17,6 +17,7 @@ export class MeasurementContract extends Contract {
     constructor() {
         super();
 
+        // Make an instance of the ShipmentContract to make the methods inside available.
         this.shipmentContract = new ShipmentContract();
     }
 
@@ -31,17 +32,31 @@ export class MeasurementContract extends Contract {
     }
 
     /** 
-     * Add a measurement to a shipment
+     * Get measurement history
      */
-    public async AddShipment(ctx: Context, id: string, type: MeasurementType, value: string) {
+    public async GetHistory(ctx: Context, id: string) {
+        const iterator = ctx.stub.getHistoryForKey(id);
+        const shipments = await toArrayOfObjects<Shipment>(iterator);
+
+        // Map through the shipment history and get the temperature values.
+        return shipments.filter(({temperature}) => temperature).map(({temperature}) => temperature);;
+    }
+
+    /** 
+     * Add a measurement to a shipment.
+     */
+    public async AddMeasurement(ctx: Context, id: string, sensorID: string, value: string) {
         let shipment: Shipment = await this.shipmentContract.GetShipment(ctx, id);
 
+        if (!await this.shipmentContract.HasSensor(ctx, id, sensorID)) {
+            throw new Error(`Sensor is not registered to this shipment.`);
+        }
+
         shipment.temperature = {
-            type,
             value,
+            sensorID
         }
 
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
     }
-
 }

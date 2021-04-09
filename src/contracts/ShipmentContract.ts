@@ -1,6 +1,5 @@
 import {Context, Contract} from 'fabric-contract-api';
 import Shipment from '../models/Shipment';
-import {MeasurementType} from '../models/Measurement';
 import {toBytes, toObject, toArrayOfObjects} from '../helpers';
 
 // Note: removed ts annotations because they currently do not allow nested objects.
@@ -11,17 +10,30 @@ export class ShipmentContract extends Contract {
     /** 
      * Add a shipment to the ledger.
      */
-    public async AddShipment(ctx: Context) {
+    public async AddShipment(ctx: Context, id: string) {
         let shipment: Shipment = {
-            id: '0',
-            temperature: {
-                type: MeasurementType.TEMP,
-                value: 0,
-            }
+            id,
+            sensors: [],
         }
 
          // Submit data to the ledger.
-        await ctx.stub.putState('0', toBytes<Shipment>(shipment));
+        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+
+        return shipment;
+    }
+
+    // TODO: extends this methode when we know more about the content of a shipment.
+    /** 
+     * Update shipment in the ledger.
+     */
+    public async UpdateShipment(ctx: Context, id: string) {
+        const shipment = await this.GetShipment(ctx, id);
+
+        if (!shipment) {
+            throw new Error('Shipment with this id does not exist.');
+        }
+
+        return shipment;
     }
 
     /** 
@@ -55,5 +67,31 @@ export class ShipmentContract extends Contract {
         const iterator = ctx.stub.getStateByRange('', '');
 
         return toArrayOfObjects<Shipment>(iterator);
+    }
+
+    /** 
+     * Register sensor on a shipment
+     */
+    public async RegisterSensor(ctx: Context, id: string, sensorID: string) {
+        const shipment = await this.GetShipment(ctx, id);
+
+        if (!await this.HasSensor(ctx, id, sensorID)) {
+            shipment.sensors = [...shipment.sensors, sensorID];
+
+            await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /** 
+     * Check if sensor is registered in a shipment.
+     */
+    public async HasSensor(ctx: Context, id: string, sensorID: string) {
+        const shipment = await this.GetShipment(ctx, id);
+
+        return shipment.sensors.includes(sensorID);
     }
 }
