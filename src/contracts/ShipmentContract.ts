@@ -16,7 +16,7 @@ export class ShipmentContract extends Contract {
             sensors: [],
         }
 
-         // Submit data to the ledger.
+        // Submit data to the ledger.
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
 
         return shipment;
@@ -32,6 +32,10 @@ export class ShipmentContract extends Contract {
         if (!shipment) {
             throw new Error('Shipment with this id does not exist.');
         }
+
+        // TODO: set values we want to change.
+
+        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
 
         return shipment;
     }

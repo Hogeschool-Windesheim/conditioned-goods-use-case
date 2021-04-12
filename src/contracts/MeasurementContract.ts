@@ -26,8 +26,7 @@ export class MeasurementContract extends Contract {
      * Get a measurement from a shipment.
      */
     public async GetMeasurement(ctx: Context, id: string) {
-        let shipment: Shipment = await this.shipmentContract.GetShipment(ctx, id);
-
+        const shipment: Shipment = await this.shipmentContract.GetShipment(ctx, id);
         return shipment.temperature;
     }
 
@@ -52,11 +51,30 @@ export class MeasurementContract extends Contract {
             throw new Error(`Sensor is not registered to this shipment.`);
         }
 
+        if (!await this.ValidateSLA(ctx, id, parseInt(value))) {
+            // TODO: send message
+        }
+
         shipment.temperature = {
             value,
             sensorID
         }
 
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+    }
+
+    /** 
+     * Validate SLA
+     */
+    private async ValidateSLA(ctx: Context, id: string, newValue: number) {
+        const temp = await this.GetMeasurement(ctx, id);
+        
+        if (newValue < -20 || newValue > 20) {
+            if (!temp || temp && temp.value > -20 && temp.value < 20) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
