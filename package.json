@@ -1,6 +1,6 @@
 {
   "name": "blockchain-backend",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "engines": {
@@ -15,8 +15,10 @@
   "engine-strict": true,
   "license": "MIT",
   "dependencies": {
+    "dotenv": "8.2.0",
     "fabric-contract-api": "2.2.1",
     "fabric-shim": "2.2.1",
+    "nodemailer": "6.5.0",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0"
   },

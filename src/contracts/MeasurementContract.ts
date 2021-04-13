@@ -1,8 +1,10 @@
+import {createTransport} from 'nodemailer';
 import {Context, Contract} from 'fabric-contract-api';
 import Measurement from '../models/Measurement';
 import Shipment from '../models/Shipment';
 import {ShipmentContract} from './ShipmentContract';
 import {toBytes, toObject, toArrayOfObjects} from '../helpers';
+import SLA from '../SLA.json';
 
 // Note: removed ts annotations because they currently do not allow nested objects.
 /** 
@@ -52,7 +54,22 @@ export class MeasurementContract extends Contract {
         }
 
         if (!await this.ValidateSLA(ctx, id, parseInt(value))) {
-            // TODO: send message
+            const transport = createTransport({
+                host: process.env.MAIL_HOST,
+                port: process.env.MAIL_PORT,
+                auth: {
+                    user: process.env.MAIL_USER,
+                    pass: process.env.MAIL_PASSWORD
+                }
+            });
+
+            await transport.sendMail({
+                from: '"Blockchain" <blockchain@example.com>', // sender address
+                to: "test@example.com", // list of receivers
+                subject: "PANIEK", // Subject line
+                text: "HELLO THERE", // plain text body
+                html: "<b>GENERAL KENOBI</b>", // html body
+            });
         }
 
         shipment.temperature = {
@@ -68,9 +85,11 @@ export class MeasurementContract extends Contract {
      */
     private async ValidateSLA(ctx: Context, id: string, newValue: number) {
         const temp = await this.GetMeasurement(ctx, id);
+        const minTemp = SLA.temperature.min;
+        const maxTemp = SLA.temperature.max;
         
-        if (newValue < -20 || newValue > 20) {
-            if (!temp || temp && temp.value > -20 && temp.value < 20) {
+        if (newValue < maxTemp || newValue > minTemp) {
+            if (!temp || temp && temp.value > minTemp && temp.value < maxTemp) {
                 return false;
             }
         }
