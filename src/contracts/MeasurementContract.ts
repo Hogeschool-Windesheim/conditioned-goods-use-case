@@ -5,6 +5,7 @@ import Shipment from '../models/Shipment';
 import {ShipmentContract} from './ShipmentContract';
 import {toBytes, toObject, toArrayOfObjects} from '../helpers';
 import SLA from '../SLA.json';
+import {isInRange} from '../validate';
 
 // Note: removed ts annotations because they currently do not allow nested objects.
 /** 
@@ -64,17 +65,18 @@ export class MeasurementContract extends Contract {
             });
 
             await transport.sendMail({
-                from: '"Blockchain" <blockchain@example.com>', // sender address
-                to: "test@example.com", // list of receivers
-                subject: "PANIEK", // Subject line
-                text: "HELLO THERE", // plain text body
-                html: "<b>GENERAL KENOBI</b>", // html body
+                from: process.env.MAIL_ADDRESS,
+                to:  process.env.MAIL_RECIEVERS.split(","), 
+                subject: process.env.MAIL_SUBJECT,
+                text: "HELLO THERE", 
+                html: "<b>GENERAL KENOBI</b>",
             });
         }
 
         shipment.temperature = {
             value,
-            sensorID
+            sensorID,
+            timestamp: new Date(),
         }
 
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
@@ -88,8 +90,9 @@ export class MeasurementContract extends Contract {
         const minTemp = SLA.temperature.min;
         const maxTemp = SLA.temperature.max;
         
-        if (newValue < maxTemp || newValue > minTemp) {
-            if (!temp || temp && temp.value > minTemp && temp.value < maxTemp) {
+        if (!isInRange(newValue, minTemp, maxTemp)) {
+            // Temp value should always be an number.
+            if (!temp || temp && !isInRange(temp.value as number, minTemp, maxTemp)) {
                 return false;
             }
         }
