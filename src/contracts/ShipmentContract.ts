@@ -79,7 +79,7 @@ export class ShipmentContract extends Contract {
     public async RegisterSensor(ctx: Context, id: string, sensorID: string) {
         const shipment = await this.GetShipment(ctx, id);
 
-        if (!await this.HasSensor(ctx, id, sensorID)) {
+        if (!shipment.sensors.includes(sensorID)) {
             shipment.sensors = [...shipment.sensors, sensorID];
 
             await ctx.stub.putState(id, toBytes<Shipment>(shipment));

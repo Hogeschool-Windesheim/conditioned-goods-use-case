@@ -50,7 +50,7 @@ export class MeasurementContract extends Contract {
     public async AddMeasurement(ctx: Context, id: string, sensorID: string, value: string) {
         let shipment: Shipment = await this.shipmentContract.GetShipment(ctx, id);
 
-        if (!await this.shipmentContract.HasSensor(ctx, id, sensorID)) {
+        if (!shipment.sensors.includes(sensorID)) {
             throw new Error(`Sensor is not registered to this shipment.`);
         }
 
@@ -66,6 +66,7 @@ export class MeasurementContract extends Contract {
 
             await transport.sendMail({
                 from: process.env.MAIL_ADDRESS,
+                // TODO: remvome , from splitted array ':)
                 to:  process.env.MAIL_RECIEVERS.split(","), 
                 subject: process.env.MAIL_SUBJECT,
                 text: "HELLO THERE", 
@@ -73,13 +74,17 @@ export class MeasurementContract extends Contract {
             });
         }
 
-        shipment.temperature = {
+        const temperature = {
             value,
             sensorID,
             timestamp: new Date(),
         }
 
+        shipment.temperature = temperature;
+
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+
+        return temperature;
     }
 
     /** 
