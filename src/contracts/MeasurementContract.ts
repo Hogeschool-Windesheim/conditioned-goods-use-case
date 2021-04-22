@@ -54,7 +54,7 @@ export class MeasurementContract extends Contract {
             throw new Error(`Sensor is not registered to this shipment.`);
         }
 
-        if (!await this.ValidateSLA(ctx, id, parseInt(value))) {
+        if (!await this.ValidateSLA(ctx, id, value)) {
             const transport = createTransport({
                 host: process.env.MAIL_HOST,
                 port: process.env.MAIL_PORT,
@@ -66,7 +66,6 @@ export class MeasurementContract extends Contract {
 
             await transport.sendMail({
                 from: process.env.MAIL_ADDRESS,
-                // TODO: remvome , from splitted array ':)
                 to:  process.env.MAIL_RECIEVERS.split(","), 
                 subject: process.env.MAIL_SUBJECT,
                 text: "HELLO THERE", 
@@ -90,14 +89,14 @@ export class MeasurementContract extends Contract {
     /** 
      * Validate SLA
      */
-    private async ValidateSLA(ctx: Context, id: string, newValue: number) {
+    public async ValidateSLA(ctx: Context, id: string, newValue: string) {
         const temp = await this.GetMeasurement(ctx, id);
         const minTemp = SLA.temperature.min;
         const maxTemp = SLA.temperature.max;
         
-        if (!isInRange(newValue, minTemp, maxTemp)) {
+        if (!isInRange(parseInt(newValue), minTemp, maxTemp)) {
             // Temp value should always be an number.
-            if (!temp || temp && !isInRange(temp.value as number, minTemp, maxTemp)) {
+            if (!temp || temp && isInRange(temp.value as number, minTemp, maxTemp)) {
                 return false;
             }
         }

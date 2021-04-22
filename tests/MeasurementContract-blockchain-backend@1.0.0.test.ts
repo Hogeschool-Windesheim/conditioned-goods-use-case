@@ -20,6 +20,8 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
     beforeAll(async () => {
         connectionProfile = await SmartContractUtil.getConnectionProfile();
         fabricWallet = await fabricNetwork.Wallets.newFileSystemWallet(walletPath);
+
+        jest.setTimeout(10000);
     });
 
     beforeEach(async () => {
@@ -54,6 +56,7 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
             
             const measurement = toObject<Measurement>(response);
 
+            // Match it to this object, since we cannot predict the timstamp.
             const expected = {
                 sensorID: "1",
                 value: "-10",
@@ -63,46 +66,95 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
         });
     });
 
-    // describe('GetMeasurement', () => {
-    //     it('should submit GetMeasurement transaction', async () => {
-    //         const arg0: string = '1';
-    //         const args: string[] = [arg0];
-    //         const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'GetMeasurement', args, gateway);
-            
-    //         // submitTransaction returns buffer of transcation return value
-    //         // TODO: Update with return value of transaction
-    //         assert.strictEqual(true, true);
-    //         // assert.strictEqual(JSON.parse(response.toString()), undefined);
-    //     });
-    // });
+    describe('GetMeasurement', () => {
+        it('should submit GetMeasurement transaction', async () => {
+            // Add shipment
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['8'], gateway);
 
-    // describe('GetHistory', () => {
-    //     it('should submit GetHistory transaction', async () => {
-    //         // TODO: populate transaction parameters
-    //         const arg0: string = '1';
-    //         const args: string[] = [arg0];
-    //         const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'GetHistory', args, gateway);
-            
-    //         // submitTransaction returns buffer of transcation return value
-    //         // TODO: Update with return value of transaction
-    //         assert.strictEqual(true, true);
-    //         // assert.strictEqual(JSON.parse(response.toString()), undefined);
-    //     });
-    // });
+            // Register sensor
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['8','1'], gateway);
 
-    // describe('ValidateSLA', () => {
-    //     it('should submit ValidateSLA transaction', async () => {
-    //         // TODO: populate transaction parameters
-    //         const arg0: string = '1';
-    //         const arg1: string = '-10';
-    //         const args: string[] = [arg0, arg1];
-    //         const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'ValidateSLA', args, gateway);
-            
-    //         // submitTransaction returns buffer of transcation return value
-    //         // TODO: Update with return value of transaction
-    //         assert.strictEqual(true, true);
-    //         // assert.strictEqual(JSON.parse(response.toString()), undefined);
-    //     });
-    // });
+            // Add measurement
+            await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['8', '1', '-10'], gateway);
 
+            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'GetMeasurement', ['8'], gateway);
+            const measurement = toObject<Measurement>(response);
+
+            // Match it to this object, since we cannot predict the timstamp.
+            const expected = {
+                sensorID: "1",
+                value: "-10",
+            } 
+
+            expect(measurement).toMatchObject(expected);
+        });
+    });
+
+    describe('GetHistory', () => {
+        it('should submit GetHistory transaction', async () => {
+            // Add shipment
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['9'], gateway);
+
+            // Register sensor
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['9','1'], gateway);
+
+            // Add measurement
+            await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['9', '1', '-10'], gateway);
+
+            // Add second measurement
+            await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['9', '1', '-8'], gateway);
+
+            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'GetHistory', ['9'], gateway);
+            
+            const measurement = toObject<Array<Measurement>>(response);
+
+            const expected1 = {
+                sensorID: "1",
+                value: "-10",
+            };
+            const expected2 = {
+                sensorID: "1",
+                value: "-8",
+            }
+            
+            expect(measurement).toContainEqual(expect.objectContaining(expected1));
+            expect(measurement).toContainEqual(expect.objectContaining(expected2));
+        });
+    });
+
+    describe('ValidateSLA', () => {
+        it('should validate the SLA to be true', async () => {
+            // Add shipment
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['10'], gateway);
+
+            // Register sensor
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['10','1'], gateway);
+
+            // Add measurement
+            await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['10', '1', '-10'], gateway);
+
+            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'ValidateSLA', ['10', '-9'], gateway);
+            
+            const isValid = toObject<boolean>(response);
+
+            expect(isValid).toBe(true);
+        });
+
+        it('should validate the SLA to be false', async () => {
+            // Add shipment
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['10'], gateway);
+
+            // Register sensor
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['10','1'], gateway);
+
+            // Add measurement
+            await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['10', '1', '-10'], gateway);
+
+            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'ValidateSLA', ['10', '500'], gateway);
+            
+            const isValid = toObject<boolean>(response);
+
+            expect(isValid).toBe(false);
+        });
+    });
 });
