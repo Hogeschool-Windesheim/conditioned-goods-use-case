@@ -1,4 +1,3 @@
-import {createTransport} from 'nodemailer';
 import {Context, Contract} from 'fabric-contract-api';
 import Measurement from '../models/Measurement';
 import Shipment from '../models/Shipment';
@@ -6,6 +5,8 @@ import {ShipmentContract} from './ShipmentContract';
 import {toBytes, toObject, toArrayOfObjects} from '../helpers';
 import SLA from '../SLA.json';
 import {isInRange} from '../validate';
+import {sendMail} from '../mail';
+import {getHtml, getText} from '../mails/temperature';
 
 // Note: removed ts annotations because they currently do not allow nested objects.
 /** 
@@ -55,22 +56,7 @@ export class MeasurementContract extends Contract {
         }
 
         if (!await this.ValidateSLA(ctx, id, value)) {
-            const transport = createTransport({
-                host: process.env.MAIL_HOST,
-                port: process.env.MAIL_PORT,
-                auth: {
-                    user: process.env.MAIL_USER,
-                    pass: process.env.MAIL_PASSWORD
-                }
-            });
-
-            await transport.sendMail({
-                from: process.env.MAIL_ADDRESS,
-                to:  process.env.MAIL_RECIEVERS.split(","), 
-                subject: process.env.MAIL_SUBJECT,
-                text: "HELLO THERE", 
-                html: "<b>GENERAL KENOBI</b>",
-            });
+            await sendMail(`Shipment #${id}`, getText(id, value), getHtml(id, value));
         }
 
         const temperature = {
