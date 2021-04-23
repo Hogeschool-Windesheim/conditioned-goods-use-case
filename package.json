@@ -1,0 +1,29 @@
+{
+  "name": "hyperledger-condgoods",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"yarn run watch-ts\" \"yarn run watch-node\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hogeschool-Windesheim/Hyperledger-CondGoods.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hogeschool-Windesheim/Hyperledger-CondGoods/issues"
+  },
+  "homepage": "https://github.com/Hogeschool-Windesheim/Hyperledger-CondGoods#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.11"
+  }
+}
