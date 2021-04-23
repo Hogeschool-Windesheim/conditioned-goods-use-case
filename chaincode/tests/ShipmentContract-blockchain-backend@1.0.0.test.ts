@@ -78,7 +78,7 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
             // Add shipment
             await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['3'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'GetShipment', ['3'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'GetShipment', ['3'], gateway);
             
             const shipment = toObject<Shipment>(response);
 
@@ -109,7 +109,7 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
             // Add shipment
             await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['5'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'GetShipments', [], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'GetShipments', [], gateway);
             
             const shipment = toObject<Array<Shipment>>(response);
 
@@ -143,7 +143,7 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
             // Add Sensor
             await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['6', '1'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'HasSensor', ['6', '1'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'HasSensor', ['6', '1'], gateway);
             
             const hasSensor = toObject<boolean>(response);
 

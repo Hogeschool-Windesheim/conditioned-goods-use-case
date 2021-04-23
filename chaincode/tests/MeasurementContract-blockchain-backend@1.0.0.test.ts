@@ -77,7 +77,7 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
             // Add measurement
             await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['8', '1', '-10'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'GetMeasurement', ['8'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('MeasurementContract', 'GetMeasurement', ['8'], gateway);
             const measurement = toObject<Measurement>(response);
 
             // Match it to this object, since we cannot predict the timstamp.
@@ -104,7 +104,7 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
             // Add second measurement
             await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['9', '1', '-8'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'GetHistory', ['9'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('MeasurementContract', 'GetHistory', ['9'], gateway);
             
             const measurement = toObject<Array<Measurement>>(response);
 
@@ -133,7 +133,7 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
             // Add measurement
             await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['10', '1', '-10'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'ValidateSLA', ['10', '-9'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('MeasurementContract', 'ValidateSLA', ['10', '-9'], gateway);
             
             const isValid = toObject<boolean>(response);
 
@@ -150,7 +150,7 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
             // Add measurement
             await SmartContractUtil.submitTransaction('MeasurementContract', 'AddMeasurement', ['10', '1', '-10'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('MeasurementContract', 'ValidateSLA', ['10', '500'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('MeasurementContract', 'ValidateSLA', ['10', '500'], gateway);
             
             const isValid = toObject<boolean>(response);
 
