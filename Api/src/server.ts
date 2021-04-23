@@ -1,9 +1,11 @@
-import app from './Api';
+import app from '.';
+require('dotenv').config();
+let port = process.env.PORT;
 
-const server = app.listen(app.get("PORT"), () => {
+const server = app.listen(port, () => {
     console.log(
-        "App is running on http://localhost:%d in %s mode",
-        app.get("PORT"),
+        "App is running on http://localhost:"+ port,
+        app.get(port),
         app.get("env")
     )
 });
