@@ -1,21 +1,20 @@
 import express from "express";
 import dotenv from 'dotenv';
-dotenv.config();
+import {routeResolver} from './routes';
 
-// require('dotenv').config();
-const port = process.env.PORT;
+dotenv.config();
 
 const app = express();
 
-// define route for the default home page
-app.get('/', (req, res) => {
-    res.send("Hello World, from hyperledgerfabric Conditionedgoods!");
-});
+// Register api routes.
+for (const [key, value] of Object.entries(routeResolver)) {
+    app.get(key, value);
+}
 
-// start the Express server
-app.listen(port, () => {
+// start the Express server.
+app.listen(process.env.PORT, () => {
     // tslint:disable-next-line:no-console
-    console.log(`App is running on http://localhost:${port}`)
+    console.log(`🚀 Server ready!`)
   });
 
 export default app;
