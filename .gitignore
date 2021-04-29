@@ -1,4 +1,5 @@
 node_modules/
+Api/env.
 dist/
 index.js
 yarn.lock
