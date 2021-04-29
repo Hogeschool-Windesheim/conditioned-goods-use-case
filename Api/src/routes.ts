@@ -1,4 +1,4 @@
-import {getShipments, getShipment} from './controllers/shipments';
+import {getShipments, getShipment, shipmentExist} from './controllers/shipments';
 
 /**
  * API routes.
@@ -6,6 +6,7 @@ import {getShipments, getShipment} from './controllers/shipments';
 export enum routes {
     BASE = '/',
     SHIPMENT = '/shipment/:id',
+    SHIPMENTEXIST = '/shipment/:id/exist',
 }
 
 /**
@@ -14,4 +15,5 @@ export enum routes {
 export const routeResolver = {
     [routes.BASE]: getShipments, 
     [routes.SHIPMENT]: getShipment,
+    [routes.SHIPMENTEXIST]: shipmentExist,
 }
