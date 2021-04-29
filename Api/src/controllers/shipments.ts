@@ -1,6 +1,11 @@
 import {Request, Response} from "express";
 import {connect} from '../gateway';
+import {toObject} from '../helpers';
+import {Shipment} from '../types';
 
+/**
+ * Get shipments.
+ */
 export async function getShipments(req: Request, res: Response) {
     const gateway = await connect();
 
@@ -14,7 +19,7 @@ export async function getShipments(req: Request, res: Response) {
       // Query data
       const result = await contract.evaluateTransaction('GetShipments');
 
-      res.json(JSON.parse(result.toString()));
+      res.json(toObject<Shipment>(result));
     } catch(err) {
       // TODO: An error logger like sentry would be nice.
       // tslint:disable-next-line:no-console
