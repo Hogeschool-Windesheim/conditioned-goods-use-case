@@ -53,7 +53,6 @@ export async function getShipments(req: Request, res: Response) {
   }
 }
 
-
 /**
  * Checks if shipment exists
  */
@@ -72,6 +71,31 @@ export async function getShipments(req: Request, res: Response) {
     const result = await contract.evaluateTransaction('ShipmentExists', `${id}`);
 
     res.json(toObject<boolean>(result));
+  } catch(err) {
+    console.log(err);
+  } finally {
+    gateway.disconnect();
+  }
+}
+
+/**
+ * Add shipment
+ */
+ export async function addShipment({params}: Request, res: Response) {
+  const {id} = params;
+  const gateway = await connect();
+
+  try {
+    // Get channel
+    const network = await gateway.getNetwork('mychannel');
+
+    // Get contract
+    const contract = network.getContract('blockchain-backend');
+
+    // Query data
+    const result = await contract.submitTransaction('AddShipment', `${id}`);
+
+    res.json(toObject<Shipment>(result));
   } catch(err) {
     console.log(err);
   } finally {
