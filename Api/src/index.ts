@@ -1,14 +1,19 @@
 import express from "express";
 import dotenv from 'dotenv';
-import {routeResolver} from './routes';
+import {getResolver, postResolver} from './routes';
 
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 
 // Register api routes.
-for (const [key, value] of Object.entries(routeResolver)) {
+for (const [key, value] of Object.entries(getResolver)) {
     app.get(key, value);
+}
+
+for (const [key, value] of Object.entries(postResolver)) {
+  app.post(key, value);
 }
 
 // start the Express server.
