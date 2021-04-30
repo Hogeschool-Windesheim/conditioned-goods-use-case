@@ -102,3 +102,28 @@ export async function getShipments(req: Request, res: Response) {
     gateway.disconnect();
   }
 }
+
+/**
+ * Update shipment
+ */
+ export async function updateShipment({params}: Request, res: Response) {
+  const {id} = params;
+  const gateway = await connect();
+
+  try {
+    // Get channel
+    const network = await gateway.getNetwork('mychannel');
+
+    // Get contract
+    const contract = network.getContract('blockchain-backend');
+
+    // Query data
+    const result = await contract.submitTransaction('UpdateShipment', `${id}`);
+
+    res.json(toObject<Shipment>(result));
+  } catch(err) {
+    console.log(err);
+  } finally {
+    gateway.disconnect();
+  }
+}
