@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import { isConstructorDeclaration } from "typescript";
 import {connect} from '../gateway';
 import {toObject} from '../helpers';
 import {Shipment} from '../types';
