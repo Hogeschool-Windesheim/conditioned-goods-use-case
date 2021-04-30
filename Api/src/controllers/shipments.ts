@@ -80,6 +80,32 @@ export async function getShipments(req: Request, res: Response) {
 }
 
 /**
+ *  Checks if shipment has a sensor
+ */
+ export async function hasSensor({params}: Request, res: Response) {
+  const id = params.id;
+  const senorID = params.sensorID;
+  const gateway = await connect();
+
+  try {
+    // Get channel
+    const network = await gateway.getNetwork('mychannel');
+
+    // Get contract
+    const contract = network.getContract('blockchain-backend');
+
+    // Query data
+    const result = await contract.evaluateTransaction('HasSensor', `${id}`,`${senorID}`);
+
+    res.json(toObject<boolean>(result));
+  } catch(err) {
+    console.log(err);
+  } finally {
+    gateway.disconnect();
+  }
+}
+
+/**
  * Add shipment
  */
  export async function addShipment({body}: Request, res: Response) {
@@ -130,11 +156,10 @@ export async function getShipments(req: Request, res: Response) {
 }
 
 /**
- *  Checks if shipment has a sensor
+ * Update shipment
  */
- export async function hasSensor({params}: Request, res: Response) {
-  const id = params.id;
-  const senorID = params.sensorID;
+ export async function updateShipment({body}: Request, res: Response) {
+  const {id} = body;
   const gateway = await connect();
 
   try {
@@ -145,9 +170,9 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('HasSensor', `${id}`,`${senorID}`);
+    const result = await contract.submitTransaction('UpdateShipment', `${id}`);
 
-    res.json(toObject<boolean>(result));
+    res.json(toObject<Shipment>(result));
   } catch(err) {
     console.log(err);
   } finally {
