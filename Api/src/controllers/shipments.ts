@@ -1,4 +1,5 @@
 import {Request, Response} from "express";
+import { isConstructorDeclaration } from "typescript";
 import {connect} from '../gateway';
 import {toObject} from '../helpers';
 import {Shipment} from '../types';
@@ -81,8 +82,8 @@ export async function getShipments(req: Request, res: Response) {
 /**
  * Add shipment
  */
- export async function addShipment({params}: Request, res: Response) {
-  const {id} = params;
+ export async function addShipment({body}: Request, res: Response) {
+  const {id} = body;
   const gateway = await connect();
 
   try {
@@ -104,10 +105,10 @@ export async function getShipments(req: Request, res: Response) {
 }
 
 /**
- * Update shipment
+ * Registers sensor
  */
- export async function updateShipment({params}: Request, res: Response) {
-  const {id} = params;
+ export async function registerSensor({body}: Request, res: Response) {
+  const {id, sensorID} = body;
   const gateway = await connect();
 
   try {
@@ -118,9 +119,9 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.submitTransaction('UpdateShipment', `${id}`);
+    const result = await contract.submitTransaction('RegisterSensor', `${id}`, `${sensorID}`);
 
-    res.json(toObject<Shipment>(result));
+    res.json(toObject<boolean>(result));
   } catch(err) {
     console.log(err);
   } finally {
