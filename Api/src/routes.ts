@@ -1,4 +1,5 @@
 import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment } from './controllers/shipments';
+import {getMeasurements,} from './controllers/measurements';
 
 /**
  * API routes.
@@ -11,6 +12,8 @@ export enum routes {
     ADDSHIPMENT = '/shipment/add',
     REGISTERSENSOR = '/shipment/sensor/add',
     UPDATESHIPMENT = '/shipment/:id/update',
+
+    MEASUREMENT = '/measurement/:id',
 }
 
 /**
@@ -21,6 +24,8 @@ export const getResolver = {
     [routes.SHIPMENT]: getShipment,
     [routes.SHIPMENTEXIST]: shipmentExist,
     [routes.HASSENSOR]: hasSensor,
+
+    [routes.MEASUREMENT]: getMeasurements,
 }
 
 /**
