@@ -82,8 +82,7 @@ export async function getShipments(req: Request, res: Response) {
  *  Checks if shipment has a sensor
  */
  export async function hasSensor({params}: Request, res: Response) {
-  const id = params.id;
-  const senorID = params.sensorID;
+  const {id, sensorID} = params;
   const gateway = await connect();
 
   try {
@@ -94,7 +93,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('HasSensor', `${id}`,`${senorID}`);
+    const result = await contract.evaluateTransaction('HasSensor', `${id}`,`${sensorID}`);
 
     res.json(toObject<boolean>(result));
   } catch(err) {
@@ -107,8 +106,8 @@ export async function getShipments(req: Request, res: Response) {
 /**
  * Add shipment
  */
- export async function addShipment({body}: Request, res: Response) {
-  const {id} = body;
+ export async function addShipment(req: Request, res: Response) {
+  const {id} = req.body;
   const gateway = await connect();
 
   try {
