@@ -11,6 +11,11 @@ export class ShipmentContract extends Contract {
      * Add a shipment to the ledger.
      */
     public async AddShipment(ctx: Context, id: string) {
+
+        if (!this.ShipmentExist(ctx, id)) {
+            throw new Error("Shipment with this id does not exist.");
+        }
+
         let shipment: Shipment = {
             id,
             sensors: [],
@@ -54,9 +59,9 @@ export class ShipmentContract extends Contract {
     }
 
     /** 
-     * Check if shipment exists
+     * Check if shipment exist
      */
-    public async ShipmentExists(ctx: Context, id: string) {
+    public async ShipmentExist(ctx: Context, id: string) {
         const shipment = await ctx.stub.getState(id);
 
         // Note: optional channing is not possible (probably because it is not complied right).

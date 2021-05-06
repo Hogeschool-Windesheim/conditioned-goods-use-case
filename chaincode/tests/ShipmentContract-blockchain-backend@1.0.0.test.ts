@@ -91,12 +91,12 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
         });
     });
 
-    describe('ShipmentExists', () => {
-        it('should evaluate ShipmentExists transaction', async () => {
+    describe('ShipmentExist', () => {
+        it('should evaluate ShipmentExist transaction', async () => {
             // Add shipment
             await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['4'], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'ShipmentExists', ['4'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'ShipmentExist', ['4'], gateway);
 
             const exist = toObject<boolean>(response);
 
