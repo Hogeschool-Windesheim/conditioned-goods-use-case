@@ -42,7 +42,7 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
 
     describe('AddShipment', () => {
         it('should submit AddShipment transaction', async () => {
-            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['1'], gateway);
+            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['1'], gateway);
 
             const shipment = toObject<Shipment>(response);
 
@@ -58,9 +58,9 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
     describe('UpdateShipment', () => {
         it('should submit UpdateShipment transaction', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['2'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['2'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'UpdateShipment', ['2'], gateway);
+            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'updateShipment', ['2'], gateway);
             
             const shipment = toObject<Shipment>(response);
 
@@ -76,9 +76,9 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
     describe('GetShipment', () => {
         it('should submit GetShipment transaction', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['3'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['3'], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'GetShipment', ['3'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'getShipment', ['3'], gateway);
             
             const shipment = toObject<Shipment>(response);
 
@@ -94,9 +94,9 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
     describe('ShipmentExist', () => {
         it('should evaluate ShipmentExist transaction', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['4'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['4'], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'ShipmentExist', ['4'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'shipmentExist', ['4'], gateway);
 
             const exist = toObject<boolean>(response);
 
@@ -107,9 +107,9 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
     describe('GetShipments', () => {
         it('should submit GetShipments transaction', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['5'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['5'], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'GetShipments', [], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'getShipments', [], gateway);
             
             const shipment = toObject<Array<Shipment>>(response);
 
@@ -125,25 +125,25 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
     describe('RegisterSensor', () => {
         it('should submit RegisterSensor transaction', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['6'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['6'], gateway);
 
-            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['6', '1'], gateway);
+            const response: Buffer = await SmartContractUtil.submitTransaction('ShipmentContract', 'registerSensor', ['6', 'fuu34hf'], gateway);
             
-            const hasRegistered = toObject<boolean>(response);
+            const hasRegistered = response.toString();
 
-            expect(hasRegistered).toEqual(true);
+            expect(hasRegistered).toEqual('fuu34hf');
         });
     });
 
     describe('HasSensor', () => {
         it('should submit HasSensor transaction', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'AddShipment', ['7'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['7'], gateway);
 
             // Add Sensor
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'RegisterSensor', ['6', '1'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'registerSensor', ['6', '1'], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'HasSensor', ['6', '1'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'sensorIsRegistered', ['6', '1'], gateway);
             
             const hasSensor = toObject<boolean>(response);
 

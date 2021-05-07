@@ -10,9 +10,9 @@ export class ShipmentContract extends Contract {
     /** 
      * Add a shipment to the ledger.
      */
-    public async AddShipment(ctx: Context, id: string) {
+    public async addShipment(ctx: Context, id: string) {
 
-        if (!this.ShipmentExist(ctx, id)) {
+        if (!this.shipmentExist(ctx, id)) {
             throw new Error("Shipment with this id does not exist.");
         }
 
@@ -31,12 +31,8 @@ export class ShipmentContract extends Contract {
     /** 
      * Update shipment in the ledger.
      */
-    public async UpdateShipment(ctx: Context, id: string) {
-        const shipment = await this.GetShipment(ctx, id);
-
-        if (!shipment) {
-            throw new Error('Shipment with this id does not exist.');
-        }
+    public async updateShipment(ctx: Context, id: string) {
+        const shipment = await this.getShipment(ctx, id);
 
         // TODO: set values we want to change.
 
@@ -48,11 +44,11 @@ export class ShipmentContract extends Contract {
     /** 
      * Get shipment from ledger. 
      */
-    public async GetShipment(ctx: Context, id: string) {
+    public async getShipment(ctx: Context, id: string) {
         const shipment = await ctx.stub.getState(id); 
 
-        if (!shipment || shipment.length === 0) {
-            throw new Error(`Shipment does not exist.`);
+        if (!(shipment && shipment.length > 0)) {
+            throw new Error(`Shipment with this id does not exist.`);
         }
 
         return toObject<Shipment>(shipment);
@@ -61,7 +57,7 @@ export class ShipmentContract extends Contract {
     /** 
      * Check if shipment exist
      */
-    public async ShipmentExist(ctx: Context, id: string) {
+    public async shipmentExist(ctx: Context, id: string) {
         const shipment = await ctx.stub.getState(id);
 
         // Note: optional channing is not possible (probably because it is not complied right).
@@ -71,7 +67,7 @@ export class ShipmentContract extends Contract {
     /** 
      * Get all shipments from the ledger
      */
-    public async GetShipments(ctx: Context) {
+    public async getShipments(ctx: Context) {
         // Query all data in the ledger.
         const iterator = ctx.stub.getStateByRange('', '');
 
@@ -81,25 +77,25 @@ export class ShipmentContract extends Contract {
     /** 
      * Register sensor on a shipment
      */
-    public async RegisterSensor(ctx: Context, id: string, sensorID: string) {
-        const shipment = await this.GetShipment(ctx, id);
+    public async registerSensor(ctx: Context, id: string, sensorID: string) {
+        const shipment = await this.getShipment(ctx, id);
 
         if (!shipment.sensors.includes(sensorID)) {
             shipment.sensors = [...shipment.sensors, sensorID];
 
             await ctx.stub.putState(id, toBytes<Shipment>(shipment));
 
-            return true;
+            return sensorID;
         }
 
-        return false;
+        return null;
     }
 
     /** 
      * Check if sensor is registered in a shipment.
      */
-    public async HasSensor(ctx: Context, id: string, sensorID: string) {
-        const shipment = await this.GetShipment(ctx, id);
+    public async sensorIsRegistered(ctx: Context, id: string, sensorID: string) {
+        const shipment = await this.getShipment(ctx, id);
 
         return shipment.sensors.includes(sensorID);
     }
