@@ -1,5 +1,7 @@
 import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment } from './controllers/shipments';
 import {shipmentAddSchema, getShipmentSchema, shipmentExistsSchema, hasSensorSchema, getShipmentsSchema} from './schemas/shipmentschema';
+import {getHistorySchema, getMeasurementSchema, addMeasurementSchema} from './schemas/measurementschema';
+import {getHistory, getMeasurement, addMeasurement} from './controllers/measurements';
 
 /**
  * API routes.
@@ -12,6 +14,9 @@ export enum routes {
     ADDSHIPMENT = '/shipment/add',
     REGISTERSENSOR = '/shipment/sensor/add',
     UPDATESHIPMENT = '/shipment/:id/update',
+    GETHISTORY = '/shipment/:id/measurements',
+    GETMEASUREMENT ='/shipment/:id/measurement',
+    ADDMEASUREMENT = '/shipment/measurement/add'
 }
 
 /**
@@ -22,6 +27,8 @@ export const getResolver = {
     [routes.SHIPMENT]: getShipment,
     [routes.SHIPMENTEXIST]: shipmentExist,
     [routes.HASSENSOR]: hasSensor,
+    [routes.GETHISTORY]: getHistory,
+    [routes.GETMEASUREMENT]: getMeasurement,
 }
 
 /**
@@ -31,6 +38,7 @@ export const postResolver = {
     [routes.ADDSHIPMENT]: addShipment,
     [routes.REGISTERSENSOR]: registerSensor,
     [routes.UPDATESHIPMENT]: updateShipment,
+    [routes.ADDMEASUREMENT]: addMeasurement
 }
 
 /**
@@ -44,5 +52,8 @@ export const routeSchemaValidation: {[key: string]: any} = {
     [routes.SHIPMENT]: getShipmentSchema,
     [routes.SHIPMENTEXIST]: shipmentExistsSchema,
     [routes.HASSENSOR]: hasSensorSchema,
-    [routes.SHIPMENTS ]:getShipmentsSchema,
+    [routes.SHIPMENTS]:getShipmentsSchema,
+    [routes.GETHISTORY]: getHistorySchema,
+    [routes.GETMEASUREMENT]: getMeasurementSchema,
+    [routes.ADDMEASUREMENT]: addMeasurementSchema,
 }
