@@ -1,5 +1,5 @@
 import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment } from './controllers/shipments';
-import {getMeasurements,} from './controllers/measurements';
+import {getMeasurement} from './controllers/measurements';
 
 /**
  * API routes.
@@ -25,7 +25,7 @@ export const getResolver = {
     [routes.SHIPMENTEXIST]: shipmentExist,
     [routes.HASSENSOR]: hasSensor,
 
-    [routes.MEASUREMENT]: getMeasurements,
+    [routes.MEASUREMENT]: getMeasurement,
 }
 
 /**

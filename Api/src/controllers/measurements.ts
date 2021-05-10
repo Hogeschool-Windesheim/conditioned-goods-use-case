@@ -6,9 +6,9 @@ import {Measurement} from '../types';
 /**
  * Get measurement from shipment
  */
- export async function getMeasurements({body}: Request, res: Response) {
-    console.log(body); 
-    const {id} = body;
+ export async function getMeasurement({params}: Request, res: Response) {
+    console.log(params); 
+    const {id} = params;
     console.log(id);
     const gateway = await connect();
 
@@ -20,7 +20,7 @@ import {Measurement} from '../types';
       const contract = network.getContract('blockchain-backend');
 
       // Query data
-      const result = await contract.evaluateTransaction('GetMeasurement',`${id}`);
+      const result = await contract.evaluateTransaction('GetHistory',`${id}`);
 
       res.json(toObject<Measurement>(result));
     } catch(err) {
