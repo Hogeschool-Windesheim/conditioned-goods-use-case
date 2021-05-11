@@ -1,3 +1,5 @@
+import {Request, Response} from "express";
+import {Schema} from "express-validator";
 import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment } from './controllers/shipments';
 import {shipmentAddSchema, getShipmentSchema, shipmentExistsSchema, hasSensorSchema} from './schemas/shipmentschema';
 import {getHistorySchema, getMeasurementSchema, addMeasurementSchema} from './schemas/measurementschema';
@@ -19,40 +21,29 @@ export enum routes {
     ADDMEASUREMENT = '/shipment/measurement/add'
 }
 
-/**
- * Resolve get route functions.
- */
-export const getResolver = {
-    [routes.SHIPMENTS]: getShipments, 
-    [routes.SHIPMENT]: getShipment,
-    [routes.SHIPMENTEXIST]: shipmentExist,
-    [routes.HASSENSOR]: hasSensor,
-    [routes.GETHISTORY]: getHistory,
-    [routes.GETMEASUREMENT]: getMeasurement,
+export enum routeTypes {
+    GET = 'get',
+    POST = 'post',
+}
+
+type Route = {
+    type: routeTypes,
+    schema?: Schema,
+    func: (req: Request, res: Response) => void,
 }
 
 /**
- * Resolve post route functions
+ * Resolve get routes.
  */
-export const postResolver = {
-    [routes.ADDSHIPMENT]: addShipment,
-    [routes.REGISTERSENSOR]: registerSensor,
-    [routes.UPDATESHIPMENT]: updateShipment,
-    [routes.ADDMEASUREMENT]: addMeasurement
-}
-
-/**
- * Route schema validation
- */
-// TODO: check typescript typing
-export const routeSchemaValidation: {[key: string]: any} = {
-    [routes.ADDSHIPMENT]: shipmentAddSchema,
-    [routes.REGISTERSENSOR]: shipmentAddSchema,
-    [routes.UPDATESHIPMENT]: shipmentAddSchema,
-    [routes.SHIPMENT]: getShipmentSchema,
-    [routes.SHIPMENTEXIST]: shipmentExistsSchema,
-    [routes.HASSENSOR]: hasSensorSchema,
-    [routes.GETHISTORY]: getHistorySchema,
-    [routes.GETMEASUREMENT]: getMeasurementSchema,
-    [routes.ADDMEASUREMENT]: addMeasurementSchema,
-}
+export const routeResolver: {[index: string]: Route} = {
+    [routes.SHIPMENTS]: {type: routeTypes.GET, func: getShipments},
+    [routes.SHIPMENT]: {type: routeTypes.GET, schema: getShipmentSchema, func: getShipment},
+    [routes.SHIPMENTEXIST]: {type: routeTypes.GET, schema: shipmentExistsSchema, func: shipmentExist},
+    [routes.HASSENSOR]: {type: routeTypes.GET, schema: hasSensorSchema, func: hasSensor},
+    [routes.GETHISTORY]: {type: routeTypes.GET, schema: getHistorySchema, func: getHistory},
+    [routes.GETMEASUREMENT]: {type: routeTypes.GET, schema: getMeasurementSchema, func: getMeasurement},
+    [routes.ADDSHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: addShipment},
+    [routes.REGISTERSENSOR]: {type: routeTypes.POST, schema: hasSensorSchema, func: registerSensor},
+    [routes.UPDATESHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: updateShipment},
+    [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement}
+};

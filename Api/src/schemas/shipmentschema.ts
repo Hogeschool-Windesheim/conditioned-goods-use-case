@@ -1,4 +1,6 @@
-export const shipmentAddSchema = {
+import {Schema} from "express-validator";
+
+export const shipmentAddSchema: Schema = {
     id: {
         in: ['body'],
         errorMessage: 'id is required',
@@ -9,7 +11,7 @@ export const shipmentAddSchema = {
     }
 }
 
-export const getShipmentSchema = {
+export const getShipmentSchema: Schema = {
     id: {
         in: ['params'],
         errorMessage: 'id is required',
@@ -20,7 +22,7 @@ export const getShipmentSchema = {
     }
 }
 
-export const shipmentExistsSchema = {
+export const shipmentExistsSchema: Schema = {
     id: {
         in: ['params'],
         errorMessage: 'id is required',
@@ -31,7 +33,7 @@ export const shipmentExistsSchema = {
     }
 }
 
-export const hasSensorSchema = {
+export const hasSensorSchema: Schema = {
     id: {
         in: ['params'],
         errorMessage: 'id is required',

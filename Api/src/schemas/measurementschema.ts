@@ -1,4 +1,6 @@
-export const getHistorySchema = {
+import {Schema} from "express-validator";
+
+export const getHistorySchema: Schema = {
     id: {
         in: ['params'],
         errorMessage: 'id is required',
@@ -9,7 +11,7 @@ export const getHistorySchema = {
     }
 }
 
-export const getMeasurementSchema = {
+export const getMeasurementSchema: Schema = {
     id: {
         in: ['params'],
         errorMessage: 'id is required',
@@ -20,7 +22,7 @@ export const getMeasurementSchema = {
     }
 }
 
-export const addMeasurementSchema = {
+export const addMeasurementSchema: Schema = {
     id: {
         in: ['body'],
         errorMessage: 'id is required',
@@ -42,6 +44,5 @@ export const addMeasurementSchema = {
         errorMessage: 'value should be an INT',
         isInt: true,
         toInt: true,
-        
     }
 }
