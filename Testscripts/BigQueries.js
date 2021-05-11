@@ -1,57 +1,16 @@
-// import org1 from '../Api/src/profiles/org1.json'
-// const org1 = require('../Api/src/profiles/org1.json')
-import {Gateway, Wallets} from 'fabric-network';
-import * as os from 'os';
-import * as path from 'path';
+const os = require('os');
+const path = require('path');
+const {Gateway, Wallets} = require('fabric-network');
+const org1 = require('../Api/src/profiles/org1.json')
 
-const org1 = {
-    "certificateAuthorities": {
-        "org1ca-api.127-0-0-1.nip.io:8081": {
-            "url": "http://org1ca-api.127-0-0-1.nip.io:8081"
-        }
-    },
-    "client": {
-        "connection": {
-            "timeout": {
-                "orderer": "300",
-                "peer": {
-                    "endorser": "300"
-                }
-            }
-        },
-        "organization": "Org1"
-    },
-    "display_name": "Org1 Gateway",
-    "id": "org1gateway",
-    "name": "Org1 Gateway",
-    "organizations": {
-        "Org1": {
-            "certificateAuthorities": [
-                "org1ca-api.127-0-0-1.nip.io:8081"
-            ],
-            "mspid": "Org1MSP",
-            "peers": [
-                "org1peer-api.127-0-0-1.nip.io:8081"
-            ]
-        }
-    },
-    "peers": {
-        "org1peer-api.127-0-0-1.nip.io:8081": {
-            "grpcOptions": {
-                "grpc.default_authority": "org1peer-api.127-0-0-1.nip.io:8081",
-                "grpc.ssl_target_name_override": "org1peer-api.127-0-0-1.nip.io:8081"
-            },
-            "url": "grpc://org1peer-api.127-0-0-1.nip.io:8081"
-        }
-    },
-    "type": "gateway",
-    "version": "1.0"
-};
-
-export async function connect() {
+/** 
+ * Connect to a Hyperledger peer.
+ */
+async function connect() {
+    // Wallet path.
     const walletPath = path.join(os.homedir(), '.fabric-vscode', 'v2', 'environments', 'blockchain', 'wallets', 'Org1');
 
-    // Create new wallet
+    // Create new wallet.
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     // Initialize a new gateway.
@@ -67,29 +26,67 @@ export async function connect() {
         wallet,
     };
 
-    // Connect to peer
+    // Conect to gateway
+    await gateway.connect(org1, options);
+
+    return gateway;
+} 
+
+/** 
+ * Insert n amount of records
+ */
+async function insertRecords(amount) {  
+    // Connect to gateway 
+    const gateway = await connect();
     
     try {
-        await gateway.connect(org1, options);
+        // Get channel "mychannel".
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('blockchain-backend');
-        await contract.submitTransaction('AddShipment', `1`);
-        await contract.submitTransaction('RegisterSensor', `1`, `1`);
-     
-    
-        
-        for (let i = 0; i < 10; i++) {
+
+        // Get shipment contract.
+        const shipmentContract = network.getContract('blockchain-backend');
+
+        console.log("STATUS > INSERTING SHIPMENT");
+
+        // Add a shipment with id 1.
+        await shipmentContract.submitTransaction('addShipment', `1`);
+
+        console.log("STATUS > ADDING SHIPMENT");
+
+        // Register sensor with id 1 to shipment with id 1.
+        await shipmentContract.submitTransaction('registerSensor', `1`, `1`);
+
+        console.log("STATUS > UPDATING MEASUREMENT");
+
+        // Get measurment contract.
+        const measurementContract = network.getContract('blockchain-backend', 'MeasurementContract');
+
+        // Insert n amount of records.
+        for (let i = 0; i < amount; i++) {
+            // Create random value between -28 and -4.
             let value = Math.round(-Math.random() * (28 - 4) + 4);
-            await contract.submitTransaction('AddMeasurement', 'MeasurementContract', '7', '1', `${value}`, `${new Date()}`);
+
+            // Insert measurement.
+            await measurementContract.submitTransaction('addMeasurement', '1', '1', `${value}`, `${new Date()}`);
         }
-        console.log(value);
+
+        console.log(`STATUS > COMPLETED! INSERTED ${amount} RECORDS`);
+
+        // Exit script.
+        process.exit();
     }
     catch (error) {
         console.log(error);
+
+        // Exit script.
+        process.exit(1);
+    } finally {
+        // Close gateway.
+       gateway.disconnect();
     }
 }
 
-connect();
+insertRecords(10);
 
 
 
