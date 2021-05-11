@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "dotenv": "8.2.0",
+    "express-validator": "6.10.1",
     "fabric-network": "2.2.5",
     "ts-node": "9.1.1"
   }
