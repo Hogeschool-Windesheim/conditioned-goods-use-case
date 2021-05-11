@@ -18,7 +18,7 @@ import {Measurement, Shipment} from '../types';
       const contract = network.getContract('blockchain-backend', 'MeasurementContract');
   
       // Query data
-      const result = await contract.evaluateTransaction('GetHistory', `${id}`);
+      const result = await contract.evaluateTransaction('getHistory', `${id}`);
   
       res.json(toObject<Measurement>(result));
     } catch(err) {
@@ -43,7 +43,7 @@ import {Measurement, Shipment} from '../types';
       const contract = network.getContract('blockchain-backend', 'MeasurementContract');
   
       // Query data
-      const result = await contract.evaluateTransaction('GetMeasurement', `${id}`);
+      const result = await contract.evaluateTransaction('getMeasurement', `${id}`);
   
       res.json(toObject<Measurement>(result));
     } catch(err) {
@@ -68,7 +68,7 @@ import {Measurement, Shipment} from '../types';
       const contract = network.getContract('blockchain-backend', 'MeasurementContract');
   
       // Query data
-      const result = await contract.submitTransaction('AddMeasurement', `${id}`,`${sensorID}`, `${value}`);
+      const result = await contract.submitTransaction('addMeasurement', `${id}`,`${sensorID}`, `${value}`);
   
       res.json(toObject<Shipment>(result));
     } catch(err) {

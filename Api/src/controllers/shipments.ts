@@ -17,7 +17,7 @@ export async function getShipments(req: Request, res: Response) {
       const contract = network.getContract('blockchain-backend');
 
       // Query data
-      const result = await contract.evaluateTransaction('GetShipments');
+      const result = await contract.evaluateTransaction('getShipments');
 
       res.json(toObject<Shipment>(result));
     } catch(err) {
@@ -43,7 +43,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('GetShipment', `${id}`);
+    const result = await contract.evaluateTransaction('getShipment', `${id}`);
 
     res.json(toObject<Shipment>(result));
   } catch(err) {
@@ -68,7 +68,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('ShipmentExists', `${id}`);
+    const result = await contract.evaluateTransaction('shipmentExists', `${id}`);
 
     res.json(toObject<boolean>(result));
   } catch(err) {
@@ -93,7 +93,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('HasSensor', `${id}`,`${sensorID}`);
+    const result = await contract.evaluateTransaction('hasSensor', `${id}`,`${sensorID}`);
 
     res.json(toObject<boolean>(result));
   } catch(err) {
@@ -118,7 +118,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.submitTransaction('AddShipment', `${id}`);
+    const result = await contract.submitTransaction('addShipment', `${id}`);
 
     res.json(toObject<Shipment>(result));
   } catch(err) {
@@ -143,7 +143,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.submitTransaction('RegisterSensor', `${id}`, `${sensorID}`);
+    const result = await contract.submitTransaction('registerSensor', `${id}`, `${sensorID}`);
 
     res.json(toObject<boolean>(result));
   } catch(err) {
@@ -168,7 +168,7 @@ export async function getShipments(req: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.submitTransaction('UpdateShipment', `${id}`);
+    const result = await contract.submitTransaction('updateShipment', `${id}`);
 
     res.json(toObject<Shipment>(result));
   } catch(err) {
