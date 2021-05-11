@@ -19,7 +19,7 @@ for (const [key, value] of Object.entries(postResolver)) {
 // start the Express server.
 app.listen(process.env.PORT, () => {
     // tslint:disable-next-line:no-console
-    console.log(`🚀 Server ready!`)
+    console.log(`🚀 Server ready on http://localhost:`+process.env.PORT+` !`)
   });
 
 export default app;
