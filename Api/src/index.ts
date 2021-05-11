@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 for (const [key, value] of Object.entries(postResolver)) {
-  const schema = routeSchemaValidation[key];
+  const schema = routeSchemaValidation[key] || {};
   app.post(key, checkSchema(schema), (req: Request, res: Response)=>{
     validate(req, res);
 

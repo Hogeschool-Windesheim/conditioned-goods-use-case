@@ -106,8 +106,8 @@ export async function getShipments(req: Request, res: Response) {
 /**
  * Add shipment
  */
- export async function addShipment(req: Request, res: Response) {
-  const {id} = req.body;
+ export async function addShipment({body}: Request, res: Response) {
+  const {id} = body;
   const gateway = await connect();
 
   try {

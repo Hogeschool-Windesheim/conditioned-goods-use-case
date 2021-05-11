@@ -1,5 +1,5 @@
 import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment } from './controllers/shipments';
-import {shipmentAddSchema, getShipmentSchema, shipmentExistsSchema, hasSensorSchema, getShipmentsSchema} from './schemas/shipmentschema';
+import {shipmentAddSchema, getShipmentSchema, shipmentExistsSchema, hasSensorSchema} from './schemas/shipmentschema';
 import {getHistorySchema, getMeasurementSchema, addMeasurementSchema} from './schemas/measurementschema';
 import {getHistory, getMeasurement, addMeasurement} from './controllers/measurements';
 
@@ -52,7 +52,6 @@ export const routeSchemaValidation: {[key: string]: any} = {
     [routes.SHIPMENT]: getShipmentSchema,
     [routes.SHIPMENTEXIST]: shipmentExistsSchema,
     [routes.HASSENSOR]: hasSensorSchema,
-    [routes.SHIPMENTS]:getShipmentsSchema,
     [routes.GETHISTORY]: getHistorySchema,
     [routes.GETMEASUREMENT]: getMeasurementSchema,
     [routes.ADDMEASUREMENT]: addMeasurementSchema,

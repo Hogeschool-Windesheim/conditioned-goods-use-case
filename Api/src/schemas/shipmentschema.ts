@@ -20,11 +20,6 @@ export const getShipmentSchema = {
     }
 }
 
-export const getShipmentsSchema = {
-
-}
-
-
 export const shipmentExistsSchema = {
     id: {
         in: ['params'],
