@@ -75,7 +75,7 @@ export class MeasurementContract extends Contract {
     /** 
      * Validate SLA
      */
-    public async validateSLA(ctx: Context, id: string, newValue: string) {
+    private async validateSLA(ctx: Context, id: string, newValue: number) {
         const temp = await this.getMeasurement(ctx, id);
         const minTemp = SLA.temperature.min;
         const maxTemp = SLA.temperature.max;
