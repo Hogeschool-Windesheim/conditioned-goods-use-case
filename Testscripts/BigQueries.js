@@ -87,11 +87,3 @@ async function insertRecords(amount) {
 }
 
 insertRecords(10000);
-
-
-
-
-
-
-
-
