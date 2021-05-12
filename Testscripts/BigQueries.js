@@ -64,7 +64,7 @@ async function insertRecords(amount) {
         // Insert n amount of records.
         for (let i = 0; i < amount; i++) {
             // Create random value between -28 and -4.
-            let value = Math.round(-Math.random() * (28 - 4) + 4);
+            let value = Math.round(Math.random() * (-24 - -5) + -5);
 
             // Insert measurement.
             await measurementContract.submitTransaction('addMeasurement', '1', '1', `${value}`, `${new Date()}`);
@@ -86,7 +86,7 @@ async function insertRecords(amount) {
     }
 }
 
-insertRecords(10);
+insertRecords(10000);
 
 
 
