@@ -1,11 +1,13 @@
-import express from "express";
+import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import {getResolver, postResolver} from './routes';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Register api routes.
 for (const [key, value] of Object.entries(getResolver)) {
@@ -20,6 +22,6 @@ for (const [key, value] of Object.entries(postResolver)) {
 app.listen(process.env.PORT, () => {
     // tslint:disable-next-line:no-console
     console.log(`🚀 Server ready on http://localhost:`+process.env.PORT+` !`)
-  });
+});
 
 export default app;

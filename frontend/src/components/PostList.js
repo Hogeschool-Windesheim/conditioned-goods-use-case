@@ -6,14 +6,15 @@ class PostList extends Component {
         super(props)
 
         this.state = {
-            posts: []
+            shipments: []
         }
     }
 
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
-        .then(Response => {
-            console.log(Response)
+        axios.get(`http://localhost:8080/shipments`)
+        .then(response => {
+            console.log(response)
+            this.setState({shipments: response.data})
         })
         .catch(error => {
             console.log(error)
@@ -21,10 +22,22 @@ class PostList extends Component {
     }
 
     render() {
+        const { shipments } = this.state
+        console.log(shipments)
+        console.log(shipments.length)
+        const shipment = shipments[0]
+        console.log(shipment)
+        console.log(shipments.id)
         return (
-            <div>
+            <span>
                 list of posts
-            </div>
+                {
+                    shipments.length   ?
+                    shipments.map(shipments => <div key={shipments.id}>{shipments.titel}</div>):
+                    null
+                }
+
+            </span>
         )
     }
 }

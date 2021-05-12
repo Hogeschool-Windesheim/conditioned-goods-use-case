@@ -14,23 +14,8 @@ export default function Index() {
         <div className="container mx-auto items-center flex flex-wrap">
           <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
             <div className="pt-32 sm:pt-0">
-              <h2 className="font-semibold text-4xl text-blueGray-600">
-                Notus React - A beautiful extension for Tailwind CSS.
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
-                Notus React is Free and Open Source. It does not change any of
-                the CSS from{" "}
-                <PostList />
-                <a
-                  href="https://tailwindcss.com/?ref=creativetim"
-                  className="text-blueGray-600"
-                  target="_blank"
-                >
-                  Tailwind CSS
-                </a>
-                . It features multiple HTML elements and it comes with dynamic
-                components for ReactJS, Vue and Angular.
-              </p>
+              <PostList />
+              
               <div className="mt-12">
                 <a
                   href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus?ref=nr-index"
