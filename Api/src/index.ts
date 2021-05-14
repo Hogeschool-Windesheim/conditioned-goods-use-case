@@ -1,7 +1,9 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import express, {Request, Response} from "express";
+import {validationResult} from "express-validator";
 import cors from 'cors';
-import {getResolver, postResolver} from './routes';
+import dotenv from 'dotenv';
+import {checkSchema} from 'express-validator';
+import {routeTypes, routeResolver} from './routes';
 
 dotenv.config();
 
@@ -9,13 +11,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Register api routes.
-for (const [key, value] of Object.entries(getResolver)) {
-    app.get(key, value);
-}
+for (const [key, value] of Object.entries(routeResolver)) {
+    const {type, schema = {}, func} = value;
 
-for (const [key, value] of Object.entries(postResolver)) {
-  app.post(key, value);
+    app[type](key, checkSchema(schema), (req: Request, res: Response) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()){
+          return res.status(400).json({
+            errors: errors.array()
+          });
+        }
+
+        func(req, res);
+    });
 }
 
 // start the Express server.

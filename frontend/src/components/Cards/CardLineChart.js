@@ -1,108 +1,121 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Chart from "chart.js";
 
-export default function CardLineChart() {
-  React.useEffect(() => {
-    var config = {
-      type: "line",
-      data: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-        ],
-        datasets: [
-          {
-            label: new Date().getFullYear(),
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
-            data: [65, 78, 66, 44, 56, 67, 75],
-            fill: false,
-          },
-          {
-            label: new Date().getFullYear() - 1,
-            fill: false,
-            backgroundColor: "#fff",
-            borderColor: "#fff",
-            data: [40, 68, 86, 74, 56, 60, 87],
-          },
-        ],
+// Make an array with all the values per sensor
+const data = [
+  {
+    id: 1,
+    temperatures: [-10, -8, -13, -20, -18, -14, -14]
+  },
+  {
+    id: 2,
+    temperatures: [-16, -14, -8, -20, -6, -4, -5]
+  }
+]
+
+const config = {
+  type: "line",
+  data: {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+    ],
+    datasets: [
+      {
+        label: "Sensor 1",
+        backgroundColor: "#4c51bf",
+        borderColor: "#4c51bf",
+        data: [-10, -8, -13, -20, -18, -14, -14],
+        fill: false,
       },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        title: {
-          display: false,
-          text: "Sales Charts",
-          fontColor: "white",
-        },
-        legend: {
-          labels: {
+      {
+        label: "Sensor 2",
+        fill: false,
+        backgroundColor: "#fff",
+        borderColor: "#fff",
+        data: [-16, -14, -8, -20, -6, -4, -5],
+      },
+    ],
+  },
+  options: {
+    maintainAspectRatio: false,
+    responsive: true,
+    title: {
+      display: false,
+      text: "Sales Charts",
+      fontColor: "white",
+    },
+    legend: {
+      labels: {
+        fontColor: "white",
+      },
+      align: "end",
+      position: "bottom",
+    },
+    tooltips: {
+      mode: "index",
+      intersect: false,
+    },
+    hover: {
+      mode: "nearest",
+      intersect: true,
+    },
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            fontColor: "rgba(255,255,255,.7)",
+          },
+          display: true,
+          scaleLabel: {
+            display: false,
+            labelString: "Month",
             fontColor: "white",
           },
-          align: "end",
-          position: "bottom",
+          gridLines: {
+            display: false,
+            borderDash: [2],
+            borderDashOffset: [2],
+            color: "rgba(33, 37, 41, 0.3)",
+            zeroLineColor: "rgba(0, 0, 0, 0)",
+            zeroLineBorderDash: [2],
+            zeroLineBorderDashOffset: [2],
+          },
         },
-        tooltips: {
-          mode: "index",
-          intersect: false,
+      ],
+      yAxes: [
+        {
+          ticks: {
+            fontColor: "rgba(255,255,255,.7)",
+          },
+          display: true,
+          scaleLabel: {
+            display: false,
+            labelString: "Value",
+            fontColor: "white",
+          },
+          gridLines: {
+            borderDash: [3],
+            borderDashOffset: [3],
+            drawBorder: false,
+            color: "rgba(255, 255, 255, 0.15)",
+            zeroLineColor: "rgba(33, 37, 41, 0)",
+            zeroLineBorderDash: [2],
+            zeroLineBorderDashOffset: [2],
+          },
         },
-        hover: {
-          mode: "nearest",
-          intersect: true,
-        },
-        scales: {
-          xAxes: [
-            {
-              ticks: {
-                fontColor: "rgba(255,255,255,.7)",
-              },
-              display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Month",
-                fontColor: "white",
-              },
-              gridLines: {
-                display: false,
-                borderDash: [2],
-                borderDashOffset: [2],
-                color: "rgba(33, 37, 41, 0.3)",
-                zeroLineColor: "rgba(0, 0, 0, 0)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
-            },
-          ],
-          yAxes: [
-            {
-              ticks: {
-                fontColor: "rgba(255,255,255,.7)",
-              },
-              display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Value",
-                fontColor: "white",
-              },
-              gridLines: {
-                borderDash: [3],
-                borderDashOffset: [3],
-                drawBorder: false,
-                color: "rgba(255, 255, 255, 0.15)",
-                zeroLineColor: "rgba(33, 37, 41, 0)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
-            },
-          ],
-        },
-      },
-    };
+      ],
+    },
+  },
+};
+
+export default function CardLineChart({title, subtitle}) {
+  useEffect(() => {
     var ctx = document.getElementById("line-chart").getContext("2d");
     window.myLine = new Chart(ctx, config);
   }, []);
@@ -113,9 +126,9 @@ export default function CardLineChart() {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-                Overview
+                {subtitle}
               </h6>
-              <h2 className="text-white text-xl font-semibold">Sales value</h2>
+              <h2 className="text-white text-xl font-semibold">{title}</h2>
             </div>
           </div>
         </div>
