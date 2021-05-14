@@ -25,7 +25,7 @@ function listViewOrdener(list){
 }
 
 export default function Index() {
-  const {loading, error, data = []} = useFetch('http://localhost:8080/shipments', {}, []);
+  const {loading, error, data = []} = useFetch('http://localhost:8080/shipments/'+ shipment , {}, []);
   console.log(data);
   return (
     <>
@@ -40,10 +40,7 @@ export default function Index() {
               <div>Current sensorID: {temperature.sensorID}</div>
               <div>Temperature: {temperature.value}°C</div>
               <div>Timestamp: {timeConverter(temperature.timestamp)} </div>
-              <Link to="/views/singelShipment"><button>
-              More info 
-              </button>
-              </Link>
+              <button value={id}>more info</button>
             </div>
           )}
           

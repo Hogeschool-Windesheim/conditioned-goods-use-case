@@ -682,6 +682,12 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+.shipments{
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+} 
+
 .container {
   width: 100%;
 }
