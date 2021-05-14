@@ -47,6 +47,7 @@ export class MeasurementContract extends Contract {
 
     /** 
      * Add a measurement to a shipment.
+     * NOTE: timestamp is the amount of milliseconds since 1970 (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#the_ecmascript_epoch_and_timestamps)
      */
     public async addMeasurement(ctx: Context, sensorID: string, value: string, timestamp: string) {
         let shipment: Shipment = await this.shipmentContract.getShipmentBySensor(ctx, sensorID);
