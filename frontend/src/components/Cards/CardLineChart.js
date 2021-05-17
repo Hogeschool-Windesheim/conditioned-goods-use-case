@@ -1,121 +1,113 @@
 import React, {useEffect} from "react";
 import Chart from "chart.js";
 
-// Make an array with all the values per sensor
-const data = [
+const colors = [
   {
-    id: 1,
-    temperatures: [-10, -8, -13, -20, -18, -14, -14]
+    backgroundColor: "#4c51bf",
+    borderColor: "#4c51bf",
   },
   {
-    id: 2,
-    temperatures: [-16, -14, -8, -20, -6, -4, -5]
+    backgroundColor: "#fff",
+    borderColor: "#fff",
   }
 ]
 
-const config = {
-  type: "line",
-  data: {
-    labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-    ],
-    datasets: [
-      {
-        label: "Sensor 1",
-        backgroundColor: "#4c51bf",
-        borderColor: "#4c51bf",
-        data: [-10, -8, -13, -20, -18, -14, -14],
-        fill: false,
-      },
-      {
-        label: "Sensor 2",
-        fill: false,
-        backgroundColor: "#fff",
-        borderColor: "#fff",
-        data: [-16, -14, -8, -20, -6, -4, -5],
-      },
-    ],
-  },
-  options: {
-    maintainAspectRatio: false,
-    responsive: true,
-    title: {
-      display: false,
-      text: "Sales Charts",
-      fontColor: "white",
-    },
-    legend: {
-      labels: {
-        fontColor: "white",
-      },
-      align: "end",
-      position: "bottom",
-    },
-    tooltips: {
-      mode: "index",
-      intersect: false,
-    },
-    hover: {
-      mode: "nearest",
-      intersect: true,
-    },
-    scales: {
-      xAxes: [
-        {
-          ticks: {
-            fontColor: "rgba(255,255,255,.7)",
-          },
-          display: true,
-          scaleLabel: {
-            display: false,
-            labelString: "Month",
-            fontColor: "white",
-          },
-          gridLines: {
-            display: false,
-            borderDash: [2],
-            borderDashOffset: [2],
-            color: "rgba(33, 37, 41, 0.3)",
-            zeroLineColor: "rgba(0, 0, 0, 0)",
-            zeroLineBorderDash: [2],
-            zeroLineBorderDashOffset: [2],
-          },
-        },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            fontColor: "rgba(255,255,255,.7)",
-          },
-          display: true,
-          scaleLabel: {
-            display: false,
-            labelString: "Value",
-            fontColor: "white",
-          },
-          gridLines: {
-            borderDash: [3],
-            borderDashOffset: [3],
-            drawBorder: false,
-            color: "rgba(255, 255, 255, 0.15)",
-            zeroLineColor: "rgba(33, 37, 41, 0)",
-            zeroLineBorderDash: [2],
-            zeroLineBorderDashOffset: [2],
-          },
-        },
-      ],
-    },
-  },
-};
+export default function CardLineChart({title, subtitle, dataset, labels}) {
 
-export default function CardLineChart({title, subtitle}) {
+  // function createDataSet() {
+  //   return data.map(({sensorID, values}, index) => {
+  //     let {backgroundColor, borderColor} = colors[index];
+
+  //     return {
+  //       label: `Sensor ${sensorID}`,
+  //       backgroundColor: backgroundColor,
+  //       borderColor: borderColor,
+  //       data: values,
+  //       fill: false,
+  //     } 
+  //   })
+  // }
+
   useEffect(() => {
+
+    const config = {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: dataset,
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: false,
+          text: "Sales Charts",
+          fontColor: "white",
+        },
+        legend: {
+          labels: {
+            fontColor: "white",
+          },
+          align: "end",
+          position: "bottom",
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+        },
+        hover: {
+          mode: "nearest",
+          intersect: true,
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                fontColor: "rgba(255,255,255,.7)",
+              },
+              display: true,
+              scaleLabel: {
+                display: false,
+                labelString: "Month",
+                fontColor: "white",
+              },
+              gridLines: {
+                display: false,
+                borderDash: [2],
+                borderDashOffset: [2],
+                color: "rgba(33, 37, 41, 0.3)",
+                zeroLineColor: "rgba(0, 0, 0, 0)",
+                zeroLineBorderDash: [2],
+                zeroLineBorderDashOffset: [2],
+              },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                fontColor: "rgba(255,255,255,.7)",
+              },
+              display: true,
+              scaleLabel: {
+                display: false,
+                labelString: "Value",
+                fontColor: "white",
+              },
+              gridLines: {
+                borderDash: [3],
+                borderDashOffset: [3],
+                drawBorder: false,
+                color: "rgba(255, 255, 255, 0.15)",
+                zeroLineColor: "rgba(33, 37, 41, 0)",
+                zeroLineBorderDash: [2],
+                zeroLineBorderDashOffset: [2],
+              },
+            },
+          ],
+        },
+      },
+    };
+
     var ctx = document.getElementById("line-chart").getContext("2d");
     window.myLine = new Chart(ctx, config);
   }, []);
