@@ -29,58 +29,58 @@ export class MeasurementContract extends Contract {
     /** 
      * Get a measurement from a shipment.
      */
-    public async GetMeasurement(ctx: Context, id: string) {
-        const shipment: Shipment = await this.shipmentContract.GetShipment(ctx, id);
+    public async getMeasurement(ctx: Context, id: string) {
+        const shipment: Shipment = await this.shipmentContract.getShipment(ctx, id);
         return shipment.temperature;
     }
 
     /** 
      * Get measurement history
      */
-    public async GetHistory(ctx: Context, id: string) {
+    public async getHistory(ctx: Context, id: string) {
         const iterator = ctx.stub.getHistoryForKey(id);
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
         // Map through the shipment history and get the temperature values.
-        return shipments.filter(({temperature}) => temperature).map(({temperature}) => temperature);;
+        return shipments.filter(({temperature}) => temperature).map(({temperature}) => temperature);
     }
 
     /** 
      * Add a measurement to a shipment.
      */
-    public async AddMeasurement(ctx: Context, id: string, sensorID: string, value: string) {
-        let shipment: Shipment = await this.shipmentContract.GetShipment(ctx, id);
+    public async addMeasurement(ctx: Context, id: string, sensorID: string, value: string, timestamp: string) {
+        let shipment: Shipment = await this.shipmentContract.getShipment(ctx, id);
+        let temperature = parseInt(value);
+        let date = Date.parse(timestamp);
 
         if (!shipment.sensors.includes(sensorID)) {
             throw new Error(`Sensor is not registered to this shipment.`);
         }
 
-        if (!await this.ValidateSLA(ctx, id, value)) {
+        if (!await this.validateSLA(ctx, id, temperature)) {
             await sendMail(`Shipment #${id}`, getText(id, value), getHtml(id, value));
         }
 
-        const temperature = {
-            value,
+        shipment.temperature = {
+            value: temperature,
             sensorID,
-            timestamp: new Date(),
-        }
-
-        shipment.temperature = temperature;
+            timestamp: date,
+        };
 
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
 
-        return temperature;
+        return shipment.temperature;
     }
 
     /** 
      * Validate SLA
      */
-    public async ValidateSLA(ctx: Context, id: string, newValue: string) {
-        const temp = await this.GetMeasurement(ctx, id);
+    private async validateSLA(ctx: Context, id: string, newValue: number) {
+        const temp = await this.getMeasurement(ctx, id);
         const minTemp = SLA.temperature.min;
         const maxTemp = SLA.temperature.max;
         
-        if (!isInRange(parseInt(newValue), minTemp, maxTemp)) {
+        if (!isInRange(newValue, minTemp, maxTemp)) {
             // Temp value should always be an number.
             if (!temp || temp && isInRange(temp.value as number, minTemp, maxTemp)) {
                 return false;

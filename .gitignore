@@ -1,6 +1,6 @@
-node_modules/
-Api/env.
-dist/
-yarn.lock
-package-lock.json
 .env
+package-lock.json
+yarn.lock
+index.js
+node_modules/
+dist/

@@ -1,36 +1,40 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Chart from "chart.js";
 
-export default function CardLineChart() {
-  React.useEffect(() => {
-    var config = {
+const colors = [
+  {
+    backgroundColor: "#4c51bf",
+    borderColor: "#4c51bf",
+  },
+  {
+    backgroundColor: "#fff",
+    borderColor: "#fff",
+  }
+]
+
+export default function CardLineChart({title, subtitle, dataset, labels}) {
+
+  // function createDataSet() {
+  //   return data.map(({sensorID, values}, index) => {
+  //     let {backgroundColor, borderColor} = colors[index];
+
+  //     return {
+  //       label: `Sensor ${sensorID}`,
+  //       backgroundColor: backgroundColor,
+  //       borderColor: borderColor,
+  //       data: values,
+  //       fill: false,
+  //     } 
+  //   })
+  // }
+
+  useEffect(() => {
+
+    const config = {
       type: "line",
       data: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-        ],
-        datasets: [
-          {
-            label: new Date().getFullYear(),
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
-            data: [65, 78, 66, 44, 56, 67, 75],
-            fill: false,
-          },
-          {
-            label: new Date().getFullYear() - 1,
-            fill: false,
-            backgroundColor: "#fff",
-            borderColor: "#fff",
-            data: [40, 68, 86, 74, 56, 60, 87],
-          },
-        ],
+        labels: labels,
+        datasets: dataset,
       },
       options: {
         maintainAspectRatio: false,
@@ -103,6 +107,7 @@ export default function CardLineChart() {
         },
       },
     };
+
     var ctx = document.getElementById("line-chart").getContext("2d");
     window.myLine = new Chart(ctx, config);
   }, []);
@@ -113,9 +118,9 @@ export default function CardLineChart() {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-                Overview
+                {subtitle}
               </h6>
-              <h2 className="text-white text-xl font-semibold">Sales value</h2>
+              <h2 className="text-white text-xl font-semibold">{title}</h2>
             </div>
           </div>
         </div>
