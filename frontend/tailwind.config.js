@@ -95,6 +95,10 @@ module.exports = {
     "visited",
     "disabled",
   ],
+  extend:{
+    tableLayout: ['hover', 'focus'],
+    width: ['hover', 'focus'],
+  },
   plugins: [
     require("@tailwindcss/forms"),
     plugin(function ({ addComponents, theme }) {
