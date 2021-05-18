@@ -1,4 +1,5 @@
-.env
+Api/.env
+chaincode/.env
 package-lock.json
 yarn.lock
 index.js
