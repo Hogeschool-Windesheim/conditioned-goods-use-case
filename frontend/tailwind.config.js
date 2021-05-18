@@ -83,22 +83,18 @@ module.exports = {
   },
   variants: [
     "responsive",
-    'hover',
     "group-hover",
     "focus-within",
     "first",
     "last",
     "odd",
     "even",
+    "hover",
     "focus",
     "active",
     "visited",
     "disabled",
   ],
-  extend:{
-    tableLayout: ['hover', 'focus'],
-    width: ['hover', 'focus'],
-  },
   plugins: [
     require("@tailwindcss/forms"),
     plugin(function ({ addComponents, theme }) {

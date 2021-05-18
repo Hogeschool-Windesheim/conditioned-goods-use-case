@@ -110,7 +110,7 @@ export default function CardLineChart({title, subtitle, dataset, labels}) {
 
     var ctx = document.getElementById("line-chart").getContext("2d");
     window.myLine = new Chart(ctx, config);
-  }, []);
+  }, [labels, dataset]);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">
