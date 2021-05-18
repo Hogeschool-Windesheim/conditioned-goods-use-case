@@ -1,8 +1,0 @@
-{
-    "index": {
-        "fields": ["sensorID", "value", "timestamp"]
-    },
-    "ddoc": "measurementIndex",
-    "name": "measurement",
-    "type": "json"
-}

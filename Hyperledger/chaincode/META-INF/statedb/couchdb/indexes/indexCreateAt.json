@@ -1,8 +1,0 @@
-{
-    "index": {
-        "fields": ["createdAt"]
-    },
-    "ddoc": "createAtIndex",
-    "name": "createAt",
-    "type": "json"
-}
