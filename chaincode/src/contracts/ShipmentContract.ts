@@ -1,6 +1,6 @@
 import {Context, Contract} from 'fabric-contract-api';
 import Shipment from '../models/Shipment';
-import {toBytes, toObject, toArrayOfObjects} from '../helpers';
+import {toBytes, toObject, toJson, toArrayOfObjects} from '../libs/helpers';
 
 // Note: removed ts annotations because they currently do not allow nested objects.
 /** 
@@ -16,9 +16,10 @@ export class ShipmentContract extends Contract {
             throw new Error("Shipment with this id does not exist.");
         }
 
-        let shipment: Shipment = {
+        const shipment: Shipment = {
             id,
             sensors: [],
+            createdAt: Date.now(),
         }
 
         // Submit data to the ledger.
@@ -98,5 +99,30 @@ export class ShipmentContract extends Contract {
         const shipment = await this.getShipment(ctx, id);
 
         return shipment.sensors.includes(sensorID);
+    }
+
+    /** 
+     * Get shipments by sensorID.
+     */
+    public async getShipmentBySensor(ctx: Context, id: string) {
+        const query = {
+            selector: {
+                sensors: {
+                    $elemMatch: {
+                        $eq: id
+                    }
+                }
+            },
+            sort: [{createdAt: "desc"}],
+        };
+
+        const iterator = ctx.stub.getQueryResult(toJson(query));
+        const shipments = await toArrayOfObjects<Shipment>(iterator);
+
+        if (!(shipments && shipments.length > 0)) {
+            throw new Error("Sensor is not registered to a shipment");
+        }
+
+        return shipments[0];
     }
 }

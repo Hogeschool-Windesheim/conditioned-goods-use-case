@@ -13,13 +13,14 @@
     "cors": "2.8.5",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "luxon": "1.27.0",
     "postcss": "8.2.15",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
-    "tailwindcss": "2.0.4",
+    "tailwindcss": "2.1.2",
     "use-http": "1.0.20"
   },
   "scripts": {
