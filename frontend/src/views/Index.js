@@ -25,7 +25,7 @@ function listViewOrdener(list){
 
 export default function Index() {
   const {loading, error, data = []} = useFetch('http://localhost:8080/shipments', {}, []);
-  console.log(data);
+
   return (
     <>
       <IndexNavbar fixed />
@@ -51,12 +51,11 @@ export default function Index() {
                 <td className="border-2 border-black">{temperature.sensorID}</td>
                 <td className="border-2 border-black">{temperature.value}°C</td>
                 <td className="border-2 border-black">{timeConverter(temperature.timestamp)} </td>
-                <td className="border-2 border-black"><a href={"/singelShipment/" + id}>More Info</a></td>
+                <td className="border-2 border-black"><a href={"/shipment/" + id}>More Info</a></td>
               </tr>
             )}
             </tbody>
           </table>
-          
         </div>
       </section>
     </>

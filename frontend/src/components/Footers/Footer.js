@@ -23,7 +23,7 @@ export default function Footer() {
             ></polygon>
           </svg>
         </div>
-        <div className="container mx-auto px-4">
+        <div className="mx-auto px-4">
           <div className="flex flex-wrap text-center lg:text-left">
             <div className="w-full lg:w-6/12 px-4">
               <h4 className="text-3xl font-semibold">Let's keep in touch!</h4>
