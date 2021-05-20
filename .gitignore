@@ -1,4 +1,5 @@
 .env
+frontend/.env
 package-lock.json
 yarn.lock
 index.js

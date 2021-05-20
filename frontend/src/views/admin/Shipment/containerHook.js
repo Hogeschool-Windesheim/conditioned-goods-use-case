@@ -8,8 +8,8 @@ import {randomColor} from "color.js";
  */
 export default function useShipment() {
     const {id} = useParams();
-    const {data: shipment} = useFetch(`http://localhost:8080/shipment/${id}`, {}, [id]);
-    const {data: measurements} = useFetch(`http://localhost:8080/shipment/${id}/measurements`, {}, [id]);
+    const {data: shipment} = useFetch(`${process.env.REACT_APP_API_URL}/shipment/${id}`, {}, [id]);
+    const {data: measurements} = useFetch(`${process.env.REACT_APP_API_URL}/shipment/${id}/measurements`, {}, [id]);
 
     const [chartData, setChartData] = useState();
 
