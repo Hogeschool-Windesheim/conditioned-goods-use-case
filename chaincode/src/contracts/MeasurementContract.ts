@@ -8,9 +8,9 @@ import {isInRange} from '../libs/validate';
 import {sendMail} from '../libs/mail';
 import {getHtml, getText} from '../mails/temperature';
 
-// Note: removed ts annotations because they currently do not allow nested objects.
 /** 
  * Handles the measurements in the shipments. 
+ * Note: removed ts annotations because they currently do not allow nested objects.
  */
 export class MeasurementContract extends Contract {
     private shipmentContract: ShipmentContract;
@@ -36,6 +36,7 @@ export class MeasurementContract extends Contract {
 
     /** 
      * Get measurement history
+     * NOTE: it's currently not possible to use pagination on the history query (https://jira.hyperledger.org/browse/FAB-12881, https://jira.hyperledger.org/browse/FAB-12183)
      */
     public async getHistory(ctx: Context, id: string) {
         const iterator = ctx.stub.getHistoryForKey(id);
