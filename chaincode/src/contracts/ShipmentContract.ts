@@ -2,9 +2,9 @@ import {Context, Contract} from 'fabric-contract-api';
 import Shipment from '../models/Shipment';
 import {toBytes, toObject, toJson, toArrayOfObjects} from '../libs/helpers';
 
-// Note: removed ts annotations because they currently do not allow nested objects.
 /** 
  * Handles the shipments in the ledger. 
+ * Note: removed ts annotations because they currently do not allow nested objects.
  */
 export class ShipmentContract extends Contract {
     /** 
@@ -67,6 +67,7 @@ export class ShipmentContract extends Contract {
 
     /** 
      * Get all shipments from the ledger
+     * Note: the bookmark will be included in the results.
      */
     public async getShipments(ctx: Context, index = "", amount = 50) {
         // Query all data in the ledger.
