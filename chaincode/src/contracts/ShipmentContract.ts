@@ -68,9 +68,9 @@ export class ShipmentContract extends Contract {
     /** 
      * Get all shipments from the ledger
      */
-    public async getShipments(ctx: Context) {
+    public async getShipments(ctx: Context, index = "", amount = 50) {
         // Query all data in the ledger.
-        const iterator = ctx.stub.getStateByRange('', '');
+        const iterator = ctx.stub.getStateByRangeWithPagination('', '', amount, index);
 
         return toArrayOfObjects<Shipment>(iterator);
     }
