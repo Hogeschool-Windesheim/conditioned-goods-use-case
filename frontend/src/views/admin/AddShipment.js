@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import useFetch, { Provider } from 'use-http'
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
-import Shipment from "./admin/Shipment";
 import { bottom } from "@popperjs/core";
 
 export default function AddShipment() {
@@ -25,7 +24,6 @@ export default function AddShipment() {
   return (
     <>
       <Provider options={{responseType:'json', headers:{Accept: 'application/json'}}}></Provider>
-      <IndexNavbar fixed />
       <section className="container header pt-20 flex h-screen max-h-860-px">
         <div className="container">
             <div className="block text-3xl mb-2">Add Shipment: </div>
