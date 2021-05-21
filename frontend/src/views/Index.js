@@ -35,7 +35,7 @@ export default function Index() {
           <table className="border-2 border-black w-full text-left ">
             <thead>
               <tr>
-                <th className="border-2 border-black">Id</th>
+                <th className="border-2 border-black">Shipment</th>
                 <th className="border-2 border-black">Sensors</th>
                 <th className="border-2 border-black">Current sensor</th>
                 <th className="border-2 border-black">Temperature</th>
@@ -56,8 +56,8 @@ export default function Index() {
             )}
             </tbody>
           </table>
-          
         </div>
+        <Link to="/AddShipment"><button>Add Shipment</button></Link>
       </section>
     </>
   );
