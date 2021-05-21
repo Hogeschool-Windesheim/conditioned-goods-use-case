@@ -178,3 +178,26 @@ export async function getShipments({params}: Request, res: Response) {
     gateway.disconnect();
   }
 }
+
+export async function getShipmentBySearchString({params}: Request, res: Response) {
+  const {searchString, index = '', amount = 50} = params;
+
+  const gateway = await connect();
+
+  try {
+     // Get channel
+    const network = await gateway.getNetwork('mychannel');
+
+    // Get contract
+    const contract = network.getContract('blockchain-backend');
+
+    // Query data
+    const result = await contract.submitTransaction('getShipmentBySearchString', `${searchString}`, `${index}`, `${amount}`);
+
+    res.json(toObject<Shipment>(result));
+  }catch(err) {
+    console.log(err);
+  } finally {
+    gateway.disconnect();
+  }
+}

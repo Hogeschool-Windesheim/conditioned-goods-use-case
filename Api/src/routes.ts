@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {Schema} from "express-validator";
-import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment } from './controllers/shipments';
-import {shipmentAddSchema, getShipmentsSchema, getShipmentSchema, shipmentExistsSchema, hasSensorSchema} from './schemas/shipmentschema';
+import {getShipments, getShipment, shipmentExist, hasSensor, addShipment, registerSensor, updateShipment, getShipmentBySearchString} from './controllers/shipments';
+import {shipmentAddSchema, getShipmentsSchema, getShipmentSchema, shipmentExistsSchema, hasSensorSchema, getShipmentBySearchStringSchema} from './schemas/shipmentschema';
 import {getHistorySchema, getMeasurementSchema, addMeasurementSchema} from './schemas/measurementschema';
 import {getHistory, getMeasurement, addMeasurement} from './controllers/measurements';
 
@@ -19,6 +19,7 @@ export enum routes {
     GETHISTORY = '/shipment/:id/measurements',
     GETMEASUREMENT ='/shipment/:id/measurement',
     ADDMEASUREMENT = '/shipment/measurement/add',
+    SEARCHSHIPMENT = '/shipment/search/:searchString/:index?/:amount?',
 }
 
 export enum routeTypes {
@@ -45,5 +46,6 @@ export const routeResolver: {[index: string]: Route} = {
     [routes.ADDSHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: addShipment},
     [routes.REGISTERSENSOR]: {type: routeTypes.POST, schema: hasSensorSchema, func: registerSensor},
     [routes.UPDATESHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: updateShipment},
-    [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement}
+    [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement},
+    [routes.SEARCHSHIPMENT]: {type: routeTypes.GET, schema: getShipmentBySearchStringSchema, func: getShipmentBySearchString}
 };

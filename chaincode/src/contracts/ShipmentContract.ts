@@ -36,7 +36,6 @@ export class ShipmentContract extends Contract {
         const shipment = await this.getShipment(ctx, id);
 
         // TODO: set values we want to change.
-
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
 
         return shipment;
@@ -69,11 +68,16 @@ export class ShipmentContract extends Contract {
      * Get all shipments from the ledger
      * Note: the bookmark will be included in the results.
      */
-    public async getShipments(ctx: Context, index = "", amount = 50) {
+    public async getShipments(ctx: Context, index, amount) {
         // Query all data in the ledger.
-        const iterator = ctx.stub.getStateByRangeWithPagination('', '', amount, index);
+        const {iterator, metadata} = await ctx.stub.getStateByRangeWithPagination('', '', amount, index);
+        const shipments = await toArrayOfObjects<Shipment>(iterator);
 
-        return toArrayOfObjects<Shipment>(iterator);
+        return {
+            result: shipments,
+            count: metadata.fetchedRecordsCount,
+            bookmark: metadata.bookmark,
+        };
     }
 
     /** 
@@ -117,7 +121,7 @@ export class ShipmentContract extends Contract {
             sort: [{createdAt: "desc"}],
         };
 
-        const iterator = ctx.stub.getQueryResult(toJson(query));
+        const iterator = await ctx.stub.getQueryResult(toJson(query));
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
         if (!(shipments && shipments.length > 0)) {
@@ -131,7 +135,7 @@ export class ShipmentContract extends Contract {
     /** 
      * Get shipments by searchString.
      */
-    public async getShipmentBySearchString(ctx: Context, string: string, index = "", amount = 50) {
+    public async getShipmentBySearchString(ctx: Context, string: string, index, amount) {
         const query = {
             selector: {
                 id: {
@@ -140,9 +144,13 @@ export class ShipmentContract extends Contract {
             }
         }
 
-        const iterator = ctx.stub.getQueryResultWithPagination(toJson(query), amount, index);
+        const {iterator, metadata} = await ctx.stub.getQueryResultWithPagination(toJson(query), amount, index);
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
-        return shipments;
+        return {
+            result: shipments,
+            count: metadata.fetchedRecordsCount,
+            bookmark: metadata.bookmark,
+        };
     }
 }

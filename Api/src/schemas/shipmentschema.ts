@@ -67,3 +67,26 @@ export const hasSensorSchema: Schema = {
     }
 }
 
+export const getShipmentBySearchStringSchema: Schema = {
+    searchString: {
+        in: ['params'],
+        errorMessage: 'searchString is required',
+        isLength: {
+            options: {min: 1},
+        },
+        trim: true,
+    },
+    index: {
+        in: ['params'],
+        optional: true,
+        trim: true,
+    },
+    amount: {
+        in: ['params'],
+        optional: true,
+        errorMessage: 'amount should be a number',
+        toInt: true,
+        isInt: true,
+    }
+}
+
