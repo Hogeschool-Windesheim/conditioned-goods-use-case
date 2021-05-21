@@ -18,7 +18,7 @@ export enum routes {
     UPDATESHIPMENT = '/shipment/:id/update',
     GETHISTORY = '/shipment/:id/measurements',
     GETMEASUREMENT ='/shipment/:id/measurement',
-    ADDMEASUREMENT = '/shipment/measurement/add'
+    ADDMEASUREMENT = '/shipment/measurement/add',
 }
 
 export enum routeTypes {
