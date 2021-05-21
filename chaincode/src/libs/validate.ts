@@ -1,7 +1,10 @@
 /** 
  * Validate if an value is in range of a min and a max.
- * (We use the absolute value to calculate this for negative values)
+ * (We use the min/max value to calculate this for negative values too)
  */
 export function isInRange(value: number, min: number, max: number) {
-    return Math.abs(value) > Math.abs(min) && Math.abs(value) < Math.abs(max); 
+    const min = Math.min(min, max);
+    const max = Math.max(min, max);
+
+    return value > min && value < max; 
 }

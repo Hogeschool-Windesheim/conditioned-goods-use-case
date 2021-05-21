@@ -1,49 +1,17 @@
 import React, {useEffect} from "react";
 import Chart from "chart.js";
 
-const colors = [
-  {
-    backgroundColor: "#4c51bf",
-    borderColor: "#4c51bf",
-  },
-  {
-    backgroundColor: "#fff",
-    borderColor: "#fff",
-  }
-]
-
-export default function CardLineChart({title, subtitle, dataset, labels}) {
-
-  // function createDataSet() {
-  //   return data.map(({sensorID, values}, index) => {
-  //     let {backgroundColor, borderColor} = colors[index];
-
-  //     return {
-  //       label: `Sensor ${sensorID}`,
-  //       backgroundColor: backgroundColor,
-  //       borderColor: borderColor,
-  //       data: values,
-  //       fill: false,
-  //     } 
-  //   })
-  // }
+export default function CardLineChart({title, subtitle, dataset}) {
 
   useEffect(() => {
-
     const config = {
       type: "line",
       data: {
-        labels: labels,
         datasets: dataset,
       },
       options: {
         maintainAspectRatio: false,
         responsive: true,
-        title: {
-          display: false,
-          text: "Sales Charts",
-          fontColor: "white",
-        },
         legend: {
           labels: {
             fontColor: "white",
@@ -52,7 +20,7 @@ export default function CardLineChart({title, subtitle, dataset, labels}) {
           position: "bottom",
         },
         tooltips: {
-          mode: "index",
+          mode: "nearest",
           intersect: false,
         },
         hover: {
@@ -62,25 +30,23 @@ export default function CardLineChart({title, subtitle, dataset, labels}) {
         scales: {
           xAxes: [
             {
+              type: 'time',
+              time: {
+                unit: 'hour',
+                displayFormats: {
+                  hour: 'HH:mm'
+                },
+                unitStepSize: 1,
+                tooltipFormat: 'HH:mm'
+              },
               ticks: {
                 fontColor: "rgba(255,255,255,.7)",
-              },
-              display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Month",
-                fontColor: "white",
+                autoSkip: true,
               },
               gridLines: {
                 display: false,
-                borderDash: [2],
-                borderDashOffset: [2],
-                color: "rgba(33, 37, 41, 0.3)",
-                zeroLineColor: "rgba(0, 0, 0, 0)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
               },
-            },
+            }
           ],
           yAxes: [
             {
@@ -88,11 +54,6 @@ export default function CardLineChart({title, subtitle, dataset, labels}) {
                 fontColor: "rgba(255,255,255,.7)",
               },
               display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Value",
-                fontColor: "white",
-              },
               gridLines: {
                 borderDash: [3],
                 borderDashOffset: [3],
@@ -110,7 +71,7 @@ export default function CardLineChart({title, subtitle, dataset, labels}) {
 
     var ctx = document.getElementById("line-chart").getContext("2d");
     window.myLine = new Chart(ctx, config);
-  }, [labels, dataset]);
+  }, [dataset]);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">
