@@ -126,4 +126,23 @@ export class ShipmentContract extends Contract {
 
         return shipments[0];
     }
+
+    // TODO: look at more search options like sensorID or creation date. 
+    /** 
+     * Get shipments by searchString.
+     */
+    public async getShipmentBySearchString(ctx: Context, string: string, index = "", amount = 50) {
+        const query = {
+            selector: {
+                id: {
+                    $regex: string,
+                }
+            }
+        }
+
+        const iterator = ctx.stub.getQueryResultWithPagination(toJson(query), amount, index);
+        const shipments = await toArrayOfObjects<Shipment>(iterator);
+
+        return shipments;
+    }
 }
