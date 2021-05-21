@@ -1,4 +1,3 @@
-import {Object, Property} from 'fabric-contract-api';
 import Measurement from './Measurement';
 
 /** 

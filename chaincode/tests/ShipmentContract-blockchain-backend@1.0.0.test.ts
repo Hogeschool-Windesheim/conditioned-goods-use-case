@@ -6,6 +6,7 @@ import * as path from 'path';
 
 import {toObject} from '../src/libs/helpers';
 import Shipment from '../src/models/Shipment';
+import PaginationResponse from '../src/models/PaginationResponse';
 
 describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
     const homedir: string = os.homedir();
@@ -112,16 +113,58 @@ describe('ShipmentContract-blockchain-backend@1.0.0' , () => {
             // Add shipment
             await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['5'], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'getShipments', [], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'getShipments', ["", "50"], gateway);
             
-            const shipments = toObject<Array<Shipment>>(response);
+            const shipments = toObject<PaginationResponse<Shipment>>(response);
 
             const expected = {
                 id: '5',
                 sensors: [],
             };
 
-            expect(shipments).toEqual(
+            expect(shipments.result).toEqual(
+                expect.arrayContaining([expect.objectContaining(expected)])
+            )
+        });
+    });
+
+    describe('GetShipmentsBySensorID', () => {
+        it('should return the latest shipment of the attached sensor', async () => {
+            // Add shipment
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['11'], gateway);
+        
+            // Add Sensor
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'registerSensor', ['11', '999'], gateway);
+
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'getShipmentBySensor', ['999'], gateway);
+
+            const shipment = toObject<Shipment>(response);
+
+            const expected = {
+                id: '11',
+                sensors: ["999"],
+            };
+
+           
+            expect(shipment).toMatchObject(expected);
+        });
+    });
+
+     describe('getShipmentBySearchString', () => {
+        it('Should return the sensor with the given id', async () => {
+            // Add shipment
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['12'], gateway);
+
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('ShipmentContract', 'getShipmentBySearchString', ['12', '', '1'], gateway);
+
+            const shipments = toObject<PaginationResponse<Shipment>>(response);
+
+            const expected = {
+                id: '12',
+                sensors: [],
+            };
+
+             expect(shipments.result).toEqual(
                 expect.arrayContaining([expect.objectContaining(expected)])
             )
         });
