@@ -1822,6 +1822,10 @@ select {
   margin-top: -16rem;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .max-h-860-px {
   max-height: 860px;
 }
