@@ -180,7 +180,7 @@ export async function getShipments({params}: Request, res: Response) {
 }
 
 export async function getShipmentBySearchString({params}: Request, res: Response) {
-  const {searchString, index = '', amount = 50} = params;
+  const {searchString = "", index = "", amount = 50} = params;
 
   const gateway = await connect();
 

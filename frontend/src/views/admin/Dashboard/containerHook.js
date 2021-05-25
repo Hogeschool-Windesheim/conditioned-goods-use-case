@@ -1,32 +1,24 @@
-import {useState} from 'react';
-import useFetch from 'use-http'
+import useFetch from 'use-http';
+import useDebounce from 'hooks/debounce.js';
 
 const DEFAULT = {result: [], count: 0, bookmark: ""}
-const PAGE_COUNT = 50;
 
 /** 
  * Handle dashboard methods.
  */
 export default function useDashboard() {
-    const [bookmark, setBookmark] = useState("");
-    const [canFetch, setCanFetch] = useState(true);
+    const {get, data = DEFAULT} = useFetch(`${process.env.REACT_APP_API_URL}/shipments/search`, []);
+    const {debounce} = useDebounce();
 
-    function onNewData(oldData = DEFAULT, newData) {
-        if (newData.count < PAGE_COUNT) setCanFetch(false);
-        return {...newData, result: [...oldData.result, ...newData.result]}
-    }
+    function search(e) {
+        const searchstring = e.target.value;
+        const url = searchstring.length > 0 ? `${searchstring}` : '';
 
-    const {data = DEFAULT} = useFetch(`${process.env.REACT_APP_API_URL}/shipments/${PAGE_COUNT}/${bookmark}`, {
-        onNewData: onNewData
-    }, [bookmark]);
-
-    function onFetchMore() {
-        setBookmark(data.bookmark);
+        debounce(() => get(url), 500);
     }
 
     return {
-        canFetch,
         data,
-        onFetchMore,
+        search,
     }
 }

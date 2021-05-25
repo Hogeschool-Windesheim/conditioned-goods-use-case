@@ -5,7 +5,6 @@ import useDashboard from './containerHook';
 
 // components
 import CardTable from "components/Cards/CardTable.js";
-import Pagination from "components/Pagination.js";
 
 const LABELS = ["Id", "Sensors", "Temperature", "Last updated", "Created on"];
 
@@ -13,7 +12,7 @@ const LABELS = ["Id", "Sensors", "Temperature", "Last updated", "Created on"];
  * Dashboard page
  */
 export default function Dashboard() {
-  const {data, canFetch, onFetchMore} = useDashboard();
+  const {data, search} = useDashboard();
 
   function renderRow({id, temperature, sensors, createdAt}, i) {
     return (
@@ -43,8 +42,9 @@ export default function Dashboard() {
   }
 
   return (
-    <Pagination canFetch={canFetch} fetchMore={onFetchMore}>
+    <div className="relative flex flex-col items-end">
+      <input type="text" className="form-input mb-2 rounded w-40" placeholder="Search shipment" onChange={search} />
       <CardTable labels={LABELS} items={data.result} renderItem={renderRow} />
-    </Pagination>
+    </div>
   );
 }

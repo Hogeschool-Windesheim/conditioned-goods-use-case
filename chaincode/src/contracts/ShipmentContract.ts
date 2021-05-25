@@ -68,7 +68,7 @@ export class ShipmentContract extends Contract {
      * Get all shipments from the ledger
      * Note: the bookmark will be included in the results.
      */
-    public async getShipments(ctx: Context, index, amount) {
+    public async getShipments(ctx: Context, index: string, amount: string) {
         // Query all data in the ledger.
         const {iterator, metadata} = await ctx.stub.getStateByRangeWithPagination('', '', amount, index);
         const shipments = await toArrayOfObjects<Shipment>(iterator);
@@ -135,7 +135,7 @@ export class ShipmentContract extends Contract {
     /** 
      * Get shipments by searchString.
      */
-    public async getShipmentBySearchString(ctx: Context, string: string, index, amount) {
+    public async getShipmentBySearchString(ctx: Context, string: string, index: string, amount: string) {
         const query = {
             selector: {
                 id: {
@@ -144,7 +144,7 @@ export class ShipmentContract extends Contract {
             }
         }
 
-        const {iterator, metadata} = await ctx.stub.getQueryResultWithPagination(toJson(query), amount, index);
+        const {iterator, metadata} = await ctx.stub.getQueryResultWithPagination(toJson(query), parseInt(amount), index);
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
         return {

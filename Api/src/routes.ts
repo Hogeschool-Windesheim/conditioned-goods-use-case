@@ -19,7 +19,7 @@ export enum routes {
     GETHISTORY = '/shipment/:id/measurements',
     GETMEASUREMENT ='/shipment/:id/measurement',
     ADDMEASUREMENT = '/shipment/measurement/add',
-    SEARCHSHIPMENT = '/shipment/search/:searchString/:amount?/:index?',
+    SEARCHSHIPMENT = '/shipments/search/:searchString?/:amount?/:index?',
 }
 
 export enum routeTypes {
@@ -37,6 +37,7 @@ type Route = {
  * Resolve get routes.
  */
 export const routeResolver: {[index: string]: Route} = {
+    [routes.SEARCHSHIPMENT]: {type: routeTypes.GET, schema: getShipmentBySearchStringSchema, func: getShipmentBySearchString},
     [routes.SHIPMENTS]: {type: routeTypes.GET, schema: getShipmentsSchema, func: getShipments},
     [routes.SHIPMENT]: {type: routeTypes.GET, schema: getShipmentSchema, func: getShipment},
     [routes.SHIPMENTEXIST]: {type: routeTypes.GET, schema: shipmentExistsSchema, func: shipmentExist},
@@ -46,6 +47,5 @@ export const routeResolver: {[index: string]: Route} = {
     [routes.ADDSHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: addShipment},
     [routes.REGISTERSENSOR]: {type: routeTypes.POST, schema: hasSensorSchema, func: registerSensor},
     [routes.UPDATESHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: updateShipment},
-    [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement},
-    [routes.SEARCHSHIPMENT]: {type: routeTypes.GET, schema: getShipmentBySearchStringSchema, func: getShipmentBySearchString}
+    [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement}
 };

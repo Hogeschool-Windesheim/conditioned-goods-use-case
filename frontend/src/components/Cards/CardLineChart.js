@@ -37,7 +37,7 @@ export default function CardLineChart({title, subtitle, dataset}) {
                   hour: 'HH:mm'
                 },
                 unitStepSize: 1,
-                tooltipFormat: 'HH:mm'
+                tooltipFormat: 'dd-MM-yyy HH:mm'
               },
               ticks: {
                 fontColor: "rgba(255,255,255,.7)",
