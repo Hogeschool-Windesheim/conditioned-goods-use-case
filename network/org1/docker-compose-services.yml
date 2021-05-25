@@ -2,15 +2,15 @@
 version: '3.2'
 
 networks:
-    skcript:
+    Kontgoods:
         external: 
-            name: skcript
+            name: Kontgoods
 
 services:
 
     ca_org1:
         networks:
-            skcript:
+            Kontgoods:
                 aliases:
                     - ca_org1
         deploy:
@@ -73,7 +73,7 @@ services:
             - /var/mynetwork/bin/:/var/bin
             # - /var/mynetwork/bin/jq:/usr/local/bin/jq
         networks:
-            - skcript
+            - Kontgoods
 
     couchdb0_org1:
         deploy:
@@ -88,7 +88,7 @@ services:
         image: hyperledger/fabric-couchdb:latest
         hostname: couchdb0_org1
         networks:
-           - skcript    
+           - Kontgoods    
 
     couchdb1_org1:
         deploy:
@@ -103,4 +103,4 @@ services:
         image: hyperledger/fabric-couchdb:latest
         hostname: couchdb1_org1
         networks:
-           - skcript    
+           - Kontgoods    
