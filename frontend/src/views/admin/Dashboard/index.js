@@ -1,16 +1,19 @@
-/*eslint-disable*/
 import React from "react";
 import {Link} from "react-router-dom";
-import useFetch from 'use-http'
 import {DateTime} from 'luxon';
+import useDashboard from './containerHook';
 
 // components
 import CardTable from "components/Cards/CardTable.js";
+import Pagination from "components/Pagination.js";
 
 const LABELS = ["Id", "Sensors", "Temperature", "Last updated", "Created on"];
 
+/** 
+ * Dashboard page
+ */
 export default function Dashboard() {
-  const {loading, error, data = []} = useFetch(`${process.env.REACT_APP_API_URL}/shipments`, {}, []);
+  const {data, canFetch, onFetchMore} = useDashboard();
 
   function renderRow({id, temperature, sensors, createdAt}, i) {
     return (
@@ -40,8 +43,8 @@ export default function Dashboard() {
   }
 
   return (
-    <>
-      <CardTable labels={LABELS} items={data} renderItem={renderRow} />
-    </>
+    <Pagination canFetch={canFetch} fetchMore={onFetchMore}>
+      <CardTable labels={LABELS} items={data.result} renderItem={renderRow} />
+    </Pagination>
   );
 }

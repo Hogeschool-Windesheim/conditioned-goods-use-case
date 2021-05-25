@@ -9,7 +9,7 @@ import {getHistory, getMeasurement, addMeasurement} from './controllers/measurem
  * API routes.
  */
 export enum routes {
-    SHIPMENTS = '/shipments/:index?/:amount?',
+    SHIPMENTS = '/shipments/:amount?/:index?/',
     SHIPMENT = '/shipment/:id',
     SHIPMENTEXIST = '/shipment/:id/exist',
     HASSENSOR = '/shipment/:id/sensor/:sensorID',
@@ -19,7 +19,7 @@ export enum routes {
     GETHISTORY = '/shipment/:id/measurements',
     GETMEASUREMENT ='/shipment/:id/measurement',
     ADDMEASUREMENT = '/shipment/measurement/add',
-    SEARCHSHIPMENT = '/shipment/search/:searchString/:index?/:amount?',
+    SEARCHSHIPMENT = '/shipment/search/:searchString/:amount?/:index?',
 }
 
 export enum routeTypes {

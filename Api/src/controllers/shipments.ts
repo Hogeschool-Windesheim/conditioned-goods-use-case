@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {connect} from '../gateway';
 import {toObject} from '../helpers';
-import {Shipment} from '../types';
+import {Shipment, Pagination} from '../types';
 
 /**
  * Get shipments.
@@ -20,7 +20,7 @@ export async function getShipments({params}: Request, res: Response) {
       // Query data
       const result = await contract.evaluateTransaction('getShipments', `${index}`, `${amount}`);
 
-      res.json(toObject<Shipment>(result));
+      res.json(toObject<Pagination<Shipment>>(result));
     } catch(err) {
       // TODO: An error logger like sentry would be nice.
       console.log(err);
@@ -194,7 +194,7 @@ export async function getShipmentBySearchString({params}: Request, res: Response
     // Query data
     const result = await contract.submitTransaction('getShipmentBySearchString', `${searchString}`, `${index}`, `${amount}`);
 
-    res.json(toObject<Shipment>(result));
+    res.json(toObject<Pagination<Shipment>>(result));
   }catch(err) {
     console.log(err);
   } finally {
