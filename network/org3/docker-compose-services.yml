@@ -10,7 +10,7 @@ services:
 
     ca_org3:
         networks:
-            skcript:
+            Kontgoods:
                 aliases:
                     - ca_org3
         deploy:
