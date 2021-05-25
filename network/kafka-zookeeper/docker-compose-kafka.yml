@@ -4,7 +4,7 @@ networks:
   skcript:
     # If network is created with deplyment, Chaincode container cannot connect to network
     external:
-      name: skcript
+      name: Kontgoods
 
 services:
   kafka0:
