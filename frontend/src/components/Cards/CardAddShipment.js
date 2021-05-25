@@ -1,20 +1,27 @@
-/*eslint-disable*/
-import React, { useEffect, useState } from "react";
-import useFetch, { Provider } from 'use-http'
+import React, {useState } from "react";
+import useFetch from 'use-http';
 
 
 export default function CardAddShipment() {
-    const [shipmentId, setShipmentId] = useState('');
-    const {post, Response, loading, error} = useFetch('http://localhost:8080/shipment/add')
+    // const [shipmentId, setShipmentId] = useState('');
+    const [form, setState] = useState({
+        shipmentId: '',
+    });
+    console.log(form.shipmentId, form.test)
+    const {post} = useFetch('http://localhost:8080/shipment/add');
 
-    function changeShipmentId(e){
-        setShipmentId(e.target.value);
-        console.log({shipmentId});
+    function updateField(e){
+        const value = e.target.value;
+        setState({
+            ...form,
+            [e.target.name]: value
+        });
     }
 
-    async function PostShipment(e){
+    function PostShipment(e){
         e.preventDefault();
-        post({id: shipmentId}).then(window.location.href = "http://localhost:3000/admin/dashboard");
+        console.log(form.shipmentId, form.test)
+        post(form).then(window.location.href = "http://localhost:3000/admin/dashboard");
     }
 
   return (
@@ -29,11 +36,8 @@ export default function CardAddShipment() {
             <form onSubmit={PostShipment}>
                 <div className="py-2">
                     <p className="font-medium">Shipment ID:</p>
-                    <label>
-                    <input onChange={changeShipmentId} value={shipmentId} type="text" placeholder="shipment" className="border" />
-                    </label>
+                    <input value={form.shipmentId} name="shipmentId" onChange={updateField} type="text" placeholder="shipment ID" className="border" />
                 </div>
-
                 <div className="py-2">
                     <button type="submit" className="bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded">Add Shipment</button>
                 </div>

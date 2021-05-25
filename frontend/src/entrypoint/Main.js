@@ -5,8 +5,6 @@ import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
 
-
-
 export default function Main() {
     return (
         <BrowserRouter>
