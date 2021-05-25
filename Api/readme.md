@@ -1,5 +1,5 @@
 ## Api
-This repository contains a Restfull Api developed as an express app, which can be deployed on its own server.
+This repository contains a Rest Api developed build with Express.js, which can be deployed on its own server.
 
 ## Getting Started
 The steps below will help you setup a working copy of this repository running locally on your machine for development and testing purpose.
@@ -32,4 +32,4 @@ npm run start
 
 ### Interact with the Api
 
-Interacting with the Api is possible trough the postman application
+Interaction with the Api is possible trough the postman application
