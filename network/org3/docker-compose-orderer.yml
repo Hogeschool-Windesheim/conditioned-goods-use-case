@@ -2,9 +2,9 @@
 version: '3.2'
 
 networks:
-    kontgoods:
+    Kontgoods:
         external: 
-            name: kontgoods
+            name: Kontgoods
 
 services:
 
@@ -60,6 +60,6 @@ services:
         ports:
           - 9050:7050
         networks:
-          kontgoods:
+          Kontgoods:
             aliases:
                 - orderer2.example.com
