@@ -2,9 +2,9 @@
 version: '3.2'
 
 networks:
-    skcript:
+    Kontgoods:
         external: 
-            name: skcript
+            name: Kontgoods
 
 services:
 
@@ -60,6 +60,6 @@ services:
             - /var/mynetwork/certs/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls:/var/hyperledger/tls
             - /var/mynetwork/certs/config/:/var/hyperledger/config
         networks:
-          skcript:
+          Kontgoods:
             aliases:
                 - orderer0.example.com
