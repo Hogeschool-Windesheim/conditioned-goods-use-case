@@ -2,9 +2,9 @@
 version: '3.2'
 
 networks:
-  skcript:
+  Kontgoods:
     external: 
-      name: skcript
+      name: Kontgoods
 
 services:
   
@@ -60,6 +60,6 @@ services:
     ports:
       - 8050:7050
     networks:
-      skcript:
+      Kontgoods:
         aliases:
           - orderer1.example.com
