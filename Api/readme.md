@@ -1,11 +1,10 @@
-## RestApi
-An Restfull Api developed as an express app, which can bedeployed on its own server.
+## Api
+This repository contains a Restfull Api developed as an express app, which can be deployed on its own server.
 
 ## Getting Started
 The steps below will help you setup a working copy of this repository running locally on your machine for development and testing purpose.
 
 ### Prerequisites
-- Docker (desktop);
 - Node;
 - NPM or Yarn;
 
@@ -20,11 +19,11 @@ or
 ```
 npm install
 ```
-Copy the `.env-example` file and rename it to `.env` and fill in the environment to your own values. The values inside the `.env` file will be available in the code through `process.env.{variable_name}`. Registered variables are:
+Copy the `.env-example` file and rename it to `.env` and fill in the variables to your own values. The values inside the `.env` file will be available in the code through `process.env.{variable_name}`. Registered variables are:
 - PORT: Port of the server (for example: 8080).
 
 ### Running the Api
-If all of the abouve requirements and step are followed it is possible to run the Api:
+If all of the above requirements and step are followed it is possible to run the Api:
 
 Run the follwing command:
 ```
@@ -33,4 +32,4 @@ npm run start
 
 ### Interact with the Api
 
-Interacting with the Api is possible trough postman, the IBM Blockchain Platform(see readme in the chaincode file) or bij running the frontend environment that is part of this project. 
+Interacting with the Api is possible trough the postman application
