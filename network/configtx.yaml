@@ -129,10 +129,10 @@ Application: &ApplicationDefaults
 
 Capabilities:
     Global: &ChannelCapabilities
-        V1_1: true
+        V2_3: true
 
     Orderer: &OrdererCapabilities
-        V1_1: true
+        V2_3: true
 
     Application: &ApplicationCapabilities
-        V1_1: true
+        V2_3: true
