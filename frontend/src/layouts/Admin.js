@@ -11,6 +11,7 @@ import PaginationProvider from "components/Providers/Pagination.js";
 // views
 import Dashboard from "views/admin/Dashboard/index.js";
 import Shipment from "views/admin/Shipment/index.js";
+import Shipments from "views/admin/Shipments/index.js";
 
 export default function Admin() {
   return (
@@ -24,6 +25,7 @@ export default function Admin() {
             <Switch>
               <Route path="/admin/dashboard" exact component={Dashboard} />
               <Route path="/admin/shipment/:id" exact component={Shipment} />
+              <Route path="/admin/shipments" exact component={Shipments} />
               <Redirect from="/admin" to="/admin/dashboard" />
             </Switch>
             <FooterAdmin />

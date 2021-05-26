@@ -70,7 +70,7 @@ export class ShipmentContract extends Contract {
      */
     public async getShipments(ctx: Context, index: string, amount: string) {
         // Query all data in the ledger.
-        const {iterator, metadata} = await ctx.stub.getStateByRangeWithPagination('', '', amount, index);
+        const {iterator, metadata} = await ctx.stub.getStateByRangeWithPagination('', '', parseInt(amount), index);
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
         return {
