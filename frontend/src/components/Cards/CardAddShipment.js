@@ -1,44 +1,48 @@
 import React, {useState } from "react";
 import useFetch from 'use-http';
 
-
 export default function CardAddShipment() {
-    const [form, setState] = useState({
+    const [form, setForm] = useState({
         id: '',
     });
-    const [buttonText, setButton] = useState("Add Shipment");
-    const [buttonClass, setButtonClass] = useState("bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded")
+    const [buttonText] = useState({
+        idle: "Add Shipment",
+        load: "loading...",
+        error: "Error ",
+        succes: "succes"
+    });
+    const [buttonClass] = useState({
+        idle: "bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded",
+        load: "bg-yellow-500 text-white font-bold py-2 px-4 rounded",
+        error: "bg-red-600 text-white font-bold py-2 px-4 rounded",
+        succes: "bg-green-500 text-white font-bold py-2 px-4 rounded"
+    });
+    const [buttonState, SetButtonState] = useState({
+        text: buttonText.idle,
+        class: buttonClass.idle
+    });
     const {post, response} = useFetch('http://localhost:8080/shipment/add');
 
     function updateField(e){
-        const value = e.target.value;
-        setState({
+        setForm({
             ...form,
-            [e.target.name]: value
+            [e.target.name]: e.target.value
         });
-        setButton("Add Shipment");
-        setButtonClass("bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded");
+        SetButtonState({text:buttonText.idle, class:buttonClass.idle});
     }
 
-    function PostShipment(e){
+    async function PostShipment(e){
+        SetButtonState({text:buttonText.load, class:buttonClass.load});
         e.preventDefault();
-        setButton("loading...");
-        setButtonClass("bg-yellow-500 text-white font-bold py-2 px-4 rounded");
-        post(form).then( 
-            setTimeout(() => {
-                if (response.ok === true){
-                    setButton("succes");
-                    setButtonClass("bg-green-500 text-white font-bold py-2 px-4 rounded");
-                    setTimeout(() => {
-                    window.location.href = "http://localhost:3000/admin/dashboard"
-                    }, 1000);
-                }
-                if (response.ok === false){
-                    setButton("Error " + response.status + " (" + response.statusText +")");
-                    setButtonClass("bg-red-600 text-white font-bold py-2 px-4 rounded");
-                }
-            }, 1000),
-        );
+        await post(form).then(() => {
+            if (response.ok === true){
+                SetButtonState({text:buttonText.succes, class:buttonClass.succes});
+                // window.location.href = "http://localhost:3000/admin/shipment/" + form.id;
+            }
+            if (response.ok === false){
+                SetButtonState({text:buttonText.error + response.status + " (" + response.statusText +")", class: buttonClass.error});
+            }
+        });
     }
 
   return (
@@ -48,7 +52,6 @@ export default function CardAddShipment() {
             Add Shipment
           </h2>
         </div>
-      
         <div className="p-4">
             <form onSubmit={PostShipment}>
                 <div className="py-2">
@@ -56,8 +59,8 @@ export default function CardAddShipment() {
                     <input value={form.id} name="id" onChange={updateField} type="text" placeholder="shipment ID" className="border" />
                 </div>
                 <div className="py-2">
-                    <button type="submit" className={buttonClass}>
-                        {buttonText}
+                    <button type="submit" className={buttonState.class}>
+                        {buttonState.text}
                     </button>
                 </div>
             </form>
