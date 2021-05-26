@@ -24,7 +24,6 @@ export default function CardAddShipment() {
         e.preventDefault();
         setButton("loading...");
         setButtonClass("bg-yellow-500 text-white font-bold py-2 px-4 rounded");
-        console.log(form)
         post(form).then( 
             setTimeout(() => {
                 if (response.ok === true){
@@ -33,12 +32,10 @@ export default function CardAddShipment() {
                     setTimeout(() => {
                     window.location.href = "http://localhost:3000/admin/dashboard"
                     }, 1000);
-                    console.log(response);
                 }
                 if (response.ok === false){
                     setButton("Error " + response.status + " (" + response.statusText +")");
                     setButtonClass("bg-red-600 text-white font-bold py-2 px-4 rounded");
-                    console.log(response);
                 }
             }, 1000),
         );
