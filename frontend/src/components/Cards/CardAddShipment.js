@@ -3,12 +3,12 @@ import useFetch from 'use-http';
 
 
 export default function CardAddShipment() {
-    // const [shipmentId, setShipmentId] = useState('');
     const [form, setState] = useState({
-        shipmentId: '',
+        id: '',
     });
-    console.log(form.shipmentId, form.test)
-    const {post} = useFetch('http://localhost:8080/shipment/add');
+    const [buttonText, setButton] = useState("Add Shipment");
+    const [buttonClass, setButtonClass] = useState("bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded")
+    const {post, response} = useFetch('http://localhost:8080/shipment/add');
 
     function updateField(e){
         const value = e.target.value;
@@ -16,12 +16,32 @@ export default function CardAddShipment() {
             ...form,
             [e.target.name]: value
         });
+        setButton("Add Shipment");
+        setButtonClass("bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded");
     }
 
     function PostShipment(e){
         e.preventDefault();
-        console.log(form.shipmentId, form.test)
-        post(form).then(window.location.href = "http://localhost:3000/admin/dashboard");
+        setButton("loading...");
+        setButtonClass("bg-yellow-500 text-white font-bold py-2 px-4 rounded");
+        console.log(form)
+        post(form).then( 
+            setTimeout(() => {
+                if (response.ok === true){
+                    setButton("succes");
+                    setButtonClass("bg-green-500 text-white font-bold py-2 px-4 rounded");
+                    setTimeout(() => {
+                    window.location.href = "http://localhost:3000/admin/dashboard"
+                    }, 1000);
+                    console.log(response);
+                }
+                if (response.ok === false){
+                    setButton("Error " + response.status + " (" + response.statusText +")");
+                    setButtonClass("bg-red-600 text-white font-bold py-2 px-4 rounded");
+                    console.log(response);
+                }
+            }, 1000),
+        );
     }
 
   return (
@@ -36,10 +56,12 @@ export default function CardAddShipment() {
             <form onSubmit={PostShipment}>
                 <div className="py-2">
                     <p className="font-medium">Shipment ID:</p>
-                    <input value={form.shipmentId} name="shipmentId" onChange={updateField} type="text" placeholder="shipment ID" className="border" />
+                    <input value={form.id} name="id" onChange={updateField} type="text" placeholder="shipment ID" className="border" />
                 </div>
                 <div className="py-2">
-                    <button type="submit" className="bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded">Add Shipment</button>
+                    <button type="submit" className={buttonClass}>
+                        {buttonText}
+                    </button>
                 </div>
             </form>
         </div>
