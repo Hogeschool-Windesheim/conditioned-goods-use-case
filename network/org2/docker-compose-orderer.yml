@@ -43,7 +43,7 @@ services:
             - ORDERER_TLS_CLIENTROOTCAS_FILES=/var/hyperledger/users/Admin@example.com/tls/ca.crt
             - ORDERER_TLS_CLIENTCERT_FILE=/var/hyperledger/users/Admin@example.com/tls/client.crt
             - ORDERER_TLS_CLIENTKEY_FILE=/var/hyperledger/users/Admin@example.com/tls/client.key
-            - ORDERER_HOST=orderer1.example.com
+            - ORDERER_HOST=orderer0.example.com
             - CONFIGTX_ORDERER_ORDERERTYPE=kafka
             - ORDERER_KAFKA_VERSION=1.0.2
             - CONFIGTX_ORDERER_KAFKA_BROKERS=[kafka0:9092,kafka1:9092,kafka2:9092,kafka3:9092]
