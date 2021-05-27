@@ -32,4 +32,4 @@ npm run start
 
 ### Interact with the Api
 
-Interacting with the Api is possible trough the postman application
+Interaction with the Api is possible trough the postman application

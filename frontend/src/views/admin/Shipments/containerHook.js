@@ -16,8 +16,8 @@ export default function useShipments() {
         return {...newData, result: [...oldData.result, ...newData.result]}
     }
 
-    const {data = DEFAULT} = useFetch(`${process.env.REACT_APP_API_URL}/shipments/${PAGE_COUNT}/${bookmark}`, {
-        onNewData: onNewData
+    const {data = DEFAULT} = useFetch(`/shipments/${PAGE_COUNT}/${bookmark}`, {
+        onNewData
     }, [bookmark]);
 
     function onFetchMore() {
