@@ -1,6 +1,3 @@
-
-import {Object, Property} from 'fabric-contract-api';
-
 /** 
  * Measurement
  */

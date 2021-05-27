@@ -15,7 +15,7 @@ export default function CardShipment({shipment}) {
         </div>
         <div className="p-4 pt-6 flex flex-col items-center mb-4">
           <div className="flex mb-4">
-            <p className="text-6xl text-black font-medium">{shipment?.temperature?.value || 0}</p>
+            <p className="text-6xl text-black font-medium">{shipment?.temperature?.value || '-'}</p>
             <p className="font-medium">°C</p>
           </div>
           <p className="text-gray-500">Last temperature</p>

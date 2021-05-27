@@ -39,7 +39,7 @@ export class MeasurementContract extends Contract {
      * NOTE: it's currently not possible to use pagination on the history query (https://jira.hyperledger.org/browse/FAB-12881, https://jira.hyperledger.org/browse/FAB-12183)
      */
     public async getHistory(ctx: Context, id: string) {
-        const iterator = ctx.stub.getHistoryForKey(id);
+        const iterator = await ctx.stub.getHistoryForKey(id);
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
         // Map through the shipment history and get the temperature values.

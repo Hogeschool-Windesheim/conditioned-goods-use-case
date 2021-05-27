@@ -1437,6 +1437,11 @@ select {
           align-items: center;
 }
 
+.items-end {
+  -webkit-align-items: flex-end;
+          align-items: flex-end;
+}
+
 .items-stretch {
   -webkit-align-items: stretch;
           align-items: stretch;
