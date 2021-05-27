@@ -130,7 +130,7 @@ export default function Sidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Shipments
+                  All shipments
                 </Link>
               </li>
             </ul>
