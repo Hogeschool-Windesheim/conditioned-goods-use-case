@@ -19,6 +19,7 @@ services:
                 constraints:
                     - node.hostname == intel-sawtooth
         image: hyperledger/fabric-orderer:2.3
+        dns_search: .
         working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
         command: orderer
         hostname: orderer2.example.com
