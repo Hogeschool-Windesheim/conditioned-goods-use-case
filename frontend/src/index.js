@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
+import "assets/styles/main.css";
 
 import Main from 'entrypoint/Main.js';
 

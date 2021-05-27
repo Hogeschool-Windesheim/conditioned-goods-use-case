@@ -24,11 +24,16 @@ export function toJson(input) {
  * Convert a buffer to an Array of JavaScript Objects.
  */
 export async function toArrayOfObjects<T>(iterator: any): Promise<Array<T>> {
-    const results = [];
+    const result = [];
 
-    for await (const res of iterator){
-        results.push(toObject(res.value));
+    let res = await iterator.next();
+    while (!res.done) {  
+        if (res.value) result.push(toObject<T>(res.value.value));
+
+        res = await iterator.next();
     }
 
-    return results
+    await iterator.close();
+
+    return result;
 }
