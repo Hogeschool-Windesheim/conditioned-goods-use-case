@@ -40,13 +40,7 @@ export default function CardAddShipment() {
     async function PostShipment(e){
         e.preventDefault();
         await post(form);
-        if (response.ok){
-            openSucces("Shipment accepted succesfully!");
-            push("/admin/shipment/" + form.id);
-        }
-        if (!response.ok){
-            openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!");
-        }
+        if (response.ok){openSucces("Shipment accepted succesfully!"); push("/admin/shipment/" + form.id);} if (!response.ok){openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!");}
     }
 
   return (

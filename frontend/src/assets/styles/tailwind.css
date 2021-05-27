@@ -2443,10 +2443,6 @@ select {
   transition-timing-function: linear;
 }
 
-.duration-150 {
-  transition-duration: 150ms;
-}
-
 .loader {
   border-top-color: #3498db;
   -webkit-animation: spinner 1.5s linear infinite;
