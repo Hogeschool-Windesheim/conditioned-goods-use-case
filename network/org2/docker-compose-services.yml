@@ -23,6 +23,7 @@ services:
                 constraints:
                     - node.hostname == DLG
         image: hyperledger/fabric-ca:latest
+        dns_search: .
         hostname: ca.org2.example.com
         environment:
             - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
@@ -46,6 +47,7 @@ services:
                 constraints:
                     - node.hostname == DLG
         image: hyperledger/fabric-couchdb:latest
+        dns_search: .
         hostname: couchdb0_org2
         networks:
            - Kontgoods
@@ -61,6 +63,7 @@ services:
                 constraints:
                     - node.hostname == DLG
         image: hyperledger/fabric-couchdb:latest
+        dns_search: .
         hostname: couchdb1_org2
         networks:
            - Kontgoods
