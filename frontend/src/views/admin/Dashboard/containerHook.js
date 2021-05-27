@@ -7,7 +7,7 @@ const DEFAULT = {result: [], count: 0, bookmark: ""}
  * Handle dashboard methods.
  */
 export default function useDashboard() {
-    const {get, data = DEFAULT} = useFetch(`${process.env.REACT_APP_API_URL}/shipments/search`, []);
+    const {get, data = DEFAULT} = useFetch(`/shipments/search`, []);
     const {debounce} = useDebounce();
 
     function search(e) {
