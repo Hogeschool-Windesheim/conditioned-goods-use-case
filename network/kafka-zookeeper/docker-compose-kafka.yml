@@ -19,7 +19,8 @@ services:
           - node.hostname == Lambweston
     hostname: kafka0
     image: hyperledger/fabric-kafka
-    # Give network alias
+ ports:
+      - "9092:9092"
     networks:
       Kontgoods:
         aliases:
@@ -49,7 +50,8 @@ services:
           - node.hostname == Lambweston
     hostname: kafka1
     image: hyperledger/fabric-kafka
-    # Give network alias
+ ports:
+      - "9092:9092"
     networks:
       Kontgoods:
         aliases:
@@ -78,7 +80,8 @@ services:
           - node.hostname == Lambweston
     hostname: kafka2
     image: hyperledger/fabric-kafka
-    # Give network alias
+ ports:
+      - "9092:9092"
     networks:
       Kontgoods:
         aliases:
@@ -107,7 +110,8 @@ services:
           - node.hostname == Lambweston
     hostname: kafka3
     image: hyperledger/fabric-kafka
-    # Give network alias
+ ports:
+      - "9092:9092"
     networks:
       Kontgoods:
         aliases:
