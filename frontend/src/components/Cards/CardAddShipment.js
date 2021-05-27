@@ -1,48 +1,52 @@
+import { useHistory } from "react-router-dom";
+import { useSnackbar } from 'react-simple-snackbar'
 import React, {useState } from "react";
 import useFetch from 'use-http';
 
+const succesOptions = {
+    position: 'top-right',
+    style: {
+        backgroundColor: "rgba(16, 185, 129)",
+        border: '1px solid black',
+        fontSize: '17px',
+    }
+};
+
+const errorOptions = {
+    position: 'top-right',
+    style: {
+        backgroundColor: "rgba(220, 38, 38)",
+        border: '1px solid black',
+        fontSize: '17px',
+    }
+};
+
 export default function CardAddShipment() {
+    const {post, response} = useFetch('http://localhost:8080/shipment/add');
+    const {push} = useHistory();
+    const [openSucces] = useSnackbar(succesOptions);
+    const [openError] = useSnackbar(errorOptions);
     const [form, setForm] = useState({
         id: '',
     });
-    const [buttonText] = useState({
-        idle: "Add Shipment",
-        load: "loading...",
-        error: "Error ",
-        succes: "succes"
-    });
-    const [buttonClass] = useState({
-        idle: "bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded",
-        load: "bg-yellow-500 text-white font-bold py-2 px-4 rounded",
-        error: "bg-red-600 text-white font-bold py-2 px-4 rounded",
-        succes: "bg-green-500 text-white font-bold py-2 px-4 rounded"
-    });
-    const [buttonState, SetButtonState] = useState({
-        text: buttonText.idle,
-        class: buttonClass.idle
-    });
-    const {post, response} = useFetch('http://localhost:8080/shipment/add');
 
     function updateField(e){
         setForm({
             ...form,
             [e.target.name]: e.target.value
         });
-        SetButtonState({text:buttonText.idle, class:buttonClass.idle});
     }
 
     async function PostShipment(e){
-        SetButtonState({text:buttonText.load, class:buttonClass.load});
         e.preventDefault();
-        await post(form).then(() => {
-            if (response.ok === true){
-                SetButtonState({text:buttonText.succes, class:buttonClass.succes});
-                // window.location.href = "http://localhost:3000/admin/shipment/" + form.id;
-            }
-            if (response.ok === false){
-                SetButtonState({text:buttonText.error + response.status + " (" + response.statusText +")", class: buttonClass.error});
-            }
-        });
+        await post(form);
+        if (response.ok){
+            openSucces("Shipment accepted succesfully!");
+            push("/admin/shipment/" + form.id);
+        }
+        if (!response.ok){
+            openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!");
+        }
     }
 
   return (
@@ -59,8 +63,8 @@ export default function CardAddShipment() {
                     <input value={form.id} name="id" onChange={updateField} type="text" placeholder="shipment ID" className="border" />
                 </div>
                 <div className="py-2">
-                    <button type="submit" className={buttonState.class}>
-                        {buttonState.text}
+                    <button type="submit" className="bg-lightBlue-600 hover:bg-lightBlue-800 text-white font-bold py-2 px-4 rounded">
+                        Add Shipment
                     </button>
                 </div>
             </form>

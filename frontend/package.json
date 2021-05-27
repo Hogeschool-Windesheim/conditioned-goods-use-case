@@ -20,6 +20,7 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
+    "react-simple-snackbar": "1.1.11",
     "tailwindcss": "2.1.2",
     "use-http": "1.0.20"
   },

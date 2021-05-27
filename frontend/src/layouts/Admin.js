@@ -1,5 +1,6 @@
 import React from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
+import SnackbarProvider from "react-simple-snackbar"
 
 // components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
@@ -15,6 +16,7 @@ import AddShipment from "views/admin/AddShipment.js";
 export default function Admin() {
   return (
     <>
+    <SnackbarProvider>
       <Sidebar />
       <div className="min-h-screen relative md:ml-64 bg-blueGray-100">
         <AdminNavbar />
@@ -30,6 +32,7 @@ export default function Admin() {
           <FooterAdmin />
         </div>
       </div>
+    </SnackbarProvider>
     </>
   );
 }
