@@ -1,4 +1,3 @@
-
 version: '3.2'
 
 networks:
@@ -17,7 +16,7 @@ services:
                 max_attempts: 3
             placement:
                 constraints:
-                    - node.hostname == intel-sawtooth
+                    - node.hostname == Lambweston
         image: hyperledger/fabric-orderer:2.3
         dns_search: .
         working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
@@ -35,11 +34,11 @@ services:
             - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/tls/server.crt
             - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/tls/ca.crt]
             - ORDERER_HOME=/var/hyperledger/orderer
-            - ORDERER_GENERAL_LISTENPORT=7050
+            - ORDERER_GENERAL_LISTENPORT=8050
             - ORDERER_GENERAL_LEDGERTYPE=ram
             - CONFIGTX_ORDERER_BATCHSIZE_MAXMESSAGECOUNT=10
             - CONFIGTX_ORDERER_BATCHTIMEOUT=2s
-            - CONFIGTX_ORDERER_ADDRESSES=[127.0.0.1:7050]
+            - CONFIGTX_ORDERER_ADDRESSES=[127.0.0.1:8050]
             - ORDERER_TLS_CLIENTAUTHREQUIRED=false
             - ORDERER_TLS_CLIENTROOTCAS_FILES=/var/hyperledger/users/Admin@example.com/tls/ca.crt
             - ORDERER_TLS_CLIENTCERT_FILE=/var/hyperledger/users/Admin@example.com/tls/client.crt
@@ -54,13 +53,13 @@ services:
             - ORDERER_GENERAL_GENESISPROFILE=SecureKafka
             - ORDERER_ABSOLUTEMAXBYTES=10MB
             - ORDERER_PREFERREDMAXBYTES=512KB
+        ports:
+          - 9050:9050
         volumes:
             - /var/mynetwork/certs/crypto-config/ordererOrganizations/example.com/users:/var/hyperledger/users
-            - /var/mynetwork/certs/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/msp
-            - /var/mynetwork/certs/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls:/var/hyperledger/tls
+            - /var/mynetwork/certs/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp:/var/hyperledger/msp
+            - /var/mynetwork/certs/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls:/var/hyperledger/tls
             - /var/mynetwork/certs/config/:/var/hyperledger/config
-        ports:
-          - 9050:7050
         networks:
           Kontgoods:
             aliases:
