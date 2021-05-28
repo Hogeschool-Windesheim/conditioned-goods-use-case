@@ -1,5 +1,6 @@
 frontend/.env
 Api/.env
+Api/profiles/
 chaincode/.env
 frontend/.env
 package-lock.json
