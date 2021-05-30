@@ -12,8 +12,8 @@ export class ShipmentContract extends Contract {
      */
     public async addShipment(ctx: Context, id: string) {
 
-        if (!this.shipmentExist(ctx, id)) {
-            throw new Error("Shipment with this id does not exist.");
+        if (await this.shipmentExist(ctx, id)) {
+            throw new Error("Shipment with this id does already exist.");
         }
 
         const shipment: Shipment = {
