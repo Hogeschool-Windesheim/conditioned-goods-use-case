@@ -86,15 +86,15 @@ export class ShipmentContract extends Contract {
     public async registerSensor(ctx: Context, id: string, sensorID: string) {
         const shipment = await this.getShipment(ctx, id);
 
-        if (!shipment.sensors.includes(sensorID)) {
-            shipment.sensors = [...shipment.sensors, sensorID];
-
-            await ctx.stub.putState(id, toBytes<Shipment>(shipment));
-
-            return sensorID;
+        if (shipment.sensors.includes(sensorID)) {
+            throw new Error("Sensor is already registered to this shipment.")
         }
 
-        return null;
+        shipment.sensors = [...shipment.sensors, sensorID];
+
+        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+
+        return sensorID;
     }
 
     /** 
