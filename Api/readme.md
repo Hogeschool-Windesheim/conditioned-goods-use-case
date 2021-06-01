@@ -7,6 +7,7 @@ The steps below will help you setup a working copy of this repository running lo
 ### Prerequisites
 - Node;
 - NPM or Yarn;
+- Executed Chaincode
 
 ### Installing the Api 
 Installing and running Api is pretty easy when following the following steps:

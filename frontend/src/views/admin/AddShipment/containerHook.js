@@ -51,12 +51,14 @@ export default function useAddShipment() {
 
         await post(form);
 
+        console.log(response);
+
         if (response.ok) {
             openSucces("Shipment accepted succesfully!");
             push("/admin/shipment/" + form.id);
         }
-
-        if (!response.ok) openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!")
+        if (!response.ok && response.status !== undefined && response.statusText !== undefined ) openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!");
+        if (!response.ok && response.status === undefined && response.statusText === undefined ) openError("Failed to add Shipment: see the console for more info!");
     }
 
     return {
