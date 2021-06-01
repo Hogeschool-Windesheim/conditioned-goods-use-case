@@ -14,7 +14,7 @@ Installing and running Api is pretty easy when following the following steps:
 
 install the dependencies
 ```
-yarn start
+yarn
 ```
 or
 ```
@@ -28,9 +28,12 @@ If all of the above requirements and step are followed it is possible to run the
 
 Run the following command:
 ```
+yarn start
+```
+or
+```
 npm run start
 ```
-
 ### Interact with the Api
 
 Interaction with the Api is possible through the postman application

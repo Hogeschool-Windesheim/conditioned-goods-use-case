@@ -14,7 +14,7 @@ Installing and running the Frontend is pretty easy when following the following 
 
 install the dependencies
 ```
-yarn start
+yarn
 ```
 or
 ```
@@ -28,9 +28,12 @@ If all of the above requirements and step are followed it is possible to run the
 
 Run the following command:
 ```
+yarn start
+```
+or
+```
 npm run start
 ```
-
 ### Interaction with the Frontend
 
 if everything was done correctly your preferred web browser should open up a tab with de frontend page while scripts are building the application.
