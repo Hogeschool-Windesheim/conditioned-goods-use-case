@@ -14,7 +14,7 @@ Installing and running Api is pretty easy when following the following steps:
 
 install the dependencies
 ```
-yarn
+yarn start
 ```
 or
 ```
@@ -26,11 +26,11 @@ Copy the `.env-example` file and rename it to `.env` and fill in the variables t
 ### Running the Api
 If all of the above requirements and step are followed it is possible to run the Api:
 
-Run the follwing command:
+Run the following command:
 ```
 npm run start
 ```
 
 ### Interact with the Api
 
-Interaction with the Api is possible trough the postman application
+Interaction with the Api is possible through the postman application
