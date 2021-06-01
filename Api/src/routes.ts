@@ -46,6 +46,6 @@ export const routeResolver: {[index: string]: Route} = {
     [routes.GETMEASUREMENT]: {type: routeTypes.GET, schema: getMeasurementSchema, func: getMeasurement},
     [routes.ADDSHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: addShipment},
     [routes.REGISTERSENSOR]: {type: routeTypes.POST, schema: hasSensorSchema, func: registerSensor},
-    [routes.UPDATESHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: updateShipment},
+    [routes.UPDATESHIPMENT]: {type: routeTypes.POST, func: updateShipment},
     [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement}
 };
