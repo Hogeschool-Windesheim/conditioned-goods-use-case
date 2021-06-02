@@ -7,7 +7,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "nodemon --exec ts-node src/server.ts",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",

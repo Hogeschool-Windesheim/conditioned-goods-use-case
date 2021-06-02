@@ -24,7 +24,7 @@ describe('Shipment controller', () =>  {
             expect(body.result).toEqual(
                 expect.arrayContaining([expect.objectContaining(expected)])
             );
-        }, 10000);
+        }, 30000);
 
         it("/shipments/1", async () => {
             await request.post('/shipment/add')
@@ -42,7 +42,7 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body.result.length).toEqual(1);
-        }, 20000);
+        }, 30000);
     });
 
     describe("Get shipment", () => {
@@ -62,7 +62,7 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body).toMatchObject(expected);
-        }, 10000);
+        }, 30000);
     });
 
     describe("Add shipment", () => {
@@ -80,7 +80,7 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body).toMatchObject(expected);
-        });
+        }, 30000);
     });
 
     describe("Shipment exist", () => {
@@ -95,7 +95,7 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body).toEqual(true);
-        }, 10000);
+        }, 30000);
 
         it("/shipment/7/exist", async () => {
             const {body} = await request
@@ -103,7 +103,7 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body).toEqual(false);
-        });
+        }, 30000);
     });
 
     describe("Shipment register sensor", () => {
@@ -122,7 +122,7 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body).toEqual('1');
-        }, 10000);
+        }, 30000);
     });
 
      describe("Shipment has sensor", () => {
@@ -142,14 +142,14 @@ describe('Shipment controller', () =>  {
                 .expect(200);
 
             expect(body).toEqual(true);
-        }, 10000);
+        }, 30000);
 
         it("/shipment/9/sensor/2", async () => {
             const {body} = await request.get('/shipment/9/sensor/2')
                 .expect(200);
 
             expect(body).toEqual(false);
-        });
+        }, 30000);
     });
 
     describe("Shipment search", () => {
@@ -176,7 +176,7 @@ describe('Shipment controller', () =>  {
             expect(body.result).toEqual(
                 expect.arrayContaining([expect.objectContaining(expected)])
             );
-        }, 20000);
+        }, 30000);
 
          it("/shipments/search/11/1", async () => {
             const expected = {
@@ -201,6 +201,6 @@ describe('Shipment controller', () =>  {
             expect(body.result).toEqual(
                 expect.arrayContaining([expect.objectContaining(expected)])
             );
-        }, 20000);
+        }, 30000);
     });
 });
