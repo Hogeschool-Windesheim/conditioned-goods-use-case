@@ -1,34 +1,5 @@
 ---
-Profiles:
-
-    OrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:
-                - *OrdererOrg
-            Capabilities:
-                <<: *OrdererCapabilities
-        Consortiums:
-            MyConsortium:
-                Organizations:
-                    - *Org1
-                    - *Org2
-                    - *Org3
-    
-    MyChannel:
-        Consortium: MyConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-                - *Org2
-                - *Org3
-            
-            Capabilities:
-                <<: *ApplicationCapabilities
-   
+  
 Organizations:
 
     - &OrdererOrg
@@ -93,3 +64,16 @@ Capabilities:
 
     Application: &ApplicationCapabilities
         V2_3: true
+Profiles:
+    
+    MyChannel:
+        Consortium: MyConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+            
+            Capabilities:
+                <<: *ApplicationCapabilities
