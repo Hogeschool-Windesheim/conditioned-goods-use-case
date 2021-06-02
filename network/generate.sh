@@ -1,4 +1,4 @@
-\#!/bin/bash
+#!/bin/bash
 #
 # Copyright Skcript Technologies Pvt. Ltd All Rights Reserved
 #
