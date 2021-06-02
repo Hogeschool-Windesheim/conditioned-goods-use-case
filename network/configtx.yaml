@@ -1,4 +1,42 @@
 ---
+Profiles:
+
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            MyConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+                    - *Org4
+                    - *Org5
+                    - *Org6
+                    - *Org7
+    
+    MyChannel:
+        Consortium: MyConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+                - *Org4
+                - *Org5
+                - *Org6
+                - *Org7
+            
+            Capabilities:
+                <<: *ApplicationCapabilities
+   
 Organizations:
 
     - &OrdererOrg
@@ -91,38 +129,10 @@ Application: &ApplicationDefaults
 
 Capabilities:
     Global: &ChannelCapabilities
-        V2_3: true
+        V1_1: true
 
     Orderer: &OrdererCapabilities
-        V2_3: true
+        V1_1: true
 
     Application: &ApplicationCapabilities
-        V2_3: true
-        
-  Profiles:
-
-    OrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:
-                - *OrdererOrg
-            Capabilities:
-                <<: *OrdererCapabilities
-        Consortiums:
-            MyConsortium:
-                Organizations:
-                    - *Org1
-                    - *Org2
-                    - *Org3
-    
-    MyChannel:
-        Consortium: MyConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-                - *Org2
-                - *Org3
-
+        V1_1: true
