@@ -1,5 +1,18 @@
 ---
-   
+   Application: &ApplicationDefaults
+
+    Organizations:
+
+Capabilities:
+    Global: &ChannelCapabilities
+        V2_3: true
+
+    Orderer: &OrdererCapabilities
+        V2_3: true
+
+    Application: &ApplicationCapabilities
+        V2_3: true
+        
     MyChannel:
         Consortium: MyConsortium
         Application:
@@ -101,20 +114,6 @@ Orderer: &OrdererDefaults
             - kafka2:9092
             - kafka3:9092
     Organizations:
-
-Application: &ApplicationDefaults
-
-    Organizations:
-
-Capabilities:
-    Global: &ChannelCapabilities
-        V2_3: true
-
-    Orderer: &OrdererCapabilities
-        V2_3: true
-
-    Application: &ApplicationCapabilities
-        V2_3: true
 
 Profiles:
 
