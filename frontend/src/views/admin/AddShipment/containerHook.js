@@ -55,8 +55,8 @@ export default function useAddShipment() {
             openSucces("Shipment accepted succesfully!");
             push("/admin/shipment/" + form.id);
         }
-
-        if (!response.ok) openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!")
+        if (!response.ok) openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!");
+        if (response.ok === undefined) openError("Failed to add Shipment: something went wrong while adding the shipment!");
     }
 
     return {

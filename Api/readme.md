@@ -7,6 +7,7 @@ The steps below will help you setup a working copy of this repository running lo
 ### Prerequisites
 - Node;
 - NPM or Yarn;
+- Executed Chaincode
 
 ### Installing the Api 
 Installing and running Api is pretty easy when following the following steps:
@@ -25,11 +26,14 @@ Copy the `.env-example` file and rename it to `.env` and fill in the variables t
 ### Running the Api
 If all of the above requirements and step are followed it is possible to run the Api:
 
-Run the follwing command:
+Run the following command:
+```
+yarn start
+```
+or
 ```
 npm run start
 ```
-
 ### Interact with the Api
 
-Interaction with the Api is possible trough the postman application
+Interaction with the Api is possible through the postman application
