@@ -1,5 +1,22 @@
 ---
+Profiles:
 
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            MyConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+    
     MyChannel:
         Consortium: MyConsortium
         Application:
@@ -42,14 +59,12 @@ Organizations:
             - Host: peer0.org3.example.com
               Port: 7051
 
-
 Orderer: &OrdererDefaults
     OrdererType: kafka
     Addresses:
         - orderer0.example.com:7050
         - orderer1.example.com:7050
         - orderer2.example.com:7050
-
 
     BatchTimeout: 2s
     BatchSize:
@@ -78,21 +93,3 @@ Capabilities:
 
     Application: &ApplicationCapabilities
         V2_3: true
-        
-  Profiles:
-
-    OrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:
-                - *OrdererOrg
-            Capabilities:
-                <<: *OrdererCapabilities
-        Consortiums:
-            MyConsortium:
-                Organizations:
-                    - *Org1
-                    - *Org2
-                    - *Org3
