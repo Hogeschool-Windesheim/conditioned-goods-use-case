@@ -11,7 +11,8 @@
     "start": "fabric-chaincode-node start",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "postbuild": "cp -av ./META-INF dist/"
+    "postbuild": "cp -av ./META-INF dist/",
+    "test": "jest"
   },
   "engine-strict": true,
   "license": "MIT",

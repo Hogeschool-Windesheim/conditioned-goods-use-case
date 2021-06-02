@@ -7,7 +7,8 @@ import {routeTypes, routeResolver} from './routes';
 
 dotenv.config();
 
-const app = express();
+export const app = express();
+
 app.use(express.json());
 app.use(cors());
 
@@ -26,11 +27,3 @@ for (const [key, value] of Object.entries(routeResolver)) {
         func(req, res);
     });
 }
-
-// start the Express server.
-app.listen(process.env.PORT, () => {
-    // tslint:disable-next-line:no-console
-    console.log(`🚀 Server ready on http://localhost:`+process.env.PORT+` !`)
-});
-
-export default app;

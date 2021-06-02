@@ -9,7 +9,7 @@ import {getHistory, getMeasurement, addMeasurement} from './controllers/measurem
  * API routes.
  */
 export enum routes {
-    SHIPMENTS = '/shipments/:amount?/:index?/',
+    SHIPMENTS = '/shipments/:amount?/:index?',
     SHIPMENT = '/shipment/:id',
     SHIPMENTEXIST = '/shipment/:id/exist',
     HASSENSOR = '/shipment/:id/sensor/:sensorID',
@@ -46,6 +46,6 @@ export const routeResolver: {[index: string]: Route} = {
     [routes.GETMEASUREMENT]: {type: routeTypes.GET, schema: getMeasurementSchema, func: getMeasurement},
     [routes.ADDSHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: addShipment},
     [routes.REGISTERSENSOR]: {type: routeTypes.POST, schema: hasSensorSchema, func: registerSensor},
-    [routes.UPDATESHIPMENT]: {type: routeTypes.POST, schema: shipmentAddSchema, func: updateShipment},
+    [routes.UPDATESHIPMENT]: {type: routeTypes.POST, func: updateShipment},
     [routes.ADDMEASUREMENT]: {type: routeTypes.POST, schema: addMeasurementSchema, func: addMeasurement}
 };

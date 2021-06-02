@@ -69,7 +69,7 @@ export async function getShipments({params}: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('shipmentExists', `${id}`);
+    const result = await contract.evaluateTransaction('shipmentExist', `${id}`);
 
     res.json(toObject<boolean>(result));
   } catch(err) {
@@ -94,7 +94,7 @@ export async function getShipments({params}: Request, res: Response) {
     const contract = network.getContract('blockchain-backend');
 
     // Query data
-    const result = await contract.evaluateTransaction('hasSensor', `${id}`,`${sensorID}`);
+    const result = await contract.evaluateTransaction('sensorIsRegistered', `${id}`,`${sensorID}`);
 
     res.json(toObject<boolean>(result));
   } catch(err) {
@@ -146,7 +146,7 @@ export async function getShipments({params}: Request, res: Response) {
     // Query data
     const result = await contract.submitTransaction('registerSensor', `${id}`, `${sensorID}`);
 
-    res.json(toObject<boolean>(result));
+    res.json(result.toString());
   } catch(err) {
     console.log(err);
   } finally {

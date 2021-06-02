@@ -50,7 +50,7 @@ export const shipmentExistsSchema: Schema = {
 
 export const hasSensorSchema: Schema = {
     id: {
-        in: ['body'],
+        in: ['body', 'params'],
         errorMessage: 'id is required',
         isLength: {
             options: {min: 1},
@@ -58,7 +58,7 @@ export const hasSensorSchema: Schema = {
         trim: true,
     },
     sensorID: {
-        in: ['body'],
+        in: ['body', 'params'],
         errorMessage: 'SensorID is required',
         isLength: {
             options: {min: 1},
