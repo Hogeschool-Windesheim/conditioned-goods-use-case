@@ -31,6 +31,8 @@ Organizations:
               Port: 7051
 
 Orderer: &OrdererDefaults
+                  Policies:
+                      <<: *SampleOrgPolicies
     OrdererType: kafka
     Addresses:
         - orderer0.example.com:7050
@@ -52,6 +54,8 @@ Orderer: &OrdererDefaults
     Organizations:
 
 Application: &ApplicationDefaults
+                  Policies:
+                      <<: *SampleOrgPolicies
 
     Organizations:
 
@@ -70,6 +74,8 @@ Profiles:
         Consortium: MyConsortium
         Application:
             <<: *ApplicationDefaults
+               Policies:
+                 <<: *SampleOrgPolicies
             Organizations:
                 - *Org1
                 - *Org2
