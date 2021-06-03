@@ -56,7 +56,7 @@ async function insertRecords(amount) {
         // Register sensor with id 1 to shipment with id 1.
         await shipmentContract.submitTransaction('registerSensor', `1`, `1`);
 
-        console.log("STATUS > UPDATING MEASUREMENT");
+        console.log("STATUS > INSERTING MEASUREMENTS");
 
         // Get measurment contract.
         const measurementContract = network.getContract('blockchain-backend', 'MeasurementContract');
@@ -67,7 +67,7 @@ async function insertRecords(amount) {
             let value = Math.round(Math.random() * (-24 - -5) + -5);
 
             // Insert measurement.
-            await measurementContract.submitTransaction('addMeasurement', '1', '1', `${value}`, `${new Date()}`);
+            await measurementContract.submitTransaction('addMeasurement', '1', `${value}`, `${new Date()}`);
         }
 
         console.log(`STATUS > COMPLETED! INSERTED ${amount} RECORDS`);
