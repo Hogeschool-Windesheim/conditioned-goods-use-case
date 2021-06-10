@@ -89,17 +89,8 @@ Orderer: &OrdererDefaults
 Application: &ApplicationDefaults
 
     Organizations:
-
-Capabilities:
-    Global: &ChannelCapabilities
-        V2_3: true
-
-    Orderer: &OrdererCapabilities
-        V2_3: true
-
-    Application: &ApplicationCapabilities
-        V2_3: true
-Policies:
+    
+    Policies:
     Readers:
         Type: ImplicitMeta
         Rule: "ANY Readers"
@@ -115,6 +106,17 @@ Policies:
     Endorsement:
         Type: ImplicitMeta
         Rule: "MAJORITY Endorsement"
+
+Capabilities:
+    Global: &ChannelCapabilities
+        V2_3: true
+
+    Orderer: &OrdererCapabilities
+        V2_3: true
+
+    Application: &ApplicationCapabilities
+        V2_3: true
+
             
 Profiles:
 
