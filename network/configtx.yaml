@@ -58,7 +58,22 @@ Organizations:
         MSPDir: crypto-config/peerOrganizations/org7.example.com/msp
         AnchorPeers:
             - Host: peer0.org7.example.com
-              Port: 7051
+    Policies:
+    Readers:
+        Type: ImplicitMeta
+        Rule: "ANY Readers"
+    Writers:
+        Type: ImplicitMeta
+        Rule: "ANY Writers"
+    Admins:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Admins"
+    LifecycleEndorsement:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Endorsement"
+    Endorsement:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Endorsement"              Port: 7051
 
 
 Orderer: &OrdererDefaults
@@ -90,22 +105,6 @@ Application: &ApplicationDefaults
 
     Organizations:
     
-    Policies:
-    Readers:
-        Type: ImplicitMeta
-        Rule: "ANY Readers"
-    Writers:
-        Type: ImplicitMeta
-        Rule: "ANY Writers"
-    Admins:
-        Type: ImplicitMeta
-        Rule: "MAJORITY Admins"
-    LifecycleEndorsement:
-        Type: ImplicitMeta
-        Rule: "MAJORITY Endorsement"
-    Endorsement:
-        Type: ImplicitMeta
-        Rule: "MAJORITY Endorsement"
 
 Capabilities:
     Global: &ChannelCapabilities
