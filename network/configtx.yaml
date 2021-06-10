@@ -55,10 +55,7 @@ Orderer: &OrdererDefaults
         - orderer0.example.com:7050
         - orderer1.example.com:7050
         - orderer2.example.com:7050
-        - orderer3.example.com:7050
-        - orderer4.example.com:7050
-        - orderer5.example.com:7050
-        - orderer6.example.com:7050
+
 
     BatchTimeout: 2s
     BatchSize:
@@ -107,10 +104,7 @@ Profiles:
                     - *Org1
                     - *Org2
                     - *Org3
-                    - *Org4
-                    - *Org5
-                    - *Org6
-                    - *Org7
+
     
     MyChannel:
         Consortium: MyConsortium
@@ -120,10 +114,7 @@ Profiles:
                 - *Org1
                 - *Org2
                 - *Org3
-                - *Org4
-                - *Org5
-                - *Org6
-                - *Org7
+
             
             Capabilities:
                 <<: *ApplicationCapabilities
