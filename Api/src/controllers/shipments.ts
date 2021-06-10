@@ -7,26 +7,26 @@ import {Shipment, Pagination} from '../types';
  * Get shipments.
  */
 export async function getShipments({params}: Request, res: Response) {
-    const {index = "", amount = 50} = params;
-    const gateway = await connect();
+  const {index = "", amount = 50} = params;
+  const gateway = await connect();
 
-    try {
-      // Get channel
-      const network = await gateway.getNetwork('mychannel');
+  try {
+    // Get channel
+    const network = await gateway.getNetwork('mychannel');
 
-      // Get contract
-      const contract = network.getContract('blockchain-backend');
+    // Get contract
+    const contract = network.getContract('blockchain-backend');
 
-      // Query data
-      const result = await contract.evaluateTransaction('getShipments', `${index}`, `${amount}`);
+    // Query data
+    const result = await contract.evaluateTransaction('getShipments', `${index}`, `${amount}`);
 
-      res.json(toObject<Pagination<Shipment>>(result));
-    } catch(err) {
-      // TODO: An error logger like sentry would be nice.
-      console.log(err);
-    } finally {
-      gateway.disconnect();
-    }
+    res.json(toObject<Pagination<Shipment>>(result));
+  } catch(err) {
+    // TODO: An error logger like sentry would be nice.
+    console.log(err);
+  } finally {
+    gateway.disconnect();
+  }
 }
 
 /**
@@ -132,7 +132,7 @@ export async function getShipments({params}: Request, res: Response) {
 /**
  * Registers sensor
  */
- export async function registerSensor({body}: Request, res: Response) {
+export async function registerSensor({body}: Request, res: Response) {
   const {id, sensorID} = body;
   const gateway = await connect();
 
@@ -157,7 +157,7 @@ export async function getShipments({params}: Request, res: Response) {
 /**
  * Update shipment
  */
- export async function updateShipment({body}: Request, res: Response) {
+export async function updateShipment({body}: Request, res: Response) {
   const {id} = body;
   const gateway = await connect();
 
@@ -179,6 +179,9 @@ export async function getShipments({params}: Request, res: Response) {
   }
 }
 
+/**
+ * Search shipment by string.
+ */
 export async function getShipmentBySearchString({params}: Request, res: Response) {
   const {searchString = "", index = "", amount = 50} = params;
 

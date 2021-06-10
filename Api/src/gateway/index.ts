@@ -3,6 +3,9 @@ import * as os from 'os';
 import * as path from 'path';
 import org1 from '../profiles/org1.json';
 
+/** 
+ * Setup a gateway conenction to the HLF Network.
+ */
 export async function connect() {
     const walletPath: string = path.join(os.homedir(), '.fabric-vscode', 'v2', 'environments', 'blockchain', 'wallets', 'Org1');
 

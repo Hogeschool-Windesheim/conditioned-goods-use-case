@@ -22,6 +22,9 @@ export enum routes {
     SEARCHSHIPMENT = '/shipments/search/:searchString?/:amount?/:index?',
 }
 
+/** 
+ * Route type enum.
+ */
 export enum routeTypes {
     GET = 'get',
     POST = 'post',

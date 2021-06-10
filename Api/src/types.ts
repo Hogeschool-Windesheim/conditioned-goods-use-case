@@ -17,7 +17,7 @@ export type Shipment = {
 };
 
 /** 
- * Pagination
+ * Pagination type.
  */
 export type Pagination<T> = {
     result: Array<T>;
