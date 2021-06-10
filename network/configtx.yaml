@@ -46,7 +46,7 @@ Policies:
         Rule: "MAJORITY Endorsement"
     Endorsement:
         Type: ImplicitMeta
-        Rule: "MAJORITY Endorsement"              Port: 7051
+        Rule: "MAJORITY Endorsement"
 
 
 Orderer: &OrdererDefaults
