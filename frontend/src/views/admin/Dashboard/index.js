@@ -42,8 +42,11 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="relative flex flex-col items-end">
-      <input type="text" className="form-input mb-2 rounded w-40" placeholder="Search shipment" onChange={search} />
+    <div className="relative ">
+      <div className="flex flex-row items-center justify-between">
+        <p className="text-white font-semibold uppercase">Last shipments</p>
+        <input type="text" className="form-input mb-2 rounded w-40" placeholder="Search shipment" onChange={search} />
+      </div>
       <CardTable labels={LABELS} items={data.result} renderItem={renderRow} />
     </div>
   );
