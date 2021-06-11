@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useSnackbar} from 'react-simple-snackbar';
 import useFetch from 'use-http';
-import {errorOptions} from '/libs/snackbar.js';
+import {errorOptions} from 'libs/snackbar.js';
 
 const DEFAULT = {result: [], count: 0, bookmark: ""}
 const PAGE_COUNT = 50;

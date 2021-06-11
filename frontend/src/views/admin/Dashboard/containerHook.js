@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import useFetch from 'use-http';
 import {useSnackbar} from 'react-simple-snackbar';
 import useDebounce from 'hooks/debounce.js';
-import {errorOptions} from '/libs/snackbar.js';
+import {errorOptions} from 'libs/snackbar.js';
 
 const DEFAULT = {result: [], count: 0, bookmark: ""}
 

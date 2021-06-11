@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useSnackbar} from 'react-simple-snackbar';
 import useFetch from 'use-http';
 import {useHistory} from "react-router-dom";
-import {succesOptions, errorOptions} from '/libs/snackbar.js';
+import {succesOptions, errorOptions} from 'libs/snackbar.js';
 
 /** 
  * Hook to handle add shipment methods.
