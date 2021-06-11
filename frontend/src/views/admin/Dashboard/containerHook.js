@@ -14,11 +14,12 @@ export default function useDashboard() {
     const {debounce} = useDebounce();
     const [openError] = useSnackbar(errorOptions);
 
+    /** 
+     * On search
+     */
     function search(e) {
-        const searchstring = e.target.value;
-        const url = searchstring.length > 0 ? `${searchstring}` : '';
-
-        debounce(() => get(url), 500);
+        // Wailt until the use stops with typing before searching for the value.
+        debounce(() => get(e.target.value), 500);
     }
 
     useEffect(() => {
