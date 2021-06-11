@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import useFetch from 'use-http';
-import {randomColor} from "color.js";
+import {randomColor} from "libs/color.js";
 
 /** 
  * Hook to handle shipment functionalities.

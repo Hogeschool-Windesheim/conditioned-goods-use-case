@@ -44,6 +44,7 @@ export default function Shipments() {
 
   return (
     <Pagination canFetch={canFetch} fetchMore={onFetchMore}>
+      <p className="text-white font-semibold uppercase mb-2">Shipments</p>
       <CardTable labels={LABELS} items={data.result} renderItem={renderRow} />
     </Pagination>
   );

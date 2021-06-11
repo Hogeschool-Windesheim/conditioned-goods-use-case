@@ -1,31 +1,14 @@
 import {useState} from 'react';
 import {useSnackbar} from 'react-simple-snackbar';
 import useFetch from 'use-http';
-import { useHistory } from "react-router-dom";
-
-const succesOptions = {
-    position: 'top-right',
-    style: {
-        backgroundColor: "rgba(16, 185, 129)",
-        border: '1px solid black',
-        fontSize: '17px',
-    }
-};
-
-const errorOptions = {
-    position: 'top-right',
-    style: {
-        backgroundColor: "rgba(220, 38, 38)",
-        border: '1px solid black',
-        fontSize: '17px',
-    }
-};
+import {useHistory} from "react-router-dom";
+import {succesOptions, errorOptions} from '/libs/snackbar.js';
 
 /** 
  * Hook to handle add shipment methods.
  */
 export default function useAddShipment() {
-    const {post, response} = useFetch('http://localhost:8080/shipment/add');
+    const {post, loading, response} = useFetch('/shipment/add');
     const {push} = useHistory();
     const [openSucces] = useSnackbar(succesOptions);
     const [openError] = useSnackbar(errorOptions);
@@ -51,12 +34,15 @@ export default function useAddShipment() {
 
         await post(form);
 
-        if (response.ok) {
+        if (loading && response.ok) {
             openSucces("Shipment accepted succesfully!");
             push("/admin/shipment/" + form.id);
         }
-        if (!response.ok) openError("Failed to add Shipment: " + response.status + " (" + response.statusText + ")!");
-        if (response.ok === undefined) openError("Failed to add Shipment: something went wrong while adding the shipment!");
+
+        if (!loading && (!response.ok || response.ok === undefined)) {
+            let error = response.data?.error.split("Error:")[1] || "Something went wrong while adding the shipment";
+            openError(error);
+        }
     }
 
     return {
