@@ -12,8 +12,8 @@ export class ShipmentContract extends Contract {
      */
     public async addShipment(ctx: Context, id: string) {
 
-        if (!this.shipmentExist(ctx, id)) {
-            throw new Error("Shipment with this id does not exist.");
+        if (await this.shipmentExist(ctx, id)) {
+            throw new Error("Shipment with this id does already exist.");
         }
 
         const shipment: Shipment = {
@@ -36,7 +36,6 @@ export class ShipmentContract extends Contract {
         const shipment = await this.getShipment(ctx, id);
 
         // TODO: set values we want to change.
-
         await ctx.stub.putState(id, toBytes<Shipment>(shipment));
 
         return shipment;
@@ -69,11 +68,16 @@ export class ShipmentContract extends Contract {
      * Get all shipments from the ledger
      * Note: the bookmark will be included in the results.
      */
-    public async getShipments(ctx: Context, index = "", amount = 50) {
+    public async getShipments(ctx: Context, index: string, amount: string) {
         // Query all data in the ledger.
-        const iterator = ctx.stub.getStateByRangeWithPagination('', '', amount, index);
+        const {iterator, metadata} = await ctx.stub.getStateByRangeWithPagination('', '', parseInt(amount), index);
+        const shipments = await toArrayOfObjects<Shipment>(iterator);
 
-        return toArrayOfObjects<Shipment>(iterator);
+        return {
+            result: shipments,
+            count: metadata.fetchedRecordsCount,
+            bookmark: metadata.bookmark,
+        };
     }
 
     /** 
@@ -82,15 +86,15 @@ export class ShipmentContract extends Contract {
     public async registerSensor(ctx: Context, id: string, sensorID: string) {
         const shipment = await this.getShipment(ctx, id);
 
-        if (!shipment.sensors.includes(sensorID)) {
-            shipment.sensors = [...shipment.sensors, sensorID];
-
-            await ctx.stub.putState(id, toBytes<Shipment>(shipment));
-
-            return sensorID;
+        if (shipment.sensors.includes(sensorID)) {
+            throw new Error("Sensor is already registered to this shipment.")
         }
 
-        return null;
+        shipment.sensors = [...shipment.sensors, sensorID];
+
+        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+
+        return sensorID;
     }
 
     /** 
@@ -117,7 +121,7 @@ export class ShipmentContract extends Contract {
             sort: [{createdAt: "desc"}],
         };
 
-        const iterator = ctx.stub.getQueryResult(toJson(query));
+        const iterator = await ctx.stub.getQueryResult(toJson(query));
         const shipments = await toArrayOfObjects<Shipment>(iterator);
 
         if (!(shipments && shipments.length > 0)) {
@@ -125,5 +129,28 @@ export class ShipmentContract extends Contract {
         }
 
         return shipments[0];
+    }
+
+    // TODO: look at more search options like sensorID or creation date. 
+    /** 
+     * Get shipments by searchString.
+     */
+    public async getShipmentBySearchString(ctx: Context, string: string, index: string, amount: string) {
+        const query = {
+            selector: {
+                id: {
+                    $regex: string,
+                }
+            }
+        }
+
+        const {iterator, metadata} = await ctx.stub.getQueryResultWithPagination(toJson(query), parseInt(amount), index);
+        const shipments = await toArrayOfObjects<Shipment>(iterator);
+
+        return {
+            result: shipments,
+            count: metadata.fetchedRecordsCount,
+            bookmark: metadata.bookmark,
+        };
     }
 }

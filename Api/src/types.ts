@@ -15,3 +15,12 @@ export type Shipment = {
     temperature?: Measurement;
     sensors: string[];
 };
+
+/** 
+ * Pagination type.
+ */
+export type Pagination<T> = {
+    result: Array<T>;
+    count: number;
+    bookmark: string;
+}

@@ -5,32 +5,34 @@ import dotenv from 'dotenv';
 import {checkSchema} from 'express-validator';
 import {routeTypes, routeResolver} from './routes';
 
+// Register .env file.
 dotenv.config();
 
-const app = express();
+// New instance of express.
+export const app = express();
+
+// Parse request to json.
 app.use(express.json());
 app.use(cors());
 
+// Loop through all the routes
 for (const [key, value] of Object.entries(routeResolver)) {
     const {type, schema = {}, func} = value;
 
+    // Get the function assosiated with the type of the request from the app object.
+    // And register the assosiated route, shema and function in express.
     app[type](key, checkSchema(schema), (req: Request, res: Response) => {
+        // Validate schema.
         const errors = validationResult(req);
 
+        // Check if validation returned errors, if it has return them with an error code.
         if (!errors.isEmpty()){
           return res.status(400).json({
             errors: errors.array()
           });
         }
 
+        // call the assosiated route function. 
         func(req, res);
     });
 }
-
-// start the Express server.
-app.listen(process.env.PORT, () => {
-    // tslint:disable-next-line:no-console
-    console.log(`🚀 Server ready on http://localhost:`+process.env.PORT+` !`)
-});
-
-export default app;

@@ -18,8 +18,8 @@ export default function CardMeasurementTable({title, labels = [], items = [], re
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
-                {labels.map((label) => 
-                   <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                {labels.map((label, i) => 
+                   <th key={i} className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                     {label}
                   </th>
                 )}

@@ -33,6 +33,8 @@ module.exports = {
       borderColor: ['active'],
       opacity: ['disabled'],
       borderWidth: ['hover', 'focus'],
+      backgroundColor: ['hover'],
+      boxShadow: ['responsive', 'hover', 'focus'],
     },
   },
   plugins: [

@@ -149,15 +149,15 @@ describe('MeasurementContract-blockchain-backend@1.0.0' , () => {
 
         it('should validate the SLA to be false', async () => {
             // Add shipment
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['10'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'addShipment', ['15'], gateway);
 
             // Register sensor
-            await SmartContractUtil.submitTransaction('ShipmentContract', 'registerSensor', ['10','1'], gateway);
+            await SmartContractUtil.submitTransaction('ShipmentContract', 'registerSensor', ['15','1'], gateway);
 
             // Add measurement
             await SmartContractUtil.submitTransaction('MeasurementContract', 'addMeasurement', ['1', '-10', `${new Date()}`], gateway);
 
-            const response: Buffer = await SmartContractUtil.evaluateTransaction('MeasurementContract', 'validateSLA', ['10', '500'], gateway);
+            const response: Buffer = await SmartContractUtil.evaluateTransaction('MeasurementContract', 'validateSLA', ['15', '500'], gateway);
             
             const isValid = toObject<boolean>(response);
 

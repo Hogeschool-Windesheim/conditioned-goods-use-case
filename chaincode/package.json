@@ -11,7 +11,8 @@
     "start": "fabric-chaincode-node start",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "postbuild": "cp -av ./META-INF dist/"
+    "postbuild": "cp -av ./META-INF dist/",
+    "test": "jest --verbose"
   },
   "engine-strict": true,
   "license": "MIT",
@@ -24,7 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "26.0.22",
-    "fabric-network": "2.2.5",
+    "fabric-network": "^2.2.6",
     "ts-jest": "26.5.5",
     "ts-node": "9.1.1",
     "typescript": "4.2.3"
