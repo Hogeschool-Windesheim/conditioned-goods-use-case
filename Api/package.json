@@ -7,7 +7,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "nodemon --exec ts-node src/server.ts",
-    "production": "NODE_ENV=production ./dist/index.js",
+    "production": "NODE_ENV=production node ./dist/server.js",
     "test": "jest --verbose"
   },
   "repository": {
