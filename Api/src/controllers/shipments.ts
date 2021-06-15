@@ -12,7 +12,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -38,7 +38,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -63,7 +63,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -88,7 +88,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -113,7 +113,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -138,7 +138,7 @@ export async function registerSensor({body}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -163,7 +163,7 @@ export async function updateShipment({body}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -189,7 +189,7 @@ export async function getShipmentBySearchString({params}: Request, res: Response
 
   try {
      // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');

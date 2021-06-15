@@ -12,7 +12,7 @@ export async function getHistory({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend', 'MeasurementContract');
@@ -37,7 +37,7 @@ export async function getMeasurement({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend', 'MeasurementContract');
@@ -62,7 +62,7 @@ export async function addMeasurement({body}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend', 'MeasurementContract');
