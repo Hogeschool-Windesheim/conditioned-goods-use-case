@@ -19,7 +19,7 @@ All prerequisites can be downloaded by running the 'Hyperledger-prereq.sh' scrip
 Docker swarm is used to connect the docker containers on both servers. Run the command 'Docker swarm init' on the Docker Swarm Manager Node to create a new swarm service. This command results in a worker join token. Run this token on the second server to join the swarm network. 
 
 After this a overlay network needs to be created. The overlay network name used in the scripts is 'Kontgoods'. To create a overlay network with this name the command '
-docker network create --driver overlay --subnet=10.200.1.0/24 --attachable Kontgoods' needs to be run. 
+docker network create --driver overlay --subnet=10.200.1.0/24 --attachable Kontgoods' needs to be run on the docker manager. 
 
 You can check if the overlay network is running by running the command 'docker network ls'. 
 
