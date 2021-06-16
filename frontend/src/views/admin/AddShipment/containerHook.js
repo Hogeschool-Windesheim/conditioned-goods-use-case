@@ -34,7 +34,7 @@ export default function useAddShipment() {
 
         await post(form);
 
-        if (loading && response.ok) {
+        if (!loading && response.ok) {
             openSucces("Shipment accepted succesfully!");
             push("/admin/shipment/" + form.id);
         }
