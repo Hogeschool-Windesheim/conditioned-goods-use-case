@@ -24,7 +24,7 @@ You can check if the overlay network is running by running the command 'docker n
 
 ### SCRIPTS
 After creating a docker swarm network you can run the scripts to create a production network. 
-You need to run the scripts in the following order (only move_crypto needs to be run on both servers, the rest on only on the docker manager):
+You need to run the scripts in the following order (only move_crypto needs to be run on both servers, the rest only on the docker manager server):
 1. ./move_crypto.sh
 2. ./populate_hostname.sh (the hostnames first need to be set in the .env file, and on the servers itself)
 3. ./scripts/network/deploy_services_kafka.sh
