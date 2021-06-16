@@ -1,18 +1,17 @@
 import React from "react";
 
-export default function CardMeasurementTable({title, labels = [], items = [], renderItem}) {
+export default function CardMeasurementTable({title, labels = [], items = [], renderItem, AddFunction}) {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-        <div className="rounded-t mb-0 px-4 py-3 border-0">
-          <div className="flex flex-wrap items-center">
-            <div className="relative w-full max-w-full flex-grow flex-1">
+          <div className="pl-4 pt-3">
+            {AddFunction}
+            <div className="flex relative w-full max-w-full flex-grow">
               <h3 className="font-semibold text-base text-blueGray-700">
                 {title}
               </h3>
             </div>
           </div>
-        </div>
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
