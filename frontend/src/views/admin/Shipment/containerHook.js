@@ -7,25 +7,29 @@ import {randomColor} from "color.js";
  * Hook to handle shipment functionalities.
  */
 export default function useShipment() {
-    const {id} = useParams();
-    const {data: shipment} = useFetch(`/shipment/${id}`, {}, [id]);
-    const {data: measurements} = useFetch(`/shipment/${id}/measurements`, {}, [id]);
+  const {id} = useParams();
+  const {data: shipment} = useFetch(`/shipment/${id}`, {}, [id]);
+  const {data: measurements} = useFetch(`/shipment/${id}/measurements`, {}, [id]);
+  const [sensors, setSensors] = useState([]);
+  const [chartData, setChartData] = useState();
 
-    const [chartData, setChartData] = useState();
+  function orderData(measurements) {
+      const groups = {};
 
-    function orderData(measurements) {
-        const groups = {};
+      measurements?.sort((date1, data2) => data2.timestamp + date1.timestamp);
 
-        measurements?.sort((date1, data2) => data2.timestamp + date1.timestamp);
+      measurements?.forEach(({sensorID, timestamp, value}) => {
+        let color = randomColor();
+        let group = groups[sensorID] || {label: `Sensor ${sensorID}`, data: [],  backgroundColor: color, borderColor: color, fill: false};
 
-        measurements?.forEach(({sensorID, timestamp, value}) => {
-            let color = randomColor();
-            let group = groups[sensorID] || {label: `Sensor ${sensorID}`, data: [],  backgroundColor: color, borderColor: color, fill: false};
-    
-            groups[sensorID] = {...group, data: [...group.data, {x: timestamp,y: value}]};
-        });
+        groups[sensorID] = {...group, data: [...group.data, {x: timestamp,y: value}]};
+      });
 
-        return Object.values(groups);
+      return Object.values(groups);
+  }
+
+  function addSensor(sensorID){
+    setSensors((sensors) => [...sensors, sensorID]);
   }
 
   useEffect(() => {
@@ -34,9 +38,15 @@ export default function useShipment() {
     setChartData(chartData);
   }, [measurements]);
 
+  useEffect(() => {
+    if (shipment) setSensors(shipment.sensors)
+  }, [shipment]);
+
   return {
-      shipment, 
-      chartData, 
-      measurements
-    }
+    shipment, 
+    chartData, 
+    measurements,
+    sensors,
+    addSensor,
+  }
 }

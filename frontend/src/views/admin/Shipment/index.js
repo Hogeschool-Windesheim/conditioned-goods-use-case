@@ -4,8 +4,9 @@ import useShipment from './containerHook.js';
 
 // components
 import CardLineChart from "components/Cards/CardLineChart.js";
-import CardTable from "components/Cards/CardTable.js";
 import CardShipment from "components/Cards/CardShipment.js";
+import CardSensor from "components/Cards/CardSensors/index.js";
+import CardTable from "components/Cards/CardTable.js";
 
 const LABELS = ["Sensor", "value", "timestamp"];
 
@@ -13,12 +14,12 @@ const LABELS = ["Sensor", "value", "timestamp"];
  * Shipment page.
  */
 export default function Shipment() {
-  const {shipment, measurements, chartData} = useShipment();
-
+  const {shipment, measurements, chartData, sensors, addSensor} = useShipment();
+  
   /** 
-   * Render row inside the table card.
+   * Render row inside the measurement table card.
    */
-  function renderRow({sensorID, timestamp, value}, i) {
+  function measurementRenderRow({sensorID, timestamp, value}, i) {
     const date = DateTime.fromMillis(timestamp);
     
     return (
@@ -35,6 +36,7 @@ export default function Shipment() {
       </tr>
     );
   }
+
   
   return (
     <>
@@ -46,9 +48,12 @@ export default function Shipment() {
           <CardLineChart title="Temperature" subtitle="History" dataset={chartData} />
         </div>
       </div>
-      <div className="flex flex-wrap">
-        <div className="w-full px-4">
-          <CardTable title="Measurements" labels={LABELS} items={measurements} renderItem={renderRow} />
+      <div className="flex flex-wrap w-full">
+        <div className="w-full xl:w-4/12 px-4">
+          <CardSensor sensors={sensors} addSensor={addSensor}/>
+        </div>
+        <div className="w-full xl:w-8/12 xl:mb-0 px-4">
+          <CardTable title="Measurements" labels={LABELS} items={measurements} renderItem={measurementRenderRow} />
         </div>
       </div>
     </>
