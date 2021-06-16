@@ -7,7 +7,7 @@ import org1 from '../profiles/org1.json';
  * Setup a gateway conenction to the HLF Network.
  */
 export async function connect() {
-    const walletPath: string = path.join(os.homedir(), '.fabric-vscode', 'v2', 'environments', 'blockchain', 'wallets', 'Org1');
+    const walletPath: string = path.normalize(process.env.WALLET);
 
     // Create new wallet
     const wallet = await Wallets.newFileSystemWallet(walletPath);

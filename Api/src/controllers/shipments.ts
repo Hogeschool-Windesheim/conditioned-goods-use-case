@@ -12,7 +12,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -21,9 +21,9 @@ export async function getShipments({params}: Request, res: Response) {
     const result = await contract.evaluateTransaction('getShipments', `${index}`, `${amount}`);
 
     res.json(toObject<Pagination<Shipment>>(result));
-  } catch(err) {
+  } catch({message}) {
     // TODO: An error logger like sentry would be nice.
-    console.log(err);
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -38,7 +38,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -47,8 +47,8 @@ export async function getShipments({params}: Request, res: Response) {
     const result = await contract.evaluateTransaction('getShipment', `${id}`);
 
     res.json(toObject<Shipment>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -63,7 +63,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -72,8 +72,8 @@ export async function getShipments({params}: Request, res: Response) {
     const result = await contract.evaluateTransaction('shipmentExist', `${id}`);
 
     res.json(toObject<boolean>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -88,7 +88,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -97,8 +97,8 @@ export async function getShipments({params}: Request, res: Response) {
     const result = await contract.evaluateTransaction('sensorIsRegistered', `${id}`,`${sensorID}`);
 
     res.json(toObject<boolean>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -113,7 +113,7 @@ export async function getShipments({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -122,8 +122,8 @@ export async function getShipments({params}: Request, res: Response) {
     const result = await contract.submitTransaction('addShipment', `${id}`);
 
     res.json(toObject<Shipment>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -138,7 +138,7 @@ export async function registerSensor({body}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -147,8 +147,8 @@ export async function registerSensor({body}: Request, res: Response) {
     const result = await contract.submitTransaction('registerSensor', `${id}`, `${sensorID}`);
 
     res.json(result.toString());
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -163,7 +163,7 @@ export async function updateShipment({body}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -172,8 +172,8 @@ export async function updateShipment({body}: Request, res: Response) {
     const result = await contract.submitTransaction('updateShipment', `${id}`);
 
     res.json(toObject<Shipment>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -189,7 +189,7 @@ export async function getShipmentBySearchString({params}: Request, res: Response
 
   try {
      // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend');
@@ -198,8 +198,8 @@ export async function getShipmentBySearchString({params}: Request, res: Response
     const result = await contract.submitTransaction('getShipmentBySearchString', `${searchString}`, `${index}`, `${amount}`);
 
     res.json(toObject<Pagination<Shipment>>(result));
-  }catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
