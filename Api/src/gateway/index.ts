@@ -21,7 +21,7 @@ export async function connect() {
             asLocalhost: true,
             enabled: true,
         },
-        identity: 'Org1 Admin',
+        identity: process.env.IDENTITY,
         wallet,
     };
 
