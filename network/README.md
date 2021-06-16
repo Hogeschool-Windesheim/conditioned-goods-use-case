@@ -16,10 +16,9 @@ The steps below will help you setup a working Hyperledger Fabric multi-node prod
 All prerequisites can be downloaded by running the 'Hyperledger-prereq.sh' script. 
 
 ### Docker Swarm
-Docker swarm is used to connect the docker containers on both servers. Run the command 'Docker swarm init' on the Docker Swarm Manager Node to create a new swarm service. This command results in a worker join token. Run this token on the second server to join the swarm network. 
+Docker swarm is used to connect all docker containers that will be running both servers. Run the command 'Docker swarm init' on the Docker Swarm Manager Node to create a new swarm service. This command results in a worker join token. Run this token on the second server to join the swarm network. 
 
-After this a overlay network needs to be created. The overlay network name used in the scripts is 'Kontgoods'. To create a overlay network with this name the command '
-docker network create --driver overlay --subnet=10.200.1.0/24 --attachable Kontgoods' needs to be run on the docker manager. 
+After this a overlay network needs to be created. The overlay network name used in the scripts is 'Kontgoods'. To create a overlay network with this name the command 'docker network create --driver overlay --subnet=10.200.1.0/24 --attachable Kontgoods' needs to be run on the docker swarm manager. 
 
 You can check if the overlay network is running by running the command 'docker network ls'. 
 
@@ -27,7 +26,7 @@ You can check if the overlay network is running by running the command 'docker n
 After creating a docker swarm network you can run the scripts to create a production network. 
 You need to run the scripts in the following order:
 1. ./move_crypto.sh 
-2. ./populate_hostname.sh
+2. ./populate_hostname.sh (the hostnames first need to be set in the .env file, and on the servers itself)
 3. ./scripts/network/deploy_services_kafka.sh
 4. ./scripts/network/deploy_services_org1.sh
 5. ./scripts/network/deploy_services_org2.sh
