@@ -140,8 +140,9 @@ export class ShipmentContract extends Contract {
             selector: {
                 id: {
                     $regex: string,
-                }
-            }
+                },
+            },
+            sort: [{createdAt: "desc"}],
         }
 
         const {iterator, metadata} = await ctx.stub.getQueryResultWithPagination(toJson(query), parseInt(amount), index);

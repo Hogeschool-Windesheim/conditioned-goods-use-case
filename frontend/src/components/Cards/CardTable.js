@@ -13,7 +13,6 @@ export default function CardMeasurementTable({title, labels = [], items = [], re
             </div>
           </div>
         <div className="block w-full overflow-x-auto">
-          {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>

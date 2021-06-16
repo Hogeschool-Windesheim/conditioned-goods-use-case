@@ -21,7 +21,10 @@ or
 npm install
 ```
 Copy the `.env-example` file and rename it to `.env` and fill in the variables to your own values. The values inside the `.env` file will be available in the code through `process.env.{variable_name}`. Registered variables are:
-- PORT: Port of the server (for example: 8080).
+- PORT: port of the server (exp: 8080).
+- ORIGIN: location of the frontend (exp: http://localhost:3000).
+- CHANNELNAME: Hyperledger Fabric channel name (exp: mychannel).
+- WALLET: wallet path (exp: )
 
 ### Running the Api
 If all of the above requirements and step are followed it is possible to run the Api:

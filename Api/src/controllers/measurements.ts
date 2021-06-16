@@ -12,7 +12,7 @@ export async function getHistory({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend', 'MeasurementContract');
@@ -21,8 +21,8 @@ export async function getHistory({params}: Request, res: Response) {
     const result = await contract.evaluateTransaction('getHistory', `${id}`);
 
     res.json(toObject<Measurement>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -37,7 +37,7 @@ export async function getMeasurement({params}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend', 'MeasurementContract');
@@ -46,8 +46,8 @@ export async function getMeasurement({params}: Request, res: Response) {
     const result = await contract.evaluateTransaction('getMeasurement', `${id}`);
 
     res.json(toObject<Measurement>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
@@ -62,7 +62,7 @@ export async function addMeasurement({body}: Request, res: Response) {
 
   try {
     // Get channel
-    const network = await gateway.getNetwork('mychannel');
+    const network = await gateway.getNetwork(process.env.CHANNELNAME);
 
     // Get contract
     const contract = network.getContract('blockchain-backend', 'MeasurementContract');
@@ -71,8 +71,8 @@ export async function addMeasurement({body}: Request, res: Response) {
     const result = await contract.submitTransaction('addMeasurement',`${sensorID}`, `${value}`, `${timestamp}`);
 
     res.json(toObject<Shipment>(result));
-  } catch(err) {
-    console.log(err);
+  } catch({message}) {
+    res.status(500).json({error: message});
   } finally {
     gateway.disconnect();
   }
