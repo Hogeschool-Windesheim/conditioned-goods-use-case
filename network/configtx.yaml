@@ -1,42 +1,5 @@
 ---
-Profiles:
-
-    OrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:
-                - *OrdererOrg
-            Capabilities:
-                <<: *OrdererCapabilities
-        Consortiums:
-            MyConsortium:
-                Organizations:
-                    - *Org1
-                    - *Org2
-                    - *Org3
-                    - *Org4
-                    - *Org5
-                    - *Org6
-                    - *Org7
-    
-    MyChannel:
-        Consortium: MyConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-                - *Org2
-                - *Org3
-                - *Org4
-                - *Org5
-                - *Org6
-                - *Org7
-            
-            Capabilities:
-                <<: *ApplicationCapabilities
-   
+ 
 Organizations:
 
     - &OrdererOrg
@@ -67,35 +30,23 @@ Organizations:
             - Host: peer0.org3.example.com
               Port: 7051
 
-    - &Org4
-        Name: Org4MSP
-        ID: Org4MSP
-        MSPDir: crypto-config/peerOrganizations/org4.example.com/msp
-        AnchorPeers:
-            - Host: peer0.org4.example.com
-              Port: 7051
-    - &Org5
-        Name: Org5MSP
-        ID: Org5MSP
-        MSPDir: crypto-config/peerOrganizations/org5.example.com/msp
-        AnchorPeers:
-            - Host: peer0.org5.example.com
-              Port: 7051              
-
-    - &Org6
-        Name: Org6MSP
-        ID: Org6MSP
-        MSPDir: crypto-config/peerOrganizations/org6.example.com/msp
-        AnchorPeers:
-            - Host: peer0.org6.example.com
-              Port: 7051
-    - &Org7
-        Name: Org7MSP
-        ID: Org7MSP
-        MSPDir: crypto-config/peerOrganizations/org7.example.com/msp
-        AnchorPeers:
-            - Host: peer0.org7.example.com
-              Port: 7051
+    
+Policies:
+    Readers:
+        Type: ImplicitMeta
+        Rule: "ANY Readers"
+    Writers:
+        Type: ImplicitMeta
+        Rule: "ANY Writers"
+    Admins:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Admins"
+    LifecycleEndorsement:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Endorsement"
+    Endorsement:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Endorsement"
 
 
 Orderer: &OrdererDefaults
@@ -104,10 +55,7 @@ Orderer: &OrdererDefaults
         - orderer0.example.com:7050
         - orderer1.example.com:7050
         - orderer2.example.com:7050
-        - orderer3.example.com:7050
-        - orderer4.example.com:7050
-        - orderer5.example.com:7050
-        - orderer6.example.com:7050
+
 
     BatchTimeout: 2s
     BatchSize:
@@ -126,13 +74,47 @@ Orderer: &OrdererDefaults
 Application: &ApplicationDefaults
 
     Organizations:
+    
 
 Capabilities:
     Global: &ChannelCapabilities
-        V1_1: true
+        V2_3: true
 
     Orderer: &OrdererCapabilities
-        V1_1: true
+        V2_3: true
 
     Application: &ApplicationCapabilities
-        V1_1: true
+        V2_3: true
+
+            
+Profiles:
+
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            MyConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+
+    
+    MyChannel:
+        Consortium: MyConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+
+            
+            Capabilities:
+                <<: *ApplicationCapabilities

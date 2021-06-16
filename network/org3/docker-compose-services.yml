@@ -2,15 +2,15 @@
 version: '3.2'
 
 networks:
-    skcript:
+    Kontgoods:
         external: 
-            name: skcript
+            name: Kontgoods
 
 services:
 
     ca_org3:
         networks:
-            skcript:
+            Kontgoods:
                 aliases:
                     - ca_org3
         deploy:
@@ -23,6 +23,7 @@ services:
                 constraints:
                     - node.hostname == intel-sawtooth
         image: hyperledger/fabric-ca:latest
+        dns_search: .
         hostname: ca.org3.example.com
         environment:
             - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
@@ -46,9 +47,10 @@ services:
                 constraints:
                     - node.hostname == intel-sawtooth
         image: hyperledger/fabric-couchdb:latest
+        dns_search: .
         hostname: couchdb0_org3
         networks:
-           - skcript
+           - Kontgoods
 
     couchdb1_org3:
         deploy:
@@ -61,6 +63,7 @@ services:
                 constraints:
                     - node.hostname == intel-sawtooth
         image: hyperledger/fabric-couchdb:latest
+        dns_search: .
         hostname: couchdb1_org3
         networks:
-           - skcript
+           - Kontgoods
