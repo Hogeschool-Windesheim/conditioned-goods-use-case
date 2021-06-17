@@ -24,7 +24,7 @@ Organizations:
             - Host: peer0.org1.example.com
               Port: 7051
               
-                      Policies:
+        Policies:
             Readers:
                 Type: Signature
                 Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
@@ -60,7 +60,7 @@ Organizations:
                 Rule: "OR('Org2MSP.peer')"  
                
 Capabilities:
-    Global: &ChannelCapabilities
+    Channel: &ChannelCapabilities
         V2_3: true
 
     Orderer: &OrdererCapabilities
@@ -73,8 +73,7 @@ Capabilities:
 Application: &ApplicationDefaults
 
   Organizations:
-  
-         Policies:
+    Policies:
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
@@ -105,7 +104,7 @@ Orderer: &OrdererDefaults
         AbsoluteMaxBytes: 99 MB
         PreferredMaxBytes: 512 KB
                     
-Kafka:
+    Kafka:
         Brokers:
             - kafka0:9092
             - kafka1:9092
@@ -113,7 +112,7 @@ Kafka:
             - kafka3:9092
         
     Organizations:
-       Policies:
+    Policies:
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
@@ -148,27 +147,29 @@ Channel: &ChannelDefaults
         <<: *ChannelCapabilities      
     
 Profiles:         
-    mychannel:
+        OrdererGenesis:
         <<: *ChannelDefaults
-        
         Orderer:
             <<: *OrdererDefaults
-            OrdererType: kafka
-            Kafka:
-           Brokers:
-              - kafka0:9092
-              - kafka1:9092
-              - kafka2:9092
-              - kafka3:9092
             Organizations:
                 - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+            Organizations:
+            - *OrdererOrg
             Capabilities:
                 <<: *OrdererCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
                 - *Org1
                 - *Org2
-            Capabilities:
-                <<: *ApplicationCapabilities
-
