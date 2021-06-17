@@ -147,8 +147,9 @@ Channel: &ChannelDefaults
     Capabilities:
         <<: *ChannelCapabilities      
     
-Profiles:         
-        OrdererGenesis:
+Profiles:
+
+    OrdererGenesis:
         <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
@@ -161,6 +162,17 @@ Profiles:
                 Organizations:
                     - *Org1
                     - *Org2
+    MyChannel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+            Capabilities:
+                <<: *ApplicationCapabilities
+
             Organizations:
             - *OrdererOrg
             Capabilities:
