@@ -16,28 +16,28 @@ The steps below will help you setup a working Hyperledger Fabric multi-node prod
 All prerequisites can be downloaded by running the 'Hyperledger-prereq.sh' script. 
 
 ### Docker Swarm
-Docker swarm is used to connect all docker containers that will be running both servers. Run the command 'Docker swarm init' on the Docker Swarm Manager Node to create a new swarm service. This command results in a worker join token. Run this token on the second server to join the swarm network. 
+Docker swarm is used to connect all docker containers. Run the command 'Docker swarm init' on the Docker Swarm Manager Node to create a new swarm service. This command results in a worker join token. Run this token on the second server to join the swarm network. 
 
-After this a overlay network needs to be created. The overlay network name used in the scripts is 'Kontgoods'. To create a overlay network with this name the command 'docker network create --driver overlay --subnet=10.200.1.0/24 --attachable Kontgoods' needs to be run on the docker swarm manager. 
+After this a overlay network needs to be created. The overlay network name used in the scripts is 'Kontgoods'. To create an overlay network with this name the command 'docker network create --driver overlay --subnet=10.200.1.0/24 --attachable Kontgoods' needs to be run on the docker swarm manager. 
 
-You can check if the overlay network is running by running the command 'docker network ls'. 
+You can check if the overlay network is running by executing the command 'docker network ls'. 
 
 ### SCRIPTS
 After creating a docker swarm network you can run the scripts to create a production network. 
-You need to run the scripts in the following order (only move_crypto needs to be run on both servers, the rest only on the docker manager server):
+You need to run the scripts in the following order (Only the move_crypto script needs to be run on both servers, the other scripts can be run on the docker swarm manager):
 1. ./move_crypto.sh
 2. ./populate_hostname.sh (the hostnames first need to be set in the .env file, and on the servers itself)
 3. ./scripts/network/deploy_services_kafka.sh
 4. ./scripts/network/deploy_services_org1.sh
 5. ./scripts/network/deploy_services_org2.sh
 
-Check if all docker containers are running (docker service ls | grep "0/1") and connected (docker service logs <container id>)
-If all containers are running and connected you can create a channel
+Check if all docker containers are running (docker service ls | grep "0/1") and connected (docker service logs <container id>).
+If all containers are running and connected you can create a channel.
 
 6. ./scripts/create_channel.sh
 
 ### CHAINCODE
-The chaincode can be found in the folder 'chaincode'. The chaincode will run all the business logic of the blockchain network. 
+The chaincode can be found in the folder 'chaincode'. The chaincode will handle all the business logic of the blockchain network. 
 
 #### Copy Chaincode
 To install the chaincode it first needs to be copied to the Docker Swarm Manager Node with a .gz extension. The chaincode can then be copied to the CLI-peer with the command 'docker cp <chaincode package> <docker container>:<docker container path>' for example 'docker cp basic.gz hlf_service_cli1:opt/var/peer/'. 
@@ -62,6 +62,12 @@ export CORE_PEER_ADDRESS=peer0.org1.example.com:7051
 
 ##### Installing the chaincode
 After the above mentioned steps you can install the chaincode with the command 'peer lifecycle chaincode install <chaincode package>' 
+  
+  
+#### Approving the chaincode
+  
+  
+#### Committing the chaincode
 
 
 
