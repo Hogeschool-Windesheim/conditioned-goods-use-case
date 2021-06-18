@@ -64,7 +64,7 @@ After the above mentioned steps you can install the chaincode with the command `
   
   
 ##### Approving the chaincode
-  
+
   
 ##### Committing the chaincode
 
