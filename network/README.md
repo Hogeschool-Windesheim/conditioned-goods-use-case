@@ -37,7 +37,8 @@ If all containers are running and connected you can create a channel.
 6. ./scripts/create_channel.sh
 
 ### CHAINCODE
-The chaincode can be found in the folder 'chaincode'. The chaincode will handle all the business logic of the blockchain network. 
+The chaincode can be found in the folder 'chaincode'. It needs to be build before using it (you can do this using the visual studio code extension 'IBM's blockchain platform). To do this you need to open the chaincode folder in visual studio code, open the IBM extension, open the eclipses next to SMART CONTRACTS and click 'Package Open Project'.   
+The chaincode will handle all the business logic of the blockchain network. 
 
 #### Copy Chaincode
 To install the chaincode it first needs to be copied to the Docker Swarm Manager Node with a .gz extension. The chaincode can then be copied to the CLI-peer with the command 'docker cp <chaincode package> <docker container>:<docker container path>' for example 'docker cp basic.gz hlf_service_cli1:opt/var/peer/'. 
