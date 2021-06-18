@@ -41,7 +41,7 @@ The chaincode can be found in the folder 'chaincode'. It needs to be build befor
 The chaincode will handle all the business logic of the blockchain network. 
 
 #### Copy Chaincode
-To install the chaincode it first needs to be copied to the Docker Swarm Manager Node with a .gz extension. The chaincode can then be copied to the CLI-peer with the command 'docker cp (chaincode package) (docker container):(docker container path)' for example 'docker cp basic.gz hlf_services_cli:opt/var/peer/'. 
+To install the chaincode it first needs to be copied to the Docker Swarm Manager Node with a .gz extension. The chaincode can then be copied to the CLI-peer with the command 'docker cp (chaincode package) (docker container):(docker container path)' for example 'docker cp basic.gz hlf_services_cli.1.m6zkc7fcy2pdxws2yp6senv0b:/opt/gopath/src/github.com/hyperledger/fabric/peer'. 
 
 #### Connecting to the peers
 After copying the chaincode to the CLI-peer it needs to be installed on all peers in the blockchain. To connect to a peer use the command 'docker exec -it (container name) (shell name)' for example 'Docker exec -it peer0.org1.example.com bash'. 
