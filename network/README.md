@@ -64,10 +64,10 @@ export CORE_PEER_ADDRESS=peer0.org1.example.com:7051
 After the above mentioned steps you can install the chaincode with the command 'peer lifecycle chaincode install <chaincode package>' 
   
   
-#### Approving the chaincode
+##### Approving the chaincode
   
   
-#### Committing the chaincode
+##### Committing the chaincode
 
 
 
