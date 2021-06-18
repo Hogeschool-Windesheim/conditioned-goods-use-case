@@ -24,7 +24,7 @@ if [ "$?" -ne 0 ]; then
 fi
 
 # generate genesis block for orderer
-$PWD/configtxgen -channelID $CHANNEL_ID -profile OrdererGenesis -outputBlock $PWD/config/genesis.block
+$PWD/configtxgen -profile OrdererGenesis -outputBlock $PWD/config/genesis.block -channelID $CHANNEL_NAME
 if [ "$?" -ne 0 ]; then
   echo "Failed to generate orderer genesis block..."
   exit 1
@@ -49,12 +49,5 @@ fi
 $PWD/configtxgen -profile ${CHANNEL_PROFILE} -outputAnchorPeersUpdate $PWD/config/ORG2${ANCHOR_TX} -channelID $CHANNEL_NAME -asOrg Org2MSP
 if [ "$?" -ne 0 ]; then
   echo "Failed to generate anchor peer update for Org2MSP..."
-  exit 1
-fi
-
-# generate anchor peer for My Channel transaction as ORG3 Org
-$PWD/configtxgen -profile ${CHANNEL_PROFILE} -outputAnchorPeersUpdate $PWD/config/ORG3${ANCHOR_TX} -channelID $CHANNEL_NAME -asOrg Org3MSP
-if [ "$?" -ne 0 ]; then
-  echo "Failed to generate anchor peer update for Org3MSP..."
   exit 1
 fi
