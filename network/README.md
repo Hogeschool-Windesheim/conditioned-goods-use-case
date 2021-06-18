@@ -8,7 +8,7 @@ The scripts are tested on two Ubuntu 20.04 servers with docker version 20.10.4. 
 The steps below will help you setup a working Hyperledger Fabric multi-node production network, including chaincode. 
 
 ### Prerequisites
-- Docker & docker compose;
+- Docker & docker-compose;
 - Git;
 - Node;
 - NPM;
