@@ -1,6 +1,6 @@
 frontend/.env
-Api/.env
-Api/profiles/
+api/.env
+api/profiles/
 chaincode/.env
 frontend/.env
 yarn.lock
