@@ -1,11 +1,11 @@
-import express, {Request, Response} from "express";
-import {validationResult} from "express-validator";
-import cors from 'cors';
-import helmet from 'helmet';
-import compression from 'compression';
-import dotenv from 'dotenv';
-import {checkSchema} from 'express-validator';
-import {routeTypes, routeResolver} from './routes';
+import express, { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import cors from "cors";
+import helmet from "helmet";
+import compression from "compression";
+import dotenv from "dotenv";
+import { checkSchema } from "express-validator";
+import { routeTypes, routeResolver } from "./routes";
 
 // Register .env file.
 dotenv.config();
@@ -17,13 +17,15 @@ export const app = express();
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ORIGIN
-}));
+app.use(
+    cors({
+        origin: "http://localhost:3001",
+    })
+);
 
 // Loop through all the routes
 for (const [key, value] of Object.entries(routeResolver)) {
-    const {type, schema = {}, func} = value;
+    const { type, schema = {}, func } = value;
 
     // Get the function assosiated with the type of the request from the app object.
     // And register the assosiated route, shema and function in express.
@@ -32,13 +34,13 @@ for (const [key, value] of Object.entries(routeResolver)) {
         const errors = validationResult(req);
 
         // Check if validation returned errors, if it has return them with an error code.
-        if (!errors.isEmpty()){
-          return res.status(400).json({
-            errors: errors.array()
-          });
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+            });
         }
 
-        // call the assosiated route function. 
+        // call the assosiated route function.
         func(req, res);
     });
 }

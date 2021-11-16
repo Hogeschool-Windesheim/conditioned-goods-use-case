@@ -1,7 +1,8 @@
-import {app} from './index';
+import { app } from "./index";
+
+const port = process.env.PORT || 3000;
 
 // Start the Express server.
-app.listen(process.env.PORT, () => {
-    // tslint:disable-next-line:no-console
-    console.log(`🚀 Server ready on http://localhost:${process.env.PORT}!`)
+app.listen(port, () => {
+    console.log(`🚀 Server ready on http://localhost:${port}!`);
 });

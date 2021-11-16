@@ -1,10 +1,7 @@
-frontend/.env
-api/.env
-api/profiles/
-chaincode/.env
-frontend/.env
+.env
+api/src/profiles/
 yarn.lock
 node_modules/
 dist/
 info/
-wallet/
+wallet
