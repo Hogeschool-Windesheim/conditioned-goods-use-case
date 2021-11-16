@@ -1,9 +1,9 @@
-/*
- * SPDX-License-Identifier: Apache-2.0
- */
+import {ShipmentContract} from './contracts/ShipmentContract';
+export {ShipmentContract} from './contracts/ShipmentContract';
+import {MeasurementContract} from './contracts/MeasurementContract';
+export {MeasurementContract} from './contracts/MeasurementContract';
+import dotenv from "dotenv";
 
-import {AssetTransferContract} from './assetTransfer';
+dotenv.config();
 
-export {AssetTransferContract} from './assetTransfer';
-
-export const contracts: any[] = [AssetTransferContract];
+export const contracts = [ShipmentContract, MeasurementContract];
