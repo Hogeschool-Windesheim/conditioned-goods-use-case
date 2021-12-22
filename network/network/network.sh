@@ -300,7 +300,7 @@ function networkDown() {
 }
 
 # Using crpto vs CA. default is cryptogen
-CRYPTO="Certificate Authorities"
+CRYPTO="cryptogen"
 # timeout duration - the duration the CLI should wait for a response from
 # another container before giving up
 MAX_RETRY=5
