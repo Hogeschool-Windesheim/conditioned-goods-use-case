@@ -11,23 +11,25 @@ import { isInRange } from "../libs/validate";
  * Handles the shipments in the ledger.
  */
 export class ShipmentContract extends Contract {
+    public async health(ctx: Context) {
+        return 1
+    }
+    
     /**
      * Add a shipment to the ledger.
      */
-    public async addShipment(ctx: Context) {
-
+    public async addShipment(ctx: Context, id: string, createdAt: number) {
         /** 
         *We're using Date.now() to create a unique ID : To have twice the same ID you have to run 2 times the function 
         *in the same milisecond which in our case seems nearly impossible
         */
 
         //the id for the owner should be his MSPID defined in the configtx.yml file 
-        let id = Date.now.toString();
         console.log(id);
         const shipment: Shipment = {
-            id: id,
+            id,
             sensors: [],
-            createdAt: Date.now(),
+            createdAt,
             owner: ctx.clientIdentity.getMSPID(),
         }
 

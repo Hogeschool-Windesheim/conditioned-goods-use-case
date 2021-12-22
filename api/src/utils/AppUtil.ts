@@ -11,7 +11,7 @@ import * as path from "path";
 const buildCCPOrg1 = (): Record<string, any> => {
     // load the common connection configuration file
     const ccpPath =
-        "/home/niku/Code/conditioned-goods-use-case/network/network/organizations/peerOrganizations/org1.example.com/connection-org1.json";
+        "/home/nick/Downloads/conditioned-goods-use-case/network/network/organizations/peerOrganizations/org1.example.com/connection-org1.json";
     const fileExists = fs.existsSync(ccpPath);
     if (!fileExists) {
         throw new Error(`no such file or directory: ${ccpPath}`);
