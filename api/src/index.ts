@@ -34,28 +34,18 @@ app.post("/soft/:contract", async (req: Request, res: Response) => {
 
         // Get contract
         const contractMap = new Map<string, any>([]);
-        contractMap.set('shipment', network.getContract("nice", "ShipmentContract"));
-        contractMap.set('measurement', network.getContract("nice", "MeasurementContract"));
+        contractMap.set('shipment', network.getContract("basic", "ShipmentContract"));
+        contractMap.set('measurement', network.getContract("basic", "MeasurementContract"));
 
-        const isInvocation = !!req.query["invoke"] || false;
-        console.log({isInvocation});
-        
+        const isInvocation = !!req.query["invoke"] || false;        
         const usedContract = contractMap.get(contractName)!;
-        console.log({usedContract})
 
-        let contractArgs;
-        if (Array.isArray(req.body) === false) {
-            contractArgs = [];
-        } else {
-            contractArgs = req.body
-        }
-
-        console.log({contractArgs})
+        let contractArgs = Array.isArray(req.body) ? req.body : [];
         const result: Buffer = await usedContract.submitTransaction(funcName, ...req.body);
         console.log([result.length, result.toString()])
-        res.write(result);
+        res.json(JSON.parse(result.toString() || "{}"));
     } catch (err) {
-        res.status(500).write(err.toString());
+        res.status(500).json({error: err.toString()});
     }
     // finally {
     //     gateway.disconnect();
