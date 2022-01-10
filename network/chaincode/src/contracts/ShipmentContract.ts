@@ -19,37 +19,48 @@ export class ShipmentContract extends Contract {
      * Add a shipment to the ledger.
      */
     public async addShipment(ctx: Context, id: string, createdAt: number) {
-        /** 
-        *We're using Date.now() to create a unique ID : To have twice the same ID you have to run 2 times the function 
-        *in the same milisecond which in our case seems nearly impossible
-        */
-
-        //the id for the owner should be his MSPID defined in the configtx.yml file 
-        console.log(id);
-        const shipment: Shipment = {
-            id,
-            sensors: [],
-            createdAt,
-            owner: ctx.clientIdentity.getMSPID(),
+ 
+        if(this.shipmentExist(ctx,id)){
+            throw new Error("A shipment with this id already exist");
         }
+        else{
 
-        // Submit data to the ledger.
-        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
-    }
+        
+        //the id for the owner should be his MSPID defined in the configtx.yml file 
+            const shipment: Shipment = {
+                id,
+                sensors: [],
+                createdAt,
+                owner: ctx.clientIdentity.getMSPID(),
+            }
+
+            // Submit data to the ledger.
+            await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+            return shipment;
+        }
+    }   
 
     //To create a Sensor and register it in the pool of sensor (in the database)
 
-    public async createSensor(ctx: Context, category: ESensorType) {
-        let sensor = new Sensor();
-        //Same here to give an unique ID we use the current date 
-        sensor.id = Date.now().toString();
-        sensor.category = category;
-        sensor.updatedAt = Date.now();
-        //By default the sensor is not used and has no value  
-        sensor.used = false;
-        sensor.value = "";
-        //push data in the ledger 
-        await ctx.stub.putState(sensor.id, toBytes<Sensor>(sensor));
+    public async createSensor(ctx: Context, id: string, category: ESensorType, createdAt: number) {
+        
+        if(this.sensorExist(ctx,id)){
+            throw new Error("A sensor with this id already exist");
+        }
+        else {
+            let sensor = new Sensor();
+            //Same here to give an unique ID we use the current date 
+            
+            sensor.id = id;
+            sensor.category = category;
+            sensor.updatedAt = createdAt;
+            //By default the sensor is not used and has no value  
+            sensor.used = false;
+            sensor.value = "";
+            //push data in the ledger 
+            await ctx.stub.putState(sensor.id, toBytes<Sensor>(sensor));
+        }
+
     }
 
     //To get a sensor from the Ledger thanks to his ID 
@@ -59,23 +70,14 @@ export class ShipmentContract extends Contract {
         if (!(sensor && sensor.length > 0)) {
             throw new Error(`Sensor with this id does not exist.`);
         }
-        return toObject<Sensor>(sensor);
+        return sensor.toString();
     }
-    // TODO: extends this methode when we know more about the content of a shipment.
-    /**
-     * Update shipment in the ledger.
-     */
-    /*
-    public async updateShipment(ctx: Context, id: string) {
-        const shipment = await this.getShipment(ctx, id);
 
-        // TODO: set values we want to change.
-
-        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
-
-        return shipment;
+    public async sensorExist(ctx: Context, sensorID: string){
+        const sensor=await ctx.stub.getState(sensorID);
+        return(sensor && sensor.length>0);
     }
-    */
+    
     /**
      * Get shipment from ledger.
      */
