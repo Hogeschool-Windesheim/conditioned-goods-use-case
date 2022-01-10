@@ -10,8 +10,19 @@ import * as path from "path";
 
 const buildCCPOrg1 = (): Record<string, any> => {
     // load the common connection configuration file
-    const ccpPath =
-        "/home/nick/Downloads/conditioned-goods-use-case/network/network/organizations/peerOrganizations/org1.example.com/connection-org1.json";
+    const ccpPath = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "network",
+        "network",
+        "organizations",
+        "peerOrganizations",
+        "org1.example.com",
+        "connection-org1.json"
+    );
+    console.log({ccpPath})
     const fileExists = fs.existsSync(ccpPath);
     if (!fileExists) {
         throw new Error(`no such file or directory: ${ccpPath}`);
@@ -32,8 +43,8 @@ const buildCCPOrg2 = (): Record<string, any> => {
         "..",
         "..",
         "..",
-        "..",
-        "test-network",
+        "network",
+        "network",
         "organizations",
         "peerOrganizations",
         "org2.example.com",
