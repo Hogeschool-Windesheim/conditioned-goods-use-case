@@ -47,9 +47,9 @@ app.post("/soft/:contract", async (req: Request, res: Response) => {
     } catch (err) {
         res.status(500).json({error: err.toString()});
     }
-    // finally {
-    //     gateway.disconnect();
-    // }
+    finally {
+        gateway.disconnect();
+    }
 });
 
 
