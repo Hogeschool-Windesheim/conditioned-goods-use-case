@@ -300,14 +300,14 @@ function networkDown() {
 }
 
 # Using crpto vs CA. default is cryptogen
-CRYPTO="cryptogen"
+CRYPTO="Certificate Authorities"
 # timeout duration - the duration the CLI should wait for a response from
 # another container before giving up
 MAX_RETRY=5
 # default for delay between commands
 CLI_DELAY=3
 # channel name defaults to "mychannel"
-CHANNEL_NAME="mychannel"
+CHANNEL_NAME="lwm-dlg-lng"
 # chaincode name defaults to "NA"
 CC_NAME="NA"
 # chaincode path defaults to "NA"
