@@ -10,72 +10,64 @@ import { isInRange } from "../libs/validate";
 /**
  * Handles the shipments in the ledger.
  */
-export class ShipmentContract extends Contract {
-    public async health(ctx: Context) {
-        return 1
-    }
-    
+export class ShipmentContract extends Contract { 
     /**
      * Add a shipment to the ledger.
      */
-    public async addShipment(ctx: Context, id: string, createdAt: number) {
- 
-        if(this.shipmentExist(ctx,id)){
+    public async addShipment(ctx: Context, id: string, createdAt: number): Promise<Shipment> {
+        const shipmentExist = await this.shipmentExist(ctx,id);
+        if (shipmentExist){
             throw new Error("A shipment with this id already exist");
         }
-        else{
 
-        
         //the id for the owner should be his MSPID defined in the configtx.yml file 
-            const shipment: Shipment = {
-                id,
-                sensors: [],
-                createdAt,
-                owner: ctx.clientIdentity.getMSPID(),
-            }
-
-            // Submit data to the ledger.
-            await ctx.stub.putState(id, toBytes<Shipment>(shipment));
-            return shipment;
+        const shipment: Shipment = {
+            id,
+            sensors: [],
+            createdAt,
+            owner: ctx.clientIdentity.getMSPID(),
         }
+
+        // Submit data to the ledger.
+        await ctx.stub.putState(id, toBytes<Shipment>(shipment));
+        return shipment;
     }   
 
     //To create a Sensor and register it in the pool of sensor (in the database)
 
     public async createSensor(ctx: Context, id: string, category: ESensorType, createdAt: number) {
-        
-        if(this.sensorExist(ctx,id)){
+        const sensorExists = await this.sensorExist(ctx, id);
+
+        if (sensorExists){
             throw new Error("A sensor with this id already exist");
         }
-        else {
-            let sensor = new Sensor();
-            //Same here to give an unique ID we use the current date 
-            
-            sensor.id = id;
-            sensor.category = category;
-            sensor.updatedAt = createdAt;
-            //By default the sensor is not used and has no value  
-            sensor.used = false;
-            sensor.value = "";
-            //push data in the ledger 
-            await ctx.stub.putState(sensor.id, toBytes<Sensor>(sensor));
-        }
 
+        let sensor = new Sensor();
+        //Same here to give an unique ID we use the current date 
+        
+        sensor.id = id;
+        sensor.category = category;
+        sensor.updatedAt = createdAt;
+        //By default the sensor is not used and has no value  
+        sensor.used = false;
+        sensor.value = "";
+        //push data in the ledger 
+        await ctx.stub.putState(sensor.id, toBytes<Sensor>(sensor));
     }
 
     //To get a sensor from the Ledger thanks to his ID 
 
-    public async getSensor(ctx: Context, sensorID: string) {
+    public async getSensor(ctx: Context, sensorID: string): Promise<Sensor> {
         const sensor = await ctx.stub.getState(sensorID);
         if (!(sensor && sensor.length > 0)) {
             throw new Error(`Sensor with this id does not exist.`);
         }
-        return sensor.toString();
+        return toObject<Sensor>(sensor);
     }
 
     public async sensorExist(ctx: Context, sensorID: string){
         const sensor=await ctx.stub.getState(sensorID);
-        return(sensor && sensor.length>0);
+        return sensor && sensor.length>0;
     }
     
     /**
@@ -84,7 +76,7 @@ export class ShipmentContract extends Contract {
     public async getShipment(ctx: Context, id: string) {
         const shipment = await ctx.stub.getState(id);
 
-        if (!(shipment && shipment.length > 0)) {
+        if ((shipment && shipment.length > 0) === false) {
             throw new Error(`Shipment with this id does not exist.`);
         }
 
@@ -130,21 +122,20 @@ export class ShipmentContract extends Contract {
         if (shipment.sensors.length > 0) {
             //if he has go through then and check if there is already a sensor of this type on it 
             for (let existingSensor of shipment.sensors) {
-                if (existingSensor.category == sensor.category) {
+                if (existingSensor.category === sensor.category) {
                     throw new Error("There is already this type of sensor on this shipment");
                 }
             }
         }
         //Check if the sensor is already used 
-        if (sensor.used == false) {
+        if (sensor.used === false) {
             //Then add the sensor to the shipment 
             shipment.sensors.push(sensor);
             //Register the change in the blockchain 
             await ctx.stub.putState(id, toBytes<Shipment>(shipment));
         } else throw new Error("Sensor already used");
-
-
     }
+
     public async getReadings(ctx: Context, shipmentId: string) {
         const shipment = await this.getShipment(ctx, shipmentId);
         if (shipment.sensors.length > 0) {
@@ -154,13 +145,14 @@ export class ShipmentContract extends Contract {
             throw new Error("There is no sensor on this shipment");
         }
     }
+
     private async validateSLA(ctx: Context, sensors: Sensor[]) {
 
         let temperatureSensor: Sensor;
         //Going throught the array of sensors 
         for (let sensor of sensors) {
             //Trying to find if there is a temperature sensor 
-            if (sensor.category == ESensorType.Temperature) {
+            if (sensor.category === ESensorType.Temperature) {
                 temperatureSensor = sensor;
             }
             else {
@@ -191,19 +183,19 @@ export class ShipmentContract extends Contract {
 
         return toObject<ShipmentTransfer>(transfer);
     }
+
     /**
      * Function to handle the transfer of ownership to track every transaction 
      * @param ctx - context variable
      * @param id - id of the shipment
      * @param newOwner - Mspid of the new owner
-    
      */
     public async transferOwnership(ctx: Context, id: string, newOwner: string): Promise<void> {
         let shipment = await this.getShipment(ctx, id);
         let actualOwner = shipment.owner;
         let shipmentTransfer: ShipmentTransfer;
         //check if you can invoke this function by checking if the MSPid is matched to the shipment
-        if (actualOwner == ctx.clientIdentity.getMSPID()) {
+        if (actualOwner === ctx.clientIdentity.getMSPID()) {
             shipmentTransfer.fromOwner = actualOwner;
             shipmentTransfer.toOwner = newOwner;
             shipmentTransfer.shipmentId = "transfer" + id;
@@ -232,9 +224,9 @@ export class ShipmentContract extends Contract {
         let shipment = await this.getShipment(ctx, id);
         let shipmentTransfer = await this.getTransfer(ctx, "transfer" + id);
         //check if the state of the shipement is right
-        if (shipmentTransfer.state == EShipmentTransferState.Pending) {
+        if (shipmentTransfer.state === EShipmentTransferState.Pending) {
             //check if you can invoke this function by checking if the MSPid is matched to the transfer
-            if (ctx.clientIdentity.getMSPID() == shipmentTransfer.toOwner) {
+            if (ctx.clientIdentity.getMSPID() === shipmentTransfer.toOwner) {
                 //changes the owner and the state of the transfer and submit it to the ledger
                 shipmentTransfer.state = EShipmentTransferState.Completed;
                 shipment.owner = shipmentTransfer.toOwner;
