@@ -1,7 +1,7 @@
 import { Gateway, GatewayOptions, Wallets } from "fabric-network";
 import * as path from "path";
 // TODO: make import of connection profile by path instead of import
-import org1 from "../profiles/connection-org1.json";
+
 import { buildCCPOrg1, buildWallet } from "../utils/AppUtil";
 import {
     buildCAClient,
@@ -38,7 +38,6 @@ export async function connect(): Promise<Gateway> {
         org1UserId,
         "org1.department1"
     );
-
     // Create a new gateway instance for interacting with the fabric network.
     // In a real application this would be done as the backend server session is setup for
     // a user that has been verified.
