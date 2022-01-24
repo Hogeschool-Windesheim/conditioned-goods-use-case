@@ -1,0 +1,44 @@
+{
+    "sensors": [
+        {
+            "sensorID": 1,
+            "used": "False",
+            "type": "Temperature"
+        },
+        {
+            "sensorID": 2,
+            "used": "True",
+            "type": "Temperature"
+        },
+        {
+            "sensorID": 3,
+            "used": "False",
+            "type": "GPS"
+        },
+        {
+            "sensorID": 4,
+            "used": "True",
+            "type": "Temperature"
+        },
+        {
+            "sensorID": 5,
+            "used": "False",
+            "type": "Temperature"
+        },
+        {
+            "sensorID": 6,
+            "used": "True",
+            "type": "GPS"
+        },
+        {
+            "sensorID": 7,
+            "used": "False",
+            "type": "Temperature"
+        },
+        {
+            "sensorID": 8,
+            "used": "True",
+            "type": "Temperature"
+        }
+    ]
+}
